@@ -1,7 +1,13 @@
-package com.laudhoot;
+package com.laudhoot.activity;
 
+import java.util.List;
 import java.util.Locale;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -16,7 +22,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.laudhoot.web.TestAPI;
+import com.laudhoot.web.TestRestClient;
+
+import junit.framework.Test;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -162,6 +175,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        public Button button1;
+        public Button button2;
+
+        ProgressDialog pDialog;
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -181,8 +198,89 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            button1 = (Button) rootView.findViewById(R.id.button_1);
+            button1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TestWebTask task = new TestWebTask();
+                    task.execute("1");
+                }
+            });
+
+            button2 = (Button) rootView.findViewById(R.id.button_2);
+            button2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TestWebTask task = new TestWebTask();
+                    task.execute("2");
+                }
+            });
             return rootView;
         }
-    }
 
+
+        /**
+         * Background Async Task to download file
+         * */
+        class TestWebTask extends AsyncTask<String, String, String> {
+            /**
+             * Before starting background thread
+             * Show Progress Bar Dialog
+             * */
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+                if(!(activeNetworkInfo != null && activeNetworkInfo.isConnected())){
+                    Toast.makeText(getActivity().getApplicationContext(), "Your internet is disabled, turn in on and then try again.", Toast.LENGTH_SHORT).show();
+                    cancel(true);
+                }
+
+                pDialog = new ProgressDialog(getActivity());
+                pDialog.setMessage("Loading...");
+                pDialog.setIndeterminate(true);
+                pDialog.setCancelable(false);
+                pDialog.show();
+                pDialog.setMessage("Please wait, calling web service...");
+
+                //check if any more files to download
+            }
+
+            /**
+             * Downloading file in background thread
+             * */
+            @Override
+            protected String doInBackground(String... params) {
+                try{
+                    TestAPI webTestApi = new TestRestClient().getTestAPI();
+                    if(params[0].equals("1")){
+                        return "Executing /test/1... Result:" + webTestApi.testController1();
+                    }else{
+                        return "Executing /test/2... Result:" + webTestApi.testController2();
+                    }
+                }catch(Exception e){
+                    return e.getMessage();
+                }
+            }
+
+            /**
+             * Updating progress bar
+             * */
+            protected void onProgressUpdate(String... progress) {
+
+            }
+
+            /**
+             * After completing background task
+             * Dismiss the progress dialog
+             * **/
+
+            @Override
+            protected void onPostExecute(String response) {
+                Toast.makeText(getActivity().getApplicationContext(), response, Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
 }
