@@ -26,8 +26,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.laudhoot.web.RestClient;
 import com.laudhoot.web.TestAPI;
-import com.laudhoot.web.TestRestClient;
 
 import junit.framework.Test;
 
@@ -253,7 +253,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             @Override
             protected String doInBackground(String... params) {
                 try{
-                    TestAPI webTestApi = new TestRestClient().getTestAPI();
+                    TestAPI webTestApi = new RestClient().getTestWebService();
                     if(params[0].equals("1")){
                         return "Executing /test/1... Result:" + webTestApi.testController1();
                     }else{

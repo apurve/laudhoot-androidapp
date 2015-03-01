@@ -3,7 +3,7 @@ package com.laudhoot.web;
 import retrofit.http.GET;
 
 /**
- * Created by root on 29/12/14.
+ * Created by apurve on 29/12/14.
  */
 public interface TestAPI {
 
