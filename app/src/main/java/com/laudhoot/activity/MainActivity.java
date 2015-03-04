@@ -1,35 +1,25 @@
 package com.laudhoot.activity;
 
-import java.util.List;
-import java.util.Locale;
-
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.util.AndroidRuntimeException;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.laudhoot.web.RestClient;
-import com.laudhoot.web.TestAPI;
+import com.laudhoot.fragment.PlaceholderFragment;
 
-import junit.framework.Test;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Locale;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -48,6 +38,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+
+    private final static String LOG_TAG = "LAUDHOOT-LOG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +65,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
+                if(mSectionsPagerAdapter.getPageIcon(0) != null) {
+                    setTitle(mSectionsPagerAdapter.getPageTitle(position));
+                }
             }
         });
 
@@ -82,10 +77,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // the adapter. Also specify this Activity object, which implements
             // the TabListener interface, as the callback (listener) for when
             // this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
+            if(mSectionsPagerAdapter.getPageIcon(i) == null){
+                actionBar.addTab(
+                        actionBar.newTab()
+                                .setText(mSectionsPagerAdapter.getPageTitle(i))
+                                .setTabListener(this));
+            }else{
+                actionBar.addTab(
+                        actionBar.newTab()
+                                .setIcon(mSectionsPagerAdapter.getPageIcon(i))
+                                .setTabListener(this));
+            }
+        }
+
+        // If icons are available then update activity title with the title of first page
+        if(mSectionsPagerAdapter.getPageIcon(0) != null){
+            setTitle(mSectionsPagerAdapter.getPageTitle(0));
         }
     }
 
@@ -133,154 +140,90 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        /**
+         * Stores the list of pages' full class names
+         */
+        private String[] pagesClasses;
+
+        /**
+         * Stores the list pages' tile
+         */
+        private String [] pageTitles;
+
+        /**
+         * Stores the list pages' icons
+         */
+        private String [] pageIcons;
+
+        private final String METHOD_NAME = "newInstance";
+
+        public SectionsPagerAdapter(FragmentManager fm) throws AndroidRuntimeException {
             super(fm);
+            pagesClasses = getResources().getStringArray(R.array.pages_classes);
+            pageTitles = getResources().getStringArray(R.array.pages_titles);
+            pageIcons = getResources().getStringArray(R.array.pages_icons);
+            if(pageTitles.length < 1 || pagesClasses.length < 1){
+                Log.d(LOG_TAG, "R.array.pages_classes and R.array.pages_titles should have at least one item each.");
+                throw new AndroidRuntimeException("No page(s) found in configuration.");
+            }else if(pagesClasses.length != pageTitles.length){
+                Log.d(LOG_TAG,"R.array.pages_classes and R.array.pages_titles should be equal in length.");
+                throw new AndroidRuntimeException("Pages of the activity are not configured properly.");
+            }else if(pageIcons.length > 0 && pagesClasses.length != pageTitles.length){
+                Log.d(LOG_TAG,"R.array.pages_classes and R.array.pages_icons should be equal in length.");
+                throw new AndroidRuntimeException("Pages of the activity are not configured properly.");
+            }
         }
 
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            try {
+                Class<?> fragmentClass = Class.forName(pagesClasses[position]);
+                Method method = fragmentClass.getMethod("newInstance", Integer.class);
+                return (Fragment) method.invoke(null, position);
+            } catch (IllegalAccessException e) {
+                Log.d(LOG_TAG, "The specified fragment have higher visibility.");
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                Log.d(LOG_TAG, "Fully qualified class name of the specified fragment in string resources cannot be found.");
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                Log.d(LOG_TAG, "Fragments must have a static "+METHOD_NAME+" method.");
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                Log.d(LOG_TAG, "Not able to call the static "+METHOD_NAME+" method.");
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return pagesClasses.length;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+            return pageTitles[position];
+        }
+
+        public Integer getPageIcon(int position) {
+            if(pageIcons.length > 0){
+                try {
+                    Field field = R.drawable.class.getDeclaredField(pageIcons[position]);
+                    return (Integer) field.get(null);
+                } catch (NoSuchFieldException e) {
+                    Log.d(LOG_TAG, "Icon "+pageIcons[position]+" not found in drawable resources.");
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    Log.d(LOG_TAG, "Resources unavailable, try rebuilding the project.");
+                    e.printStackTrace();
+                }
             }
             return null;
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public Button button1;
-        public Button button2;
-
-        ProgressDialog pDialog;
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            button1 = (Button) rootView.findViewById(R.id.button_1);
-            button1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TestWebTask task = new TestWebTask();
-                    task.execute("1");
-                }
-            });
-
-            button2 = (Button) rootView.findViewById(R.id.button_2);
-            button2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TestWebTask task = new TestWebTask();
-                    task.execute("2");
-                }
-            });
-            return rootView;
-        }
-
-
-        /**
-         * Background Async Task to download file
-         * */
-        class TestWebTask extends AsyncTask<String, String, String> {
-            /**
-             * Before starting background thread
-             * Show Progress Bar Dialog
-             * */
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-                if(!(activeNetworkInfo != null && activeNetworkInfo.isConnected())){
-                    Toast.makeText(getActivity().getApplicationContext(), "Your internet is disabled, turn in on and then try again.", Toast.LENGTH_SHORT).show();
-                    cancel(true);
-                }
-
-                pDialog = new ProgressDialog(getActivity());
-                pDialog.setMessage("Loading...");
-                pDialog.setIndeterminate(true);
-                pDialog.setCancelable(false);
-                pDialog.show();
-                pDialog.setMessage("Please wait, calling web service...");
-
-                //check if any more files to download
-            }
-
-            /**
-             * Downloading file in background thread
-             * */
-            @Override
-            protected String doInBackground(String... params) {
-                try{
-                    TestAPI webTestApi = new RestClient().getTestWebService();
-                    if(params[0].equals("1")){
-                        return "Executing /test/1... Result:" + webTestApi.testController1();
-                    }else{
-                        return "Executing /test/2... Result:" + webTestApi.testController2();
-                    }
-                }catch(Exception e){
-                    return e.getMessage();
-                }
-            }
-
-            /**
-             * Updating progress bar
-             * */
-            protected void onProgressUpdate(String... progress) {
-
-            }
-
-            /**
-             * After completing background task
-             * Dismiss the progress dialog
-             * **/
-
-            @Override
-            protected void onPostExecute(String response) {
-                Toast.makeText(getActivity().getApplicationContext(), response, Toast.LENGTH_LONG).show();
-
-            }
-        }
-    }
 }

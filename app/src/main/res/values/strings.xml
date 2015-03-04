@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="pages_titles">
+        <item>Page 1</item>
+        <item>Page 2</item>
+        <item>Page 3</item>
+        <item>Page 4</item>
+    </string-array>
+    <string-array name="pages_classes">
+        <item>com.laudhoot.fragment.PlaceholderFragment</item>
+        <item>com.laudhoot.fragment.PlaceholderFragment</item>
+        <item>com.laudhoot.fragment.PlaceholderFragment</item>
+        <item>com.laudhoot.fragment.PlaceholderFragment</item>
+    </string-array>
+    <!--icons array can be left empty, titles will be shown for each page-->
+    <string-array name="pages_icons">
+        <item>ic_launcher</item>
+        <item>ic_launcher</item>
+        <item>ic_launcher</item>
+        <item>ic_launcher</item>
+    </string-array>
+
     <string name="app_name">laudhoot</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>

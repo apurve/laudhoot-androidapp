@@ -6,10 +6,12 @@ package com.laudhoot.model;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.query.Select;
 
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class BaseModel extends Model implements Serializable{
 
@@ -21,6 +23,17 @@ public class BaseModel extends Model implements Serializable{
 
     @Column(name = "archive_status")
     private byte archiveStatus;
+
+    protected <T extends Model> List<T> getManyThrough(Class<T> targetClass, Class<T> joinClass, String targetForeignKeyInJoin, String foreignKeyInJoin){
+        return new Select()
+                .from(targetClass)
+                .as("target_model")
+                .join(joinClass)
+                .as("join_model")
+                .on("join_model." + targetForeignKeyInJoin + " = " + "target_model.id")
+                .where(foreignKeyInJoin + " = ?", this.getId())
+                .execute();
+    }
 
     public BaseModel() {
         super();
