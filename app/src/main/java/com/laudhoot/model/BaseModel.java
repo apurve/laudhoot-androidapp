@@ -1,7 +1,7 @@
 package com.laudhoot.model;
 
 /**
- * Created by root on 1/3/15.
+ * Created by apurve on 1/3/15.
  */
 
 import com.activeandroid.Model;

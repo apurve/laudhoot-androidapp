@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.laudhoot.Laudhoot;
+import com.laudhoot.R;
 import com.laudhoot.fragment.PlaceholderFragment;
 
 import java.lang.reflect.Constructor;
@@ -39,8 +41,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
-    private final static String LOG_TAG = "LAUDHOOT-LOG";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
-                if(mSectionsPagerAdapter.getPageIcon(0) != null) {
+                if (mSectionsPagerAdapter.getPageIcon(0) != null) {
                     setTitle(mSectionsPagerAdapter.getPageTitle(position));
                 }
             }
@@ -77,12 +77,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // the adapter. Also specify this Activity object, which implements
             // the TabListener interface, as the callback (listener) for when
             // this tab is selected.
-            if(mSectionsPagerAdapter.getPageIcon(i) == null){
+            if (mSectionsPagerAdapter.getPageIcon(i) == null) {
                 actionBar.addTab(
                         actionBar.newTab()
                                 .setText(mSectionsPagerAdapter.getPageTitle(i))
                                 .setTabListener(this));
-            }else{
+            } else {
                 actionBar.addTab(
                         actionBar.newTab()
                                 .setIcon(mSectionsPagerAdapter.getPageIcon(i))
@@ -91,7 +91,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         // If icons are available then update activity title with the title of first page
-        if(mSectionsPagerAdapter.getPageIcon(0) != null){
+        if (mSectionsPagerAdapter.getPageIcon(0) != null) {
             setTitle(mSectionsPagerAdapter.getPageTitle(0));
         }
     }
@@ -148,12 +148,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         /**
          * Stores the list pages' tile
          */
-        private String [] pageTitles;
+        private String[] pageTitles;
 
         /**
          * Stores the list pages' icons
          */
-        private String [] pageIcons;
+        private String[] pageIcons;
 
         private final String METHOD_NAME = "newInstance";
 
@@ -162,14 +162,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             pagesClasses = getResources().getStringArray(R.array.pages_classes);
             pageTitles = getResources().getStringArray(R.array.pages_titles);
             pageIcons = getResources().getStringArray(R.array.pages_icons);
-            if(pageTitles.length < 1 || pagesClasses.length < 1){
-                Log.d(LOG_TAG, "R.array.pages_classes and R.array.pages_titles should have at least one item each.");
+            if (pageTitles.length < 1 || pagesClasses.length < 1) {
+                Log.d(Laudhoot.LOG_TAG, "R.array.pages_classes and R.array.pages_titles should have at least one item each.");
                 throw new AndroidRuntimeException("No page(s) found in configuration.");
-            }else if(pagesClasses.length != pageTitles.length){
-                Log.d(LOG_TAG,"R.array.pages_classes and R.array.pages_titles should be equal in length.");
+            } else if (pagesClasses.length != pageTitles.length) {
+                Log.d(Laudhoot.LOG_TAG, "R.array.pages_classes and R.array.pages_titles should be equal in length.");
                 throw new AndroidRuntimeException("Pages of the activity are not configured properly.");
-            }else if(pageIcons.length > 0 && pagesClasses.length != pageTitles.length){
-                Log.d(LOG_TAG,"R.array.pages_classes and R.array.pages_icons should be equal in length.");
+            } else if (pageIcons.length > 0 && pagesClasses.length != pageTitles.length) {
+                Log.d(Laudhoot.LOG_TAG, "R.array.pages_classes and R.array.pages_icons should be equal in length.");
                 throw new AndroidRuntimeException("Pages of the activity are not configured properly.");
             }
         }
@@ -183,16 +183,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 Method method = fragmentClass.getMethod("newInstance", Integer.class);
                 return (Fragment) method.invoke(null, position);
             } catch (IllegalAccessException e) {
-                Log.d(LOG_TAG, "The specified fragment have higher visibility.");
+                Log.d(Laudhoot.LOG_TAG, "The specified fragment have higher visibility.");
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
-                Log.d(LOG_TAG, "Fully qualified class name of the specified fragment in string resources cannot be found.");
+                Log.d(Laudhoot.LOG_TAG, "Fully qualified class name of the specified fragment in string resources cannot be found.");
                 e.printStackTrace();
             } catch (NoSuchMethodException e) {
-                Log.d(LOG_TAG, "Fragments must have a static "+METHOD_NAME+" method.");
+                Log.d(Laudhoot.LOG_TAG, "Fragments must have a static " + METHOD_NAME + " method.");
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
-                Log.d(LOG_TAG, "Not able to call the static "+METHOD_NAME+" method.");
+                Log.d(Laudhoot.LOG_TAG, "Not able to call the static " + METHOD_NAME + " method.");
                 e.printStackTrace();
             }
             return null;
@@ -210,15 +210,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         public Integer getPageIcon(int position) {
-            if(pageIcons.length > 0){
+            if (pageIcons.length > 0) {
                 try {
                     Field field = R.drawable.class.getDeclaredField(pageIcons[position]);
                     return (Integer) field.get(null);
                 } catch (NoSuchFieldException e) {
-                    Log.d(LOG_TAG, "Icon "+pageIcons[position]+" not found in drawable resources.");
+                    Log.d(Laudhoot.LOG_TAG, "Icon " + pageIcons[position] + " not found in drawable resources.");
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
-                    Log.d(LOG_TAG, "Resources unavailable, try rebuilding the project.");
+                    Log.d(Laudhoot.LOG_TAG, "Resources unavailable, try rebuilding the project.");
                     e.printStackTrace();
                 }
             }
