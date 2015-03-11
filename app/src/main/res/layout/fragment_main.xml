@@ -16,12 +16,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/button_1"
         android:layout_centerHorizontal="true"
-        android:text="DB Task"/>
+        android:text="DB Test One:Many"/>
+
+    <Button android:id="@+id/button_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_2"
+        android:layout_centerHorizontal="true"
+        android:text="DB Test Many:Many"/>
 
     <TextView android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_2"
+        android:layout_below="@id/button_3"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

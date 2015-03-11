@@ -1,0 +1,24 @@
+evaluationDependsOn(":app")
+
+apply plugin: 'java'
+
+dependencies {
+    def androidModule = project(':app')
+    compile androidModule
+
+    testCompile androidModule.android.applicationVariants.toList().first().javaCompile.classpath
+    testCompile androidModule.android.applicationVariants.toList().first().javaCompile.outputs.files
+    testCompile files(androidModule.plugins.findPlugin("com.android.application").getBootClasspath())
+
+    testCompile 'junit:junit:4.10'
+    testCompile 'org.robolectric:robolectric:2.4'
+    testCompile 'org.easytesting:fest:1.0.16'
+    testCompile 'org.mockito:mockito-core:1.9.5'
+}
+
+tasks.withType(Test) {
+    scanForTestClasses = false
+    include "**/*Should.class"
+    include "**/*Test.class"
+    include "**/*Tests.class"
+}

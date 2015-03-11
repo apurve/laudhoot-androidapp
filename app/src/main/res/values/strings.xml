@@ -9,7 +9,7 @@
     </string-array>
     <string-array name="pages_classes">
         <item>com.laudhoot.fragment.PlaceholderFragment</item>
-        <item>com.laudhoot.fragment.PlaceholderFragment</item>
+        <item>com.laudhoot.fragment.ManyToManyFragment</item>
         <item>com.laudhoot.fragment.PlaceholderFragment</item>
         <item>com.laudhoot.fragment.PlaceholderFragment</item>
     </string-array>

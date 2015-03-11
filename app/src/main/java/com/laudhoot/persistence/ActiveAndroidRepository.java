@@ -4,6 +4,8 @@ package com.laudhoot.persistence;
  * Created by apurve on 1/3/15.
  */
 
+import android.database.Cursor;
+
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Cache;
 import com.activeandroid.Model;
@@ -34,8 +36,8 @@ public class ActiveAndroidRepository<T extends BaseModel> implements CRUDReposit
     }
 
     @Override
-    public List<T> findAllOnFK(String fk, Long fkValue){
-        return new Select().from(persistentObjectClass).where(fk+" = ?", fkValue).execute();
+    public List<T> findAllOnFK(String fk, Long fkValue) {
+        return new Select().from(persistentObjectClass).where(fk + " = ?", fkValue).execute();
     }
 
     @Override
@@ -97,8 +99,8 @@ public class ActiveAndroidRepository<T extends BaseModel> implements CRUDReposit
     @Override
     public void purgeRepository() {
         TableInfo tableInfo = Cache.getTableInfo(persistentObjectClass);
-        ActiveAndroid.execSQL("delete from "+tableInfo.getTableName()+";");
-        ActiveAndroid.execSQL("delete from sqlite_sequence where name='"+tableInfo.getTableName()+"';");
+        ActiveAndroid.execSQL("delete from " + tableInfo.getTableName() + ";");
+        ActiveAndroid.execSQL("delete from sqlite_sequence where name='" + tableInfo.getTableName() + "';");
     }
 
     @Override
@@ -111,6 +113,16 @@ public class ActiveAndroidRepository<T extends BaseModel> implements CRUDReposit
     public void markForArchive(T persistentObject) {
         persistentObject.setArchiveStatus(ArchiveStatus.MARKED_FOR_ARCHIVES);
         saveOrUpdate(persistentObject);
+    }
+
+    @Override
+    public Cursor fetchResultCursor() {
+        String tableName = Cache.getTableInfo(persistentObjectClass).getTableName();
+        // Query all items without any conditions
+        String resultRecords = new Select(tableName + ".*, " + tableName + ".Id as _id").
+                from(persistentObjectClass).toSql();
+        // Execute query on the underlying ActiveAndroid SQLite database
+        return Cache.openDatabase().rawQuery(resultRecords, null);
     }
 
 }

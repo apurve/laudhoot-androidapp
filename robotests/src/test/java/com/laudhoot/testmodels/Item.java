@@ -1,7 +1,10 @@
-package com.laudhoot.model;
+package com.laudhoot.testmodels;
 
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.laudhoot.model.BaseModel;
+
+import java.util.List;
 
 /**
  * Created by apurve on 4/3/15.
@@ -26,6 +29,10 @@ public class Item extends BaseModel {
     }
 
     public Item() {
+    }
+
+    public List<Order> getOrders() {
+        return getManyThroughMapping(Order.class, OrderItemMapping.class);
     }
 
     public Item(String name, Category category) {

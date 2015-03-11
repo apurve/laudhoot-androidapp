@@ -1,10 +1,8 @@
-package com.laudhoot.persistence;
+package com.laudhoot.testrepositories;
 
-import android.util.Log;
-
-import com.laudhoot.Laudhoot;
-import com.laudhoot.model.Category;
-import com.laudhoot.model.Item;
+import com.laudhoot.persistence.ActiveAndroidRepository;
+import com.laudhoot.testmodels.Category;
+import com.laudhoot.testmodels.Item;
 
 /**
  * Created by apurve on 4/3/15.

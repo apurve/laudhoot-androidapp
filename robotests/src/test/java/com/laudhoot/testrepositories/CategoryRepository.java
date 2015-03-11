@@ -1,6 +1,7 @@
-package com.laudhoot.persistence;
+package com.laudhoot.testrepositories;
 
-import com.laudhoot.model.Category;
+import com.laudhoot.persistence.ActiveAndroidRepository;
+import com.laudhoot.testmodels.Category;
 
 /**
  * Created by root on 4/3/15.

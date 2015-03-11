@@ -3,6 +3,8 @@ package com.laudhoot.persistence;
 /**
  * Created by apurve on 1/3/15.
  */
+import android.database.Cursor;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -93,5 +95,11 @@ public interface CRUDRepository<T extends Serializable> {
      * @param persistentObject the object which needs to be soft deleted
      */
     void markForArchive(T persistentObject);
+
+    /**
+     * Fetch a cursor for result set of all records.
+     * @return Cursor for the result records
+     * */
+    Cursor fetchResultCursor();
 
 }
