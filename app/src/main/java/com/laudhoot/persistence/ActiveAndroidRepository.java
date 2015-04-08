@@ -54,7 +54,7 @@ public class ActiveAndroidRepository<T extends BaseModel> implements CRUDReposit
     }
 
     @Override
-    public byte findArchiveStatus(Long id) {
+    public int findArchiveStatus(Long id) {
         //TODO - optimize the query
         return ((T) new Select()
                 .from(persistentObjectClass)

@@ -25,17 +25,10 @@ public class BaseModel extends Model implements Serializable {
     private Date updatedOn;
 
     @Column(name = "archive_status")
-    private byte archiveStatus;
+    private int archiveStatus;
 
-    protected <T extends Model, U extends Model> List<T> getManyThrough(Class<T> targetClass, Class<U> joinClass, String targetForeignKeyInJoin, String foreignKeyInJoin) {
-        return new Select()
-                .from(targetClass)
-                .as("target_model")
-                .join(joinClass)
-                .as("join_model")
-                .on("join_model." + targetForeignKeyInJoin + " = " + "target_model.id")
-                .where(foreignKeyInJoin + " = ?", this.getId())
-                .execute();
+    public BaseModel() {
+        super();
     }
 
     /**
@@ -49,23 +42,8 @@ public class BaseModel extends Model implements Serializable {
     protected <T extends BaseModel, U extends BaseModel> List<T> getManyThroughMapping(Class<T> targetClass, Class<U> mappingClass) {
         return new Select().from(targetClass).as("target_model")
                 .innerJoin(mappingClass).as("mapping_model").on("target_model.id = mapping_model." + targetClass.getSimpleName().toLowerCase())
-                .innerJoin(this.getClass()).on("mapping_model." + this.getClass().getSimpleName().toLowerCase() + " = ?", getId()).execute();
-
-    }
-
-/*    protected <T extends BaseModel, U extends BaseModel> List<T> getManyThroughMapping2(Class<T> targetModel, Class<U> mappingModel) {
-        List<U> mappings = getMany(mappingModel, this.getClass().getSimpleName().toLowerCase());
-        List<T> results = new ArrayList<T>();
-        for (U mapping : mappings) {
-            TableInfo targetTableInfo = Cache.getTableInfo(targetModel);
-            List<T> result = new Select().from(targetModel)
-                    .innerJoin(mappingModel).as("mapping_model").on("mapping_model." + targetModel.getSimpleName().toLowerCase() + "=" + targetTableInfo.getTableName() + "." + targetTableInfo.getIdName()).execute();
-        }
-        return results;
-    }*/
-
-    public BaseModel() {
-        super();
+                .where("mapping_model."+this.getClass().getSimpleName().toLowerCase()+"= ?", this.getId())
+                .execute();
     }
 
     public Date getCreatedOn() {
@@ -84,13 +62,14 @@ public class BaseModel extends Model implements Serializable {
         this.updatedOn = updatedOn;
     }
 
-    public byte getArchiveStatus() {
+    public int getArchiveStatus() {
         return archiveStatus;
     }
 
-    public void setArchiveStatus(byte archiveStatus) {
+    public void setArchiveStatus(int archiveStatus) {
         this.archiveStatus = archiveStatus;
     }
+
 
     @Override
     public String toString() {

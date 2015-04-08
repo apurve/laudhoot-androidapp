@@ -46,7 +46,7 @@ public interface CRUDRepository<T extends Serializable> {
      * @param id of the persistentObject
      * @return
      */
-    byte findArchiveStatus(Long id);
+    int findArchiveStatus(Long id);
 
     /**
      * Performs insertion or updation operation as required.

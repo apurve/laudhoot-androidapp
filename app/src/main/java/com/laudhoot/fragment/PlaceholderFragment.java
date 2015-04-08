@@ -1,10 +1,9 @@
 package com.laudhoot.fragment;
 
 /**
- * Created by root on 2/3/15.
+ * Created by apurve on 2/3/15.
  */
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,13 +13,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
+import com.laudhoot.util.NetworkStateManager;
 import com.laudhoot.util.WebTask;
-import com.laudhoot.web.RestClient;
 import com.laudhoot.web.TestAPI;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import javax.inject.Inject;
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,6 +41,11 @@ public class PlaceholderFragment extends Fragment {
     @InjectView(R.id.section_label)
     public TextView textView;
 
+    @Inject
+    TestAPI webTestApi;
+
+    @Inject
+    NetworkStateManager networkStateManager;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -61,12 +68,13 @@ public class PlaceholderFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.inject(this, rootView);
+        ((Laudhoot) (getActivity().getApplication())).inject(this);
         button1 = (Button) rootView.findViewById(R.id.button_1);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SampleWebTask(getActivity()).execute();
+                new SampleWebTask().execute();
             }
         });
 
@@ -92,14 +100,13 @@ public class PlaceholderFragment extends Fragment {
 
     class SampleWebTask extends WebTask {
 
-        public SampleWebTask(Activity activity){
-            super(activity);
+        public SampleWebTask(){
+            super(getActivity(), networkStateManager);
         }
 
         @Override
         protected String doInBackground(String... params) {
             super.doInBackground(params);
-            TestAPI webTestApi = new RestClient().getTestWebService();
             return webTestApi.testController1();
         }
 
@@ -107,7 +114,8 @@ public class PlaceholderFragment extends Fragment {
         protected void onPostExecute(String response) {
             super.onPostExecute(response);
             Toast.makeText(
-                    activity.getApplicationContext(), "Executing /test/1... Result:" + response,
+                    getActivity().getApplicationContext(),
+                    "Executing /test/1... Result:" + response,
                     Toast.LENGTH_LONG
             ).show();
         }

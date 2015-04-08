@@ -8,17 +8,24 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 /**
  * Created by apurve on 2/3/15.
  * Background Async Task to download data.
  * */
 public class WebTask extends AsyncTask<String, String, String> {
 
-    protected Activity activity;
+    private Activity activity;
+
+    private NetworkStateManager networkStateManager;
+
     protected ProgressDialog pDialog;
 
-    protected WebTask(Activity activity) {
+    public WebTask(Activity activity, NetworkStateManager networkStateManager) {
         this.activity = activity;
+        this.networkStateManager = networkStateManager;
+        pDialog = new WebProgressDialog(activity);
     }
 
     /**
@@ -28,18 +35,10 @@ public class WebTask extends AsyncTask<String, String, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-
-        if(!(activeNetworkInfo != null && activeNetworkInfo.isConnected())){
-            Toast.makeText(activity.getApplicationContext(), "Your internet is disabled, turn in on and then try again.", Toast.LENGTH_SHORT).show();
+        if(networkStateManager.isNotConnected()){
+            Toast.makeText(activity, "Your internet is disabled, turn in on and then try again.", Toast.LENGTH_SHORT).show();
             cancel(true);
         }
-
-        pDialog = new ProgressDialog(activity);
-        pDialog.setIndeterminate(true);
-        pDialog.setCancelable(false);
-        pDialog.setMessage("Please wait...");
         pDialog.show();
     }
 
@@ -64,6 +63,13 @@ public class WebTask extends AsyncTask<String, String, String> {
      * **/
     @Override
     protected void onPostExecute(String response) {
+        pDialog.setIndeterminate(false);
+        pDialog.dismiss();
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
         pDialog.setIndeterminate(false);
         pDialog.dismiss();
     }
