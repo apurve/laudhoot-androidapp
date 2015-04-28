@@ -10,7 +10,7 @@
     <string-array name="pages_classes">
         <item>com.laudhoot.fragment.PlaceholderFragment</item>
         <item>com.laudhoot.fragment.ManyToManyFragment</item>
-        <item>com.laudhoot.fragment.PlaceholderFragment</item>
+        <item>com.laudhoot.fragment.GeoFenceFragment</item>
         <item>com.laudhoot.fragment.PlaceholderFragment</item>
     </string-array>
     <!--icons array can be left empty, titles will be shown for each page-->

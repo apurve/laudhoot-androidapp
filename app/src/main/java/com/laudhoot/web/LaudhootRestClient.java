@@ -55,7 +55,6 @@ public class LaudhootRestClient {
         try {
             File cacheDir = new File(application.getCacheDir(), "http-cache");
             Cache cache = new Cache(cacheDir, 1024 * 1024 * 5l); // 5 MB HTTP Cache
-
             client.setCache(cache);
         } catch (IOException e) {
             Log.e(Laudhoot.LOG_TAG, "Could not create cache directory for HTTP client: " + e.getMessage(), e);

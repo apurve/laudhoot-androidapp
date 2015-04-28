@@ -5,6 +5,7 @@ import android.app.Application;
 import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
+import com.laudhoot.di.module.FragmentModule;
 import com.laudhoot.di.module.SystemServicesModule;
 import com.laudhoot.di.module.WebServicesModule;
 import com.laudhoot.util.NetworkStateManager;
@@ -39,8 +40,9 @@ public class Laudhoot extends Application {
 
     private List<Object> getModules() {
         return Arrays.<Object>asList(
-                new SystemServicesModule(Laudhoot.this),
-                new WebServicesModule(Laudhoot.this)
+                new SystemServicesModule(Laudhoot.this)
+                ,new WebServicesModule(Laudhoot.this)
+                //,new FragmentModule(Laudhoot.this)
         );
     }
 
