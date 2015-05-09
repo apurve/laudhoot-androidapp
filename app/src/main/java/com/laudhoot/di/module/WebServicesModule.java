@@ -3,7 +3,7 @@ package com.laudhoot.di.module;
 import android.app.Application;
 
 import com.laudhoot.Laudhoot;
-import com.laudhoot.fragment.PlaceholderFragment;
+import com.laudhoot.view.fragment.PlaceholderFragment;
 import com.laudhoot.web.LaudhootRestClient;
 import com.laudhoot.web.TestAPI;
 
@@ -13,7 +13,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Created by root on 5/4/15.
+ * Created by apurve on 5/4/15.
  */
 
 @Module(

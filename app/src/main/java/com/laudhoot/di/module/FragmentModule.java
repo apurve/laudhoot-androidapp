@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
-import com.laudhoot.fragment.PlaceholderFragment;
+import com.laudhoot.view.fragment.PlaceholderFragment;
 
 import dagger.Module;
 

@@ -1,4 +1,4 @@
-package com.laudhoot.persistence;
+package com.laudhoot.persistence.repository;
 
 /**
  * Created by apurve on 1/3/15.
@@ -101,5 +101,11 @@ public interface CRUDRepository<T extends Serializable> {
      * @return Cursor for the result records
      * */
     Cursor fetchResultCursor();
+
+    public static class ArchiveStatus {
+        public static final int NOT_ARCHIVED = 0;
+        public static final int ARCHIVED = 1;
+        public static final int MARKED_FOR_ARCHIVES = 2;
+    }
 
 }

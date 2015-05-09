@@ -1,4 +1,4 @@
-package com.laudhoot.fragment;
+package com.laudhoot.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

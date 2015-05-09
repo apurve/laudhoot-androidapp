@@ -8,7 +8,7 @@ import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 
 import com.laudhoot.Laudhoot;
-import com.laudhoot.fragment.PlaceholderFragment;
+import com.laudhoot.view.fragment.PlaceholderFragment;
 import com.laudhoot.util.NetworkStateManager;
 
 import javax.inject.Singleton;

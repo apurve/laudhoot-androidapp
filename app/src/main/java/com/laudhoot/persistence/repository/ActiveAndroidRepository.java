@@ -1,4 +1,4 @@
-package com.laudhoot.persistence;
+package com.laudhoot.persistence.repository;
 
 /**
  * Created by apurve on 1/3/15.
@@ -8,11 +8,10 @@ import android.database.Cursor;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Cache;
-import com.activeandroid.Model;
 import com.activeandroid.TableInfo;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
-import com.laudhoot.model.BaseModel;
+import com.laudhoot.persistence.model.BaseModel;
 
 import java.util.Date;
 import java.util.List;

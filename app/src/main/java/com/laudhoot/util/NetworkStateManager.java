@@ -28,4 +28,5 @@ public class NetworkStateManager {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo.isConnectedOrConnecting();
     }
+
 }

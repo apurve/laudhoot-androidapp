@@ -1,6 +1,6 @@
 package com.laudhoot.testrepositories;
 
-import com.laudhoot.persistence.ActiveAndroidRepository;
+import com.laudhoot.persistence.repository.ActiveAndroidRepository;
 import com.laudhoot.testmodels.Category;
 import com.laudhoot.testmodels.Item;
 

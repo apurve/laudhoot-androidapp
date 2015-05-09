@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 import com.laudhoot.di.module.FragmentModule;
+import com.laudhoot.di.module.PersistenceServicesModule;
 import com.laudhoot.di.module.SystemServicesModule;
 import com.laudhoot.di.module.WebServicesModule;
 import com.laudhoot.util.NetworkStateManager;
@@ -24,6 +25,7 @@ import dagger.ObjectGraph;
 public class Laudhoot extends Application {
 
     public static final String LOG_TAG = "LAUDHOOT-LOG";
+    public static final boolean D = true;
     private ObjectGraph objectGraph;
 
     @Override
@@ -43,6 +45,7 @@ public class Laudhoot extends Application {
                 new SystemServicesModule(Laudhoot.this)
                 ,new WebServicesModule(Laudhoot.this)
                 //,new FragmentModule(Laudhoot.this)
+                ,new PersistenceServicesModule()
         );
     }
 

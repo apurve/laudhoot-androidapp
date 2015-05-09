@@ -1,4 +1,4 @@
-package com.laudhoot.activity;
+package com.laudhoot.view.activity;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -129,5 +128,13 @@ public class LocationAwareActivity extends PagerActivity
         public void onDismiss(DialogInterface dialog) {
             ((LocationAwareActivity) getActivity()).onDialogDismissed();
         }
+    }
+
+    public Location getLastLocation() {
+        return lastLocation;
+    }
+
+    public GoogleApiClient getLocationApiClient() {
+        return locationApiClient;
     }
 }

@@ -2,7 +2,7 @@ package com.laudhoot.testmodels;
 
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.laudhoot.model.BaseModel;
+import com.laudhoot.persistence.model.BaseModel;
 
 /**
  * Created by root on 7/3/15.

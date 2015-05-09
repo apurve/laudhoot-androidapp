@@ -1,18 +1,14 @@
-package com.laudhoot.model;
+package com.laudhoot.persistence.model;
 
 /**
  * Created by apurve on 1/3/15.
  */
 
-import com.activeandroid.Cache;
 import com.activeandroid.Model;
-import com.activeandroid.TableInfo;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.query.Select;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
