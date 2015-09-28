@@ -3,7 +3,6 @@ package com.laudhoot.view.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -98,16 +97,14 @@ public class InitializationActivity extends Activity {
             ClientDetailTO clientDetailTO = new ClientDetailTO(telephonyManager.getDeviceId());
             try {
                 clientDetailTO = laudhootAPI.clientRegistration(clientDetailTO);
+                clientDetailsRepository.create(clientDetailTO.getClientId(), clientDetailTO.getClientSecret());
+                return null; // for success
             }catch(RetrofitError error) {
                 Log.d(Laudhoot.LOG_TAG, error.getMessage());
-            }catch(Exception error){
+                return error.getMessage();
+            }catch(Exception error) {
                 Log.d(Laudhoot.LOG_TAG, error.getMessage());
-            }
-            if(clientDetailTO.hasError()) {
-                return clientDetailTO.getError();
-            } else {
-                clientDetailsRepository.create(clientDetailTO.getClientId(), clientDetailTO.getClientSecret());
-                return null; // success but we do not to show any message
+                return error.getMessage();
             }
         }
 

@@ -54,5 +54,11 @@
     <string name="enable_data_network">Data services must be enabled to laud/hoot. Enable data services?</string>
     <string name="data_network_not_enabled">Data services must be enabled for laudhoot.</string>
     <string name="title_enable_data_network">Enable Data Services</string>
+    <string name="error_network">There is a network error, you can try again later.</string>
+    <string name="error_no_response">Laudhoot server ins\'t responding, please try again later.</string>
+    <string name="error_conversion">Data conversion error, please send error report.</string>
+    <string name="error_unexpected">Unexpected error, please send error report.</string>
+    <string name="error_web_service_unexpected">Unexpected web service error, please try again later.</string>
+    <string name="error_web_service_validation">Validation error in fields;</string>
 
 </resources>

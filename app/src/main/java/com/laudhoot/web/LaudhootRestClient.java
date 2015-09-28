@@ -2,6 +2,7 @@ package com.laudhoot.web;
 
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Base64;
 import android.util.Log;
 
@@ -24,6 +25,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -48,7 +51,7 @@ public class LaudhootRestClient {
                 .setClient(getClient(application))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setConverter(new GsonConverter((customGson)))
-                        //.setErrorHandler(new BankServiceErrorHandler()) //TODO - http error handling
+                .setErrorHandler(new WebServiceErrorHandler(application.getApplicationContext()))
                 .build();
     }
 
