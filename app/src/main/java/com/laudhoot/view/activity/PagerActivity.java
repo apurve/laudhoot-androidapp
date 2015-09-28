@@ -1,5 +1,6 @@
 package com.laudhoot.view.activity;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -48,6 +49,8 @@ public class PagerActivity extends ActionBarActivity implements ActionBar.TabLis
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setBackgroundDrawable(new ColorDrawable(R.color.laudhoot_theme_color));
+        actionBar.setIcon(R.drawable.ic_launcher);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -232,4 +235,5 @@ public class PagerActivity extends ActionBarActivity implements ActionBar.TabLis
     public void makeShortToast(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
 }

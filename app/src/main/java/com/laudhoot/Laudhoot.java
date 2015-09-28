@@ -5,17 +5,12 @@ import android.app.Application;
 import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
-import com.laudhoot.di.module.FragmentModule;
 import com.laudhoot.di.module.PersistenceServicesModule;
 import com.laudhoot.di.module.SystemServicesModule;
 import com.laudhoot.di.module.WebServicesModule;
-import com.laudhoot.util.NetworkStateManager;
-import com.laudhoot.web.TestAPI;
 
 import java.util.Arrays;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import dagger.ObjectGraph;
 

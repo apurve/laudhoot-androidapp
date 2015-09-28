@@ -2,8 +2,8 @@
 <resources>
 
     <string-array name="pages_titles">
-        <item>GeoFence Transitions</item>
-        <item>Create GeoFence</item>
+        <item>Shout Feed</item>
+        <item>Test Fragment</item>
     </string-array>
     <string-array name="pages_classes">
         <item>com.laudhoot.view.fragment.GeoFenceFragment</item>
@@ -16,9 +16,6 @@
     </string-array>
 
     <string name="app_name">laudhoot</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
@@ -31,13 +28,6 @@
 
     <string name="title_activity_show_geofence_transitions">ShowGeofenceTransitionsActivity</string>
     <string name="title_activity_main">MainActivity</string>
-
-    <!-- Buttons strings -->
-    <string name="add_geofences">Add geofences</string>
-    <string name="remove_geofences">Remove geofences</string>
-
-    <string name="geofences_added">Geofences added</string>
-    <string name="geofences_removed">Geofences removed</string>
 
     <!-- Error strings -->
     <string name="not_connected">GoogleApiClient no yet connected. Try again.</string>
@@ -52,5 +42,17 @@
     <string name="geofence_transition_invalid_type">
         Geofence transition error: invalid transition type %1$d
     </string>
+    <string name="enable_gps_network">Location services must be enabled to laud/hoot. Enable location services?</string>
+    <string name="gps_network_not_enabled">Location services must be enabled for laudhoot.</string>
+    <string name="title_enable_gps_network">Enable Location Services</string>
+    <string name="laud">laud</string>
+    <string name="hoot">hoot</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="data">2G/3G</string>
+    <string name="geofence_feed_empty_title">Shouts not found.</string>
+    <string name="geofence_feed_empty_message">Shouts could not be found. This can happen when location services are disabled or were just turned on. If they were just turned on it may take a moment to get the location. Give it a few seconds and then refresh the feed by pulling down on this message.</string>
+    <string name="enable_data_network">Data services must be enabled to laud/hoot. Enable data services?</string>
+    <string name="data_network_not_enabled">Data services must be enabled for laudhoot.</string>
+    <string name="title_enable_data_network">Enable Data Services</string>
 
 </resources>

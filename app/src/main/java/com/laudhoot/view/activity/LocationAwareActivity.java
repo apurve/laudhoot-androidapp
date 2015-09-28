@@ -1,5 +1,6 @@
 package com.laudhoot.view.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
@@ -7,6 +8,7 @@ import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -55,13 +57,18 @@ public class LocationAwareActivity extends PagerActivity
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        lastLocation = LocationServices.FusedLocationApi.getLastLocation(locationApiClient);
+        lastLocation = getLocation();
         if(lastLocation != null){
             makeToast("Latitude - "+lastLocation.getLatitude()
             +" | Longitude - "+lastLocation.getLongitude());
         }else{
             makeShortToast("Location unavailable.");
         }
+    }
+
+    public Location getLocation() {
+        lastLocation = LocationServices.FusedLocationApi.getLastLocation(locationApiClient);
+        return lastLocation;
     }
 
     @Override
@@ -137,4 +144,5 @@ public class LocationAwareActivity extends PagerActivity
     public GoogleApiClient getLocationApiClient() {
         return locationApiClient;
     }
+
 }

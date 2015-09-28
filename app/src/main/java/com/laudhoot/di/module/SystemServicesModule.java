@@ -6,9 +6,11 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
 
 import com.laudhoot.Laudhoot;
-import com.laudhoot.view.fragment.PlaceholderFragment;
+import com.laudhoot.util.LocationStateManager;
+import com.laudhoot.view.activity.InitializationActivity;
 import com.laudhoot.util.NetworkStateManager;
 
 import javax.inject.Singleton;
@@ -26,8 +28,7 @@ import static android.content.Context.LOCATION_SERVICE;
         complete = false,
         library = true,
         injects = {
-                Laudhoot.class,
-                PlaceholderFragment.class
+                InitializationActivity.class
         }
 )
 public class SystemServicesModule {
@@ -39,7 +40,7 @@ public class SystemServicesModule {
     }
 
     @Provides @Singleton
-    Application provideApplication(){
+    Laudhoot provideApplication(){
         return application;
     }
 
@@ -62,8 +63,18 @@ public class SystemServicesModule {
     }
 
     @Provides @Singleton
+    LocationStateManager provideLocationStateManager(LocationManager locationManager) {
+        return new LocationStateManager(locationManager);
+    }
+
+    @Provides @Singleton
     LocationManager provideLocationManager() {
         return (LocationManager) application.getSystemService(LOCATION_SERVICE);
+    }
+
+    @Provides @Singleton
+    TelephonyManager provideTelephonyManager() {
+        return (TelephonyManager) application.getSystemService(Context.TELEPHONY_SERVICE);
     }
 
 }

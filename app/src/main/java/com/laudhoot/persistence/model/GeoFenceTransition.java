@@ -8,7 +8,7 @@ import com.activeandroid.annotation.Table;
  */
 public class GeoFenceTransition extends BaseModel {
 
-    @Column(name="transition_string", unique = true)
+    @Column(name="transition_string")
     private String            transitionString;
 
     public GeoFenceTransition() {
@@ -33,4 +33,5 @@ public class GeoFenceTransition extends BaseModel {
         return transitionString +
                 "\n" + getCreatedOn();
     }
+
 }

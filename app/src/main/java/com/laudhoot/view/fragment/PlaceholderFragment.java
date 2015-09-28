@@ -29,7 +29,8 @@ import com.laudhoot.view.activity.LocationAwareActivity;
 import com.laudhoot.service.GeofenceTransitionsIntentService;
 import com.laudhoot.util.NetworkStateManager;
 import com.laudhoot.util.WebTask;
-import com.laudhoot.web.TestAPI;
+import com.laudhoot.web.services.LaudhootAPI;
+import com.laudhoot.web.services.TestAPI;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,6 +15,8 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.laudhoot.Laudhoot;
+import com.laudhoot.web.services.LaudhootAPI;
+import com.laudhoot.web.services.TestAPI;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
@@ -74,6 +76,10 @@ public class LaudhootRestClient {
         public JsonElement serialize(byte[] src, Type typeOfSrc, JsonSerializationContext context) {
             return new JsonPrimitive(Base64.encodeToString(src, Base64.NO_WRAP));
         }
+    }
+
+    public LaudhootAPI getShoutWebService() {
+        return restAdapter.create(LaudhootAPI.class);
     }
 
     public TestAPI getTestWebService() {

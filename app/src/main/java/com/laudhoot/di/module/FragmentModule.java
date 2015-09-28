@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
-import com.laudhoot.view.fragment.PlaceholderFragment;
 
 import dagger.Module;
 
@@ -17,7 +16,6 @@ import dagger.Module;
         library = true,
         injects = {
                 Laudhoot.class,
-                PlaceholderFragment.class
         }
 )
 public class FragmentModule {

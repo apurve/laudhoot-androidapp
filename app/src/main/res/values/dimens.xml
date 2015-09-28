@@ -2,4 +2,11 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="title">20sp</dimen>
+    <dimen name="message">15sp</dimen>
+    <dimen name="label">13sp</dimen>
+    <dimen name="laudhoot_count">25sp</dimen>
+    <dimen name="arrow_button">25dp</dimen>
+
 </resources>

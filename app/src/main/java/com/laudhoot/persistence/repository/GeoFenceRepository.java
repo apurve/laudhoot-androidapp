@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by apurve on 9/5/15.
  */
-public class GeoFenceRepository extends ActiveAndroidRepository{
+public class GeoFenceRepository extends ActiveAndroidRepository {
 
     public GeoFenceRepository() {
         super(GeoFenceTransition.class);
@@ -22,4 +22,5 @@ public class GeoFenceRepository extends ActiveAndroidRepository{
     public List<GeoFenceTransition> getTransitions(){
         return findAll();
     }
+    
 }

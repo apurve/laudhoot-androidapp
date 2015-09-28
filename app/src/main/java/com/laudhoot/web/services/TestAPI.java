@@ -1,4 +1,4 @@
-package com.laudhoot.web;
+package com.laudhoot.web.services;
 
 import retrofit.http.GET;
 
