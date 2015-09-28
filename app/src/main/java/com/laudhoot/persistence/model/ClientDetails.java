@@ -3,6 +3,9 @@ package com.laudhoot.persistence.model;
 import com.activeandroid.annotation.Column;
 
 /**
+ * Model to store details of the client created when the application is installed on a new mobile device.
+ * These details are later used to obtain OAuth2.0 tokens to access laudhoot web services.
+ *
  * Created by apurve on 19/9/15.
  */
 public class ClientDetails extends BaseModel {

@@ -22,6 +22,11 @@ import javax.inject.Inject;
 import retrofit.RetrofitError;
 
 /**
+ * Android activity for initialization operations.
+ *
+ * The activity checks for availability of data network and gps. It also registers a client if one is not present
+ * in the local sqlite database.
+ *
  * Created by apurve on 6/6/15.
  */
 public class InitializationActivity extends Activity {

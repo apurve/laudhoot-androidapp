@@ -1,6 +1,8 @@
 package com.laudhoot.web.model;
 
 /**
+ * Transfer object for a reply to post.
+ *
  * Created by apurve on 2/6/15.
  */
 public class ReplyTO extends BaseTO {

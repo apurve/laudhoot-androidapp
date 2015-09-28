@@ -5,6 +5,8 @@ import com.laudhoot.persistence.model.GeoFenceTransition;
 import java.util.List;
 
 /**
+ * Persistence operations repository for geo fence transition model.
+ *
  * Created by apurve on 9/5/15.
  */
 public class GeoFenceRepository extends ActiveAndroidRepository {

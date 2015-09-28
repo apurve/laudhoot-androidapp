@@ -13,6 +13,8 @@ import com.laudhoot.R;
 import com.laudhoot.view.activity.InitializationActivity;
 
 /**
+ * Utility class to provide data network management.
+ *
  * Created by apurve on 4/4/15.
  */
 

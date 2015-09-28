@@ -1,6 +1,8 @@
 package com.laudhoot.web;
 
 /**
+ * Constants used by Retrofit for web operations.
+ *
  * Created by apurve on 29/12/14.
  */
 public class WebConstants {

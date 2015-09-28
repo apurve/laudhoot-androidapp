@@ -15,6 +15,9 @@ import java.util.List;
 import dagger.ObjectGraph;
 
 /**
+ * Laudhoot application root class from where persistence context and services context are built and other classes'
+ * dependencies are injected.
+ *
  * Created by apurve on 2/3/15.
  */
 public class Laudhoot extends Application {

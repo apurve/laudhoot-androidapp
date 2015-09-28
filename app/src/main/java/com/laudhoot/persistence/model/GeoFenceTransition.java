@@ -4,6 +4,10 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 /**
+ * Model to use meta data of a transition from the boundary of a geo fence.
+ *
+ * Note : This is not being used currently but intended to optimize or provide new features.
+ *
  * Created by apurve on 9/5/15.
  */
 public class GeoFenceTransition extends BaseModel {

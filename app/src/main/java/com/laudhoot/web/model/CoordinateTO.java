@@ -1,6 +1,8 @@
 package com.laudhoot.web.model;
 
 /**
+ * Transfer object for geo location coordinates.
+ *
  * Created by root on 2/6/15.
  */
 public class CoordinateTO extends BaseTO {

@@ -30,6 +30,9 @@ import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
 /**
+ * A synchronous rest client based on Retrofit framework. It decodes and encodes HTTP packets to transfer objects of laudhoot
+ * using a caching mechanism for performance optimization and provides basic error handling with callback methods.
+ *
  * Created by apurve on 1/3/15.
  */
 
@@ -45,7 +48,7 @@ public class LaudhootRestClient {
                 .setClient(getClient(application))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setConverter(new GsonConverter((customGson)))
-                        //.setErrorHandler(new BankServiceErrorHandler())
+                        //.setErrorHandler(new BankServiceErrorHandler()) //TODO - http error handling
                 .build();
     }
 

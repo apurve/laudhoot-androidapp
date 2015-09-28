@@ -15,6 +15,8 @@ import com.laudhoot.R;
 import com.laudhoot.view.activity.InitializationActivity;
 
 /**
+ * Utility class to provide location management.
+ *
  * Created by root on 6/6/15.
  */
 public class LocationStateManager {

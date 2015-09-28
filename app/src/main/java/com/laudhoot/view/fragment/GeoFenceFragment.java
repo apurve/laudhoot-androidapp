@@ -23,6 +23,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * Fragment hosting shout feed.
+ *
  * Created by apurve on 12/4/15.
  */
 public class GeoFenceFragment extends Fragment {

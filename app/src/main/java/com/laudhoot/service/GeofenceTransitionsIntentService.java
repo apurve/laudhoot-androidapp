@@ -25,6 +25,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
+ * Transition intent service implementation using Google's geofencing platform .
+ *
+ * Note : Not being used currently, just added for POC.
  * Created by apurve on 8/5/15.
  */
 public class GeofenceTransitionsIntentService extends IntentService {

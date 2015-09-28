@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Adapter to populate shout feed.
+ *
+ * TODO - create a base web feed adapter which can be used a utility by other adapters.
+ *
  * Created by apurve on 9/5/15.
  */
 public class ShoutFeedAdapter extends BaseAdapter {

@@ -1,6 +1,8 @@
 package com.laudhoot.web.model;
 
 /**
+ * Transfer object for geofence.
+ *
  * Created by root on 2/6/15.
  */
 public class GeoFenceTO extends BaseTO {

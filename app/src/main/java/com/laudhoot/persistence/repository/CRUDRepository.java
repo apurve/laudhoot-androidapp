@@ -1,6 +1,8 @@
 package com.laudhoot.persistence.repository;
 
 /**
+ * Contract for persistence services provided by the application framework.
+ *
  * Created by apurve on 1/3/15.
  */
 import android.database.Cursor;

@@ -11,8 +11,9 @@ import android.widget.Toast;
 import javax.inject.Inject;
 
 /**
+ * Base {@link android.os.AsyncTask} to perform web operations.
+ *
  * Created by apurve on 2/3/15.
- * Background Async Task to download data.
  * */
 public class WebTask extends AsyncTask<String, String, String> {
 
@@ -36,7 +37,7 @@ public class WebTask extends AsyncTask<String, String, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         if(networkStateManager.isNotConnected()){
-            Toast.makeText(activity, "Your internet is disabled, turn in on and then try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Your internet is disabled, turn it on and then try again.", Toast.LENGTH_SHORT).show();
             cancel(true);
         }
         pDialog.show();

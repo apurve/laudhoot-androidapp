@@ -3,6 +3,8 @@ package com.laudhoot.web.model;
 import com.activeandroid.annotation.Column;
 
 /**
+ * Transfer object for client details.
+ *
  * Created by root on 19/9/15.
  */
 public class ClientDetailTO extends BaseTO {

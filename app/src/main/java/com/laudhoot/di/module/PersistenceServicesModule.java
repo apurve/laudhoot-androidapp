@@ -12,6 +12,8 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * DI Module used to provide persistence services.
+ *
  * Created by apurve on 3/5/15.
  */
 

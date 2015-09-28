@@ -1,6 +1,10 @@
 package com.laudhoot.persistence.model;
 
 /**
+ * Base model to provide common functionality to all other models in the application.
+ *
+ * The models in application currently work on ActiveAndroid persistence framework.
+ *
  * Created by apurve on 1/3/15.
  */
 
@@ -12,7 +16,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class BaseModel extends Model implements Serializable {
+public abstract class BaseModel extends Model implements Serializable {
 
     @Column(name = "created_on")
     private Date createdOn;

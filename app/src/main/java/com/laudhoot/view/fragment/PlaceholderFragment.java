@@ -41,7 +41,9 @@ import javax.inject.Inject;
 
 
 /**
- * A placeholder fragment containing a simple view.
+ * A fragment containing a simple view for testing purpose.
+ *
+ * Created by apurve on 12/12/14.
  */
 public class PlaceholderFragment extends Fragment implements ResultCallback<Status> {
     /**

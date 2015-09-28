@@ -9,6 +9,9 @@ import com.laudhoot.R;
 import dagger.Module;
 
 /**
+ * The class in intended to replace the refection logic used to instantiate view of the application in {@link com.laudhoot.view.activity.PagerActivity}.
+ *
+ * Note : Not being used currently.
  * Created by apurve on 12/4/15.
  */
 @Module(

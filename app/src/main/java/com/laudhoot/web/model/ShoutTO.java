@@ -3,6 +3,8 @@ package com.laudhoot.web.model;
 import java.util.List;
 
 /**
+ * Transfer object for a shout.
+ *
  * Created by root on 2/6/15.
  */
 public class ShoutTO extends BaseTO {

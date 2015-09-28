@@ -1,6 +1,8 @@
 package com.laudhoot.persistence.repository;
 
 /**
+ * ActiveAndroid implementation of the persistence services contract provided by the application.
+ *
  * Created by apurve on 1/3/15.
  */
 

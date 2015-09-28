@@ -3,6 +3,9 @@ package com.laudhoot.web.model;
 import java.util.Map;
 
 /**
+ * Transfer objects are being used to transfer data on web.
+ * The base class for all transfer objects.
+ *
  * Created by root on 2/6/15.
  */
 public class BaseTO {

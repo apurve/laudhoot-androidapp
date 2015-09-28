@@ -21,6 +21,8 @@ import dagger.Provides;
 import static android.content.Context.LOCATION_SERVICE;
 
 /**
+ * DI module used to provide system services.
+ *
  * Created by apurve on 4/4/15.
  */
 

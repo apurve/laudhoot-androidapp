@@ -16,6 +16,8 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
+ * DI module used to provide web services.
+ *
  * Created by apurve on 5/4/15.
  */
 

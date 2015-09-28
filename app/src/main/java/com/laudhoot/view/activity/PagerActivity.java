@@ -23,6 +23,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Locale;
 
+/**
+ * Self rendering page view activity with action bar. Fragments populating the pages are mapped in an XML file and
+ * the activity renders the view based on meta data provided in the XML mapping.
+ *
+ * TODO - self rendering code uses reflection which should be implemented using DI.
+ * Created by apurve on 1/3/15.
+ */
 
 public class PagerActivity extends ActionBarActivity implements ActionBar.TabListener {
 

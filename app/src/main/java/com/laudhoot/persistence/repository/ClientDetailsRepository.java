@@ -8,6 +8,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * Persistence operations repository for client details model.
+ *
  * Created by apurve on 19/9/15.
  */
 public class ClientDetailsRepository extends ActiveAndroidRepository {

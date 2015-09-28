@@ -17,6 +17,9 @@ import com.google.android.gms.location.LocationServices;
 import com.laudhoot.Laudhoot;
 
 /**
+ * The activity is aware of the location of mobile device and hosts all the user interacting fragments.
+ *
+ * TODO - The implementation is of Google's location services and needs to be made compatible to laudhoot.
  * Created by root on 12/4/15.
  */
 public class LocationAwareActivity extends PagerActivity
