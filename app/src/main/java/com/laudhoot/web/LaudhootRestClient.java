@@ -16,6 +16,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.laudhoot.Laudhoot;
+import com.laudhoot.web.services.ClientAPI;
 import com.laudhoot.web.services.LaudhootAPI;
 import com.laudhoot.web.services.TestAPI;
 import com.squareup.okhttp.Cache;
@@ -35,7 +36,7 @@ import retrofit.converter.GsonConverter;
 /**
  * A synchronous rest client based on Retrofit framework. It decodes and encodes HTTP packets to transfer objects of laudhoot
  * using a caching mechanism for performance optimization and provides basic error handling with callback methods.
- *
+ * <p/>
  * Created by apurve on 1/3/15.
  */
 
@@ -52,6 +53,7 @@ public class LaudhootRestClient {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setConverter(new GsonConverter((customGson)))
                 .setErrorHandler(new WebServiceErrorHandler(application.getApplicationContext()))
+                .setRequestInterceptor(new HttpCommonHeaderHandler())
                 .build();
     }
 
@@ -86,6 +88,10 @@ public class LaudhootRestClient {
 
     public LaudhootAPI getShoutWebService() {
         return restAdapter.create(LaudhootAPI.class);
+    }
+
+    public ClientAPI getClientWebServices() {
+        return restAdapter.create(ClientAPI.class);
     }
 
     public TestAPI getTestWebService() {

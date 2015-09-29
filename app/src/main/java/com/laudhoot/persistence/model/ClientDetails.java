@@ -25,6 +25,15 @@ public class ClientDetails extends BaseModel {
     @Column(name = "additional_information")
     private String additionalInformation;
 
+    @Column(name = "token_type")
+    private String tokenType;
+
+    @Column(name = "expires_in")
+    private String expiresIn;
+
+    @Column(name = "scope")
+    private String scope;
+
     public ClientDetails() {
     }
 
@@ -73,4 +82,27 @@ public class ClientDetails extends BaseModel {
         this.additionalInformation = additionalInformation;
     }
 
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
+
+    public String getExpiresIn() {
+        return expiresIn;
+    }
+
+    public void setExpiresIn(String expiresIn) {
+        this.expiresIn = expiresIn;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
 }

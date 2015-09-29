@@ -7,6 +7,7 @@ import com.laudhoot.view.activity.InitializationActivity;
 import com.laudhoot.view.fragment.GeoFenceFragment;
 import com.laudhoot.view.fragment.PlaceholderFragment;
 import com.laudhoot.web.LaudhootRestClient;
+import com.laudhoot.web.services.ClientAPI;
 import com.laudhoot.web.services.LaudhootAPI;
 import com.laudhoot.web.services.TestAPI;
 
@@ -14,6 +15,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit.client.Client;
 
 /**
  * DI module used to provide web services.
@@ -37,6 +39,11 @@ public class WebServicesModule {
 
     public WebServicesModule(Application application) {
         laudhootRestClient = new LaudhootRestClient(application);
+    }
+
+    @Provides @Singleton
+    ClientAPI provideClientWebAPI() {
+        return laudhootRestClient.getClientWebServices();
     }
 
     @Provides @Singleton

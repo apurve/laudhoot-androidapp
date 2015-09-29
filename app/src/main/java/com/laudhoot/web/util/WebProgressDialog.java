@@ -1,4 +1,4 @@
-package com.laudhoot.util;
+package com.laudhoot.web.util;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

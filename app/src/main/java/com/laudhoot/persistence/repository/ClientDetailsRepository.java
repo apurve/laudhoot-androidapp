@@ -2,6 +2,7 @@ package com.laudhoot.persistence.repository;
 
 import com.activeandroid.query.Select;
 import com.laudhoot.persistence.model.ClientDetails;
+import com.laudhoot.web.model.TokenResponse;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,7 +10,7 @@ import java.util.List;
 
 /**
  * Persistence operations repository for client details model.
- *
+ * <p/>
  * Created by apurve on 19/9/15.
  */
 public class ClientDetailsRepository extends ActiveAndroidRepository {
@@ -24,11 +25,13 @@ public class ClientDetailsRepository extends ActiveAndroidRepository {
         return clientDetails;
     }
 
-    public ClientDetails updateTokens(String clientId, String accessToken, String refreshToken) {
+    public ClientDetails updateTokens(String clientId, TokenResponse tokenResponse) {
         ClientDetails clientDetails = findByClientId(clientId);
-        if(clientDetails != null) {
-            clientDetails.setAccessToken(accessToken);
-            clientDetails.setRefreshToken(refreshToken);
+        if (clientDetails != null) {
+            clientDetails.setAccessToken(tokenResponse.getAccessToken());
+            clientDetails.setExpiresIn(tokenResponse.getExpiresIn());
+            clientDetails.setTokenType(tokenResponse.getTokenType());
+            clientDetails.setScope(tokenResponse.getScope());
             saveOrUpdate(clientDetails);
             return clientDetails;
         }
@@ -63,6 +66,15 @@ public class ClientDetailsRepository extends ActiveAndroidRepository {
                 .from(ClientDetails.class)
                 .where("client_id = ?", clientId)
                 .executeSingle();
+    }
+
+    public boolean isAccessTokenValid(String clientId) {
+        ClientDetails clientDetails = findByClientId(clientId);
+        String accessToken = clientDetails.getAccessToken();
+        if (accessToken != null && accessToken.length() > 0) {
+            return true;
+        }
+        return false;
     }
 
 }

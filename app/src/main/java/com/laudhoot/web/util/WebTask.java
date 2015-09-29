@@ -1,14 +1,11 @@
-package com.laudhoot.util;
+package com.laudhoot.web.util;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import javax.inject.Inject;
+import com.laudhoot.util.NetworkStateManager;
 
 /**
  * Base {@link android.os.AsyncTask} to perform web operations.

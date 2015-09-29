@@ -1,26 +1,29 @@
 package com.laudhoot.web.services;
 
+import com.laudhoot.web.util.BaseCallback;
 import com.laudhoot.web.model.ClientDetailTO;
 import com.laudhoot.web.model.CoordinateTO;
 import com.laudhoot.web.model.GeoFenceTO;
 import com.laudhoot.web.model.ReplyTO;
 import com.laudhoot.web.model.ShoutTO;
+import com.laudhoot.web.model.TokenResponse;
 
 import java.util.List;
 
 import retrofit.http.Body;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.Query;
 
 /**
+ *
+ *
  * Created by apurve on 29/12/14.
  */
 public interface LaudhootAPI {
-
-    public static final String CLIENT = "/rest/client";
-    public static final String REGISTRATION = "/registration";
-
 
     public static final String GEOFENCE = "/geofence";
 
@@ -29,9 +32,6 @@ public interface LaudhootAPI {
     public static final String LAUD = "/laud";
     public static final String HOOT = "/hoot";
     public static final String REPLY = "/reply";
-
-    @POST(CLIENT+REGISTRATION)
-    public ClientDetailTO clientRegistration(@Body ClientDetailTO clientDetailTO);
 
     @GET(GEOFENCE)
     public GeoFenceTO findGeoFence(@Body CoordinateTO coordinateTO);
