@@ -6,7 +6,7 @@
     <dimen name="title">20sp</dimen>
     <dimen name="message">15sp</dimen>
     <dimen name="label">13sp</dimen>
-    <dimen name="laudhoot_count">25sp</dimen>
+    <dimen name="laudhoot_count">15sp</dimen>
     <dimen name="arrow_button">25dp</dimen>
 
 </resources>

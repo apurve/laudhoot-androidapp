@@ -27,7 +27,7 @@ public interface ClientAPI {
                                    @Field("grant_type") String grantType, @Field("response_type") String responseType,
                                    BaseCallback<TokenResponse> callback);
 
-    @POST(CLIENT+REGISTRATION)
+    @POST(CLIENT+REGISTRATION) //TODO - make client registration secure
     public void clientRegistration(@Body ClientDetailTO clientDetailTO, BaseCallback<ClientDetailTO> callback);
 
 }

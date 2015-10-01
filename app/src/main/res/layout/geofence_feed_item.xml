@@ -36,7 +36,7 @@
             android:background="@drawable/arrow_inactive"
             android:layout_width="@dimen/arrow_button"
             android:layout_height="@dimen/arrow_button"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:clickable="true"
             android:layout_gravity="top" />
 
@@ -44,9 +44,9 @@
             android:id="@+id/laudhoot_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="7dp"
+            android:layout_margin="1dp"
             android:textColor="@color/label"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:textSize="@dimen/laudhoot_count"
             android:layout_gravity="center" />
 
@@ -55,7 +55,7 @@
             android:background="@drawable/arrow_inactive"
             android:layout_width="@dimen/arrow_button"
             android:layout_height="@dimen/arrow_button"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:clickable="true"
             android:layout_gravity="bottom"
             android:rotation="0" />
