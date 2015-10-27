@@ -6,7 +6,7 @@
         <item>Test Fragment</item>
     </string-array>
     <string-array name="pages_classes">
-        <item>com.laudhoot.view.fragment.GeoFenceFragment</item>
+        <item>com.laudhoot.view.fragment.ShoutFeedFragment</item>
         <item>com.laudhoot.view.fragment.PlaceholderFragment</item>
     </string-array>
     <!--icons array can be left empty, titles will be shown for each page-->
@@ -60,5 +60,13 @@
     <string name="error_unexpected">Unexpected error, please send error report.</string>
     <string name="error_web_service_unexpected">Unexpected web service error, please try again later.</string>
     <string name="error_web_service_validation">Validation error in fields;</string>
+    <string name="anonymous_client_registered">Anonymous registration done.</string>
+    <string name="registering_anonymous_client">Starting automated anonymous registration...</string>
+    <string name="getting_tokens">Getting security tokens..</string>
+    <string name="failure_getting_tokens">Not able to get security tokens, you may try again.</string>
+    <string name="failure_registering_anonymous_client">Not able to complete automated registration, exiting.</string>
+    <string name="resolving_geofence">Resolving your location...</string>
+    <string name="failure_resolving_geofence">Cannot resolve your location.</string>
+    <string name="error_client_unauthorized">Client authorization failed</string>
 
 </resources>

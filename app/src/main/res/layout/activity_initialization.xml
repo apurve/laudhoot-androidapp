@@ -24,4 +24,13 @@
         android:src="@drawable/ic_launcher"
         android:contentDescription="Nupee Logo" />
 
+    <TextView
+        android:id="@+id/init_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appLogo_ini"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/message" />
+
 </RelativeLayout>

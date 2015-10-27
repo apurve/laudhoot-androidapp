@@ -38,19 +38,29 @@ public class WebServiceErrorHandler implements ErrorHandler {
         switch(cause.getKind()) {
             case NETWORK: {
                 errorDescription = context.getString(R.string.error_network);
-                Log.d(Laudhoot.LOG_TAG, "Network Error | "+cause.getMessage()+" | "+cause.getStackTrace());
+                if(Laudhoot.D)
+                    Log.d(Laudhoot.LOG_TAG, "Network Error | "+cause.getMessage()+" | "+cause.getStackTrace());
                 break;
             }
             case CONVERSION: {
                 errorDescription = context.getString(R.string.error_conversion);
-                Log.d(Laudhoot.LOG_TAG, "Conversion Error | "+cause.getMessage()+" | "+cause.getStackTrace());
+                if(Laudhoot.D)
+                    Log.d(Laudhoot.LOG_TAG, "Conversion Error | "+cause.getMessage()+" | "+cause.getStackTrace());
                 break;
             }
             case HTTP: {
                 if(cause.getResponse().getStatus() == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
                     errorDescription = context.getString(R.string.error_web_service_unexpected);
-                    Log.d(Laudhoot.LOG_TAG, "Unexpected Web Service Error | "+cause.getMessage()+" | "+cause.getStackTrace());
-                    Log.d(Laudhoot.LOG_TAG, "HTTP Response | "+cause.getResponse().getBody());
+                    if(Laudhoot.D) {
+                        Log.d(Laudhoot.LOG_TAG, "Unexpected Web Service Error | " + cause.getMessage() + " | " + cause.getStackTrace());
+                        Log.d(Laudhoot.LOG_TAG, "HTTP Response | " + cause.getResponse().getBody());
+                    }
+                } if(cause.getResponse().getStatus() == HttpStatus.SC_UNAUTHORIZED) {
+                    errorDescription = context.getString(R.string.error_client_unauthorized);
+                    if(Laudhoot.D) {
+                        Log.d(Laudhoot.LOG_TAG, "Client Unauthorized | " + cause.getMessage() + " | " + cause.getStackTrace());
+                        Log.d(Laudhoot.LOG_TAG, "HTTP Response | " + cause.getResponse().getBody());
+                    }
                 } else {
                     try {
                         BaseTO errorResponse = (BaseTO) cause.getBodyAs(BaseTO.class);
@@ -71,8 +81,10 @@ public class WebServiceErrorHandler implements ErrorHandler {
                         }
                     } catch (Exception exception) {
                         errorDescription = context.getString(R.string.error_web_service_unexpected);
-                        Log.d(Laudhoot.LOG_TAG, "Unexpected Web Service Error | "+cause.getMessage()+" | "+cause.getStackTrace());
-                        Log.d(Laudhoot.LOG_TAG, "HTTP Response | "+cause.getResponse().getBody());
+                        if(Laudhoot.D) {
+                            Log.d(Laudhoot.LOG_TAG, "Unexpected Web Service Error | " + cause.getMessage() + " | " + cause.getStackTrace());
+                            Log.d(Laudhoot.LOG_TAG, "HTTP Response | " + cause.getResponse().getBody());
+                        }
                     }
                 }
                 break;
@@ -80,22 +92,27 @@ public class WebServiceErrorHandler implements ErrorHandler {
             case UNEXPECTED: {
                 if (cause.getResponse() == null) {
                     errorDescription = context.getString(R.string.error_no_response);
-                    Log.d(Laudhoot.LOG_TAG, "No Response | "+cause.getMessage()+" | "+cause.getStackTrace());
+                    if(Laudhoot.D)
+                        Log.d(Laudhoot.LOG_TAG, "No Response | "+cause.getMessage()+" | "+cause.getStackTrace());
                 } else {
                     errorDescription = context.getString(R.string.error_unexpected);
-                    Log.d(Laudhoot.LOG_TAG, "Unexpected Error | "+cause.getMessage()+" | "+cause.getStackTrace());
+                    if(Laudhoot.D) {
+                        Log.d(Laudhoot.LOG_TAG, "Unexpected Error | "+cause.getMessage()+" | "+cause.getStackTrace());
+                        Log.d(Laudhoot.LOG_TAG, "Unexpected Error | "+cause.getResponse()+" | "+cause.getStackTrace());
+                    }
                 }
                 break;
             }
             default: {
                 errorDescription = context.getString(R.string.error_unexpected);
-                Log.d(Laudhoot.LOG_TAG, "Unexpected Error | "+cause.getMessage()+" | "+cause.getStackTrace());
+                if(Laudhoot.D)
+                    Log.d(Laudhoot.LOG_TAG, "Unexpected Error | "+cause.getMessage()+" | "+cause.getStackTrace());
                 break;
             }
         }
         if(errorDescription == null){
             errorDescription = context.getString(R.string.error_unexpected);
         }
-        return new Exception(errorDescription);
+        return new Exception(errorDescription, cause);
     }
 }

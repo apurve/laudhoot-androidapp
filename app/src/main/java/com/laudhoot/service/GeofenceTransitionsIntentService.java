@@ -16,7 +16,7 @@ import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
-import com.laudhoot.view.activity.LocationAwareActivity;
+import com.laudhoot.view.activity.MainActivity;
 import com.laudhoot.persistence.repository.GeoFenceRepository;
 
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class GeofenceTransitionsIntentService extends IntentService {
             );
 
             // create a DB record
-            geoFenceRepository.create(geofenceTransitionDetails);
+            //geoFenceRepository.create(geofenceTransitionDetails);
 
             // Send notification and log the transition details.
             sendNotification(geofenceTransitionDetails);
@@ -136,13 +136,13 @@ public class GeofenceTransitionsIntentService extends IntentService {
      */
     private void sendNotification(String notificationDetails) {
         // Create an explicit content Intent that starts the main Activity.
-        Intent notificationIntent = new Intent(getApplicationContext(), LocationAwareActivity.class);
+        Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
 
         // Construct a task stack.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 
         // Add the main Activity to the task stack as the parent.
-        stackBuilder.addParentStack(LocationAwareActivity.class);
+        stackBuilder.addParentStack(MainActivity.class);
 
         // Push the content Intent onto the stack.
         stackBuilder.addNextIntent(notificationIntent);

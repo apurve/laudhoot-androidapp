@@ -21,37 +21,20 @@ import java.util.List;
  */
 public abstract class WebFeedAdapter<I, H extends WebFeedAdapter.ViewHolder> extends ArrayAdapter<I> implements EndlessListView.EndlessAdapter<I> {
 
-    protected List<I> items;
-
     protected LayoutInflater inflater = null;
 
     protected int feedItemId, emptyItemId;
 
     public WebFeedAdapter(Context context, List<I> items, int feedItemId, int emptyItemId) {
         super(context, feedItemId, items);
-        this.items = items;
         this.feedItemId = feedItemId;
         this.emptyItemId = emptyItemId;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
-    public int getCount() {
-        if (items == null || items.size() <= 0)
-            return 1;
-        return items.size();
-    }
-
-    @Override
-    public I getItem(int position) {
-        if (items == null || items.size() <= 0)
-            return null;
-        return items.get(position);
-    }
-
-    @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        if (items == null || items.size() <= 0) {
+        if (getCount() < 1) {
             EmptyViewHolder holder;
             if (convertView == null) {
                 convertView = inflater.inflate(emptyItemId, null);
@@ -66,7 +49,7 @@ public abstract class WebFeedAdapter<I, H extends WebFeedAdapter.ViewHolder> ext
             updateEmptyViewHolder(holder);
         } else {
             H holder;
-            final I item = items.get(position);
+            final I item = getItem(position);
             if (convertView == null) {
                 convertView = inflater.inflate(feedItemId, null);
                 holder = createViewHolder(convertView, item);

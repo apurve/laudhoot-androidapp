@@ -1,25 +1,15 @@
 package com.laudhoot.view.adapter;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.laudhoot.R;
-import com.laudhoot.persistence.model.GeoFenceTransition;
-import com.laudhoot.persistence.repository.CRUDRepository;
-import com.laudhoot.view.EndlessListView;
-import com.laudhoot.view.activity.LocationAwareActivity;
-import com.laudhoot.view.fragment.GeoFenceFragment;
+import com.laudhoot.view.fragment.ShoutFeedFragment;
 import com.laudhoot.web.model.ShoutTO;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -29,11 +19,11 @@ import java.util.List;
  */
 public class ShoutAdapter extends WebFeedAdapter<ShoutTO, ShoutHolder> {
 
-    private GeoFenceFragment fragment;
+    private ShoutFeedFragment fragment;
 
     private static LayoutInflater inflater = null;
 
-    public ShoutAdapter(GeoFenceFragment fragment, List<ShoutTO> shouts) {
+    public ShoutAdapter(ShoutFeedFragment fragment, List<ShoutTO> shouts) {
         super(fragment.getActivity().getApplicationContext(), shouts, R.layout.geofence_feed_item, R.layout.geofence_feed_empty);
         this.fragment = fragment;
         inflater = (LayoutInflater) fragment.getActivity().

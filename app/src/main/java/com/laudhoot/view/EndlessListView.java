@@ -46,7 +46,7 @@ public class EndlessListView<T> extends ListView implements AbsListView.OnScroll
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        if (getAdapter() != null && getAdapter().getCount() > 1 && !isLoading
+        if (getAdapter() != null && !isLoading
                 && visibleItemCount + firstVisibleItem >= totalItemCount) {
             addFooterView(footer);
             isLoading = true;

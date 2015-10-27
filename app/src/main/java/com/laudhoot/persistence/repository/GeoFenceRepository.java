@@ -1,6 +1,10 @@
 package com.laudhoot.persistence.repository;
 
+import com.activeandroid.query.Select;
+import com.laudhoot.persistence.model.ClientDetails;
 import com.laudhoot.persistence.model.GeoFenceTransition;
+import com.laudhoot.persistence.model.Geofence;
+import com.laudhoot.web.model.GeoFenceTO;
 
 import java.util.List;
 
@@ -12,17 +16,28 @@ import java.util.List;
 public class GeoFenceRepository extends ActiveAndroidRepository {
 
     public GeoFenceRepository() {
-        super(GeoFenceTransition.class);
+        super(Geofence.class);
     }
 
-    public GeoFenceTransition create(String transitionString){
-        GeoFenceTransition transition = new GeoFenceTransition(transitionString);
-        saveOrUpdate(transition);
-        return transition;
+    public Geofence save(GeoFenceTO geoFenceTO) {
+        Geofence geofence = findByCode(geoFenceTO.getCode());
+        if (geofence == null) {
+            geofence = new Geofence(geoFenceTO);
+        } else {
+            geofence.setRadiusInMeters(geoFenceTO.getRadiusInMeters());
+            geofence.setCenterLatitude(geoFenceTO.getCenter().getLatitude());
+            geofence.setCenterLongitude(geoFenceTO.getCenter().getLongitude());
+            geofence.setExpiresInHours(geoFenceTO.getExpiresInHours());
+            geoFenceTO.setName(geoFenceTO.getName());
+        }
+        saveOrUpdate(geofence);
+        return geofence;
     }
 
-    public List<GeoFenceTransition> getTransitions(){
-        return findAll();
+    public Geofence findByCode(String code) {
+        return (Geofence) new Select()
+                .from(Geofence.class)
+                .where("code = ?", code)
+                .executeSingle();
     }
-    
 }

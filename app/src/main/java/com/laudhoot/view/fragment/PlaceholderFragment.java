@@ -25,7 +25,7 @@ import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
 import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
-import com.laudhoot.view.activity.LocationAwareActivity;
+import com.laudhoot.view.activity.MainActivity;
 import com.laudhoot.service.GeofenceTransitionsIntentService;
 import com.laudhoot.util.NetworkStateManager;
 import com.laudhoot.web.util.WebTask;
@@ -51,7 +51,7 @@ public class PlaceholderFragment extends Fragment implements ResultCallback<Stat
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private LocationAwareActivity activity = null;
+    private MainActivity activity = null;
 
     private Button button1;
     private Button button2;
@@ -96,7 +96,7 @@ public class PlaceholderFragment extends Fragment implements ResultCallback<Stat
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.activity = (LocationAwareActivity) activity;
+        this.activity = (MainActivity) activity;
         if (Laudhoot.D) {
             Log.e(Laudhoot.LOG_TAG, "+++ ON FRAGMENT ATTACH +++");
         }
@@ -123,9 +123,9 @@ public class PlaceholderFragment extends Fragment implements ResultCallback<Stat
                 String radius = radiusView.getText().toString();
                 String life = lifeView.getText().toString();
                 if (radius.isEmpty() || life.isEmpty()) {
-                    activity.makeToast("Radius or life cannot be blank.");
+                    activity.getToaster().makeToast("Radius or life cannot be blank.");
                 } else if (activity.getLastLocation() == null) {
-                    activity.makeToast("Turn on your GPS.");
+                    activity.getToaster().makeToast("Turn on your GPS.");
                 } else {
                     createGeoFence(activity.getLastLocation().getLatitude(),
                             activity.getLastLocation().getLongitude(),
@@ -174,9 +174,9 @@ public class PlaceholderFragment extends Fragment implements ResultCallback<Stat
     @Override
     public void onResult(Status status) {
         if(status.hasResolution()){
-            activity.makeToast("Cannot create GeoFence.");
+            activity.getToaster().makeToast("Cannot create GeoFence.");
         }else{
-            activity.makeToast("Successfully created GeoFence.");
+            activity.getToaster().makeToast("Successfully created GeoFence.");
         }
 
     }

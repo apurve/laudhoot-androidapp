@@ -2,9 +2,9 @@ package com.laudhoot.di.module;
 
 import android.app.Application;
 
-import com.laudhoot.Laudhoot;
 import com.laudhoot.view.activity.InitializationActivity;
-import com.laudhoot.view.fragment.GeoFenceFragment;
+import com.laudhoot.view.activity.MainActivity;
+import com.laudhoot.view.fragment.ShoutFeedFragment;
 import com.laudhoot.view.fragment.PlaceholderFragment;
 import com.laudhoot.web.LaudhootRestClient;
 import com.laudhoot.web.services.ClientAPI;
@@ -15,7 +15,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit.client.Client;
 
 /**
  * DI module used to provide web services.
@@ -27,10 +26,10 @@ import retrofit.client.Client;
         complete = false,
         library = true,
         injects = {
-                Laudhoot.class,
                 PlaceholderFragment.class,
-                GeoFenceFragment.class,
-                InitializationActivity.class
+                ShoutFeedFragment.class,
+                InitializationActivity.class,
+                MainActivity.class
         }
 )
 public class WebServicesModule {
@@ -48,7 +47,7 @@ public class WebServicesModule {
 
     @Provides @Singleton
     LaudhootAPI provideLaudhootWebAPI() {
-        return laudhootRestClient.getShoutWebService();
+        return laudhootRestClient.getLaudhootWebService();
     }
 
     @Provides @Singleton

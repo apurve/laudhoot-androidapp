@@ -86,7 +86,7 @@ public class LaudhootRestClient {
         }
     }
 
-    public LaudhootAPI getShoutWebService() {
+    public LaudhootAPI getLaudhootWebService() {
         return restAdapter.create(LaudhootAPI.class);
     }
 

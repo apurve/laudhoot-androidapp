@@ -27,37 +27,39 @@ public interface LaudhootAPI {
 
     public static final String GEOFENCE = "/geofence";
 
-    public static final String SHOUT = "/rest/shout";
+    public static final String REST = "/rest";
+    public static final String SHOUT = "/shout";
     public static final String CREATE = "/create";
     public static final String LAUD = "/laud";
     public static final String HOOT = "/hoot";
     public static final String REPLY = "/reply";
 
-    @GET(GEOFENCE)
-    public GeoFenceTO findGeoFence(@Body CoordinateTO coordinateTO);
+    @GET(REST+GEOFENCE)
+    public void findGeoFence(@Query("latitude") Double latitude, @Query("longitude") Double longitude,
+                             @Header("Authorization") String authorization, BaseCallback<GeoFenceTO> callback);
 
     @GET(GEOFENCE)
     public GeoFenceTO findGeoFence(@Query("geoFenceCode") String geoFenceCode);
 
-    @GET(SHOUT)
+    @GET(REST+SHOUT)
     public List<ShoutTO> listShoutsOfGeoFence(@Query("geoFenceCode") String geoFenceCode);
 
-    @POST(SHOUT+CREATE)
+    @POST(REST+SHOUT+CREATE)
     public ShoutTO createShout(@Body ShoutTO shoutTO);
 
-    @POST(SHOUT+REPLY+CREATE)
+    @POST(REST+SHOUT+REPLY+CREATE)
     public ReplyTO createReply(@Body ReplyTO replyTO);
 
-    @POST(SHOUT+LAUD)
+    @POST(REST+SHOUT+LAUD)
     public Long laudShout(@Body Long shoutId);
 
-    @POST(SHOUT+HOOT)
+    @POST(REST+SHOUT+HOOT)
     public Long hootShout(@Body Long shoutId);
 
-    @POST(SHOUT+REPLY+LAUD)
+    @POST(REST+SHOUT+REPLY+LAUD)
     public Long laudReply(@Body Long replyId);
 
-    @POST(SHOUT+REPLY+HOOT)
+    @POST(REST+SHOUT+REPLY+HOOT)
     public Long hootReply(@Body Long replyId);
 
 }

@@ -1,11 +1,18 @@
 package com.laudhoot.persistence.repository;
 
+import android.util.Log;
+
 import com.activeandroid.query.Select;
+import com.laudhoot.Laudhoot;
 import com.laudhoot.persistence.model.ClientDetails;
+import com.laudhoot.persistence.model.Geofence;
+import com.laudhoot.web.model.GeoFenceTO;
 import com.laudhoot.web.model.TokenResponse;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +36,13 @@ public class ClientDetailsRepository extends ActiveAndroidRepository {
         ClientDetails clientDetails = findByClientId(clientId);
         if (clientDetails != null) {
             clientDetails.setAccessToken(tokenResponse.getAccessToken());
-            clientDetails.setExpiresIn(tokenResponse.getExpiresIn());
+            Calendar timeout = Calendar.getInstance();
+            clientDetails.setExpiresOn(
+                    new Date(System.currentTimeMillis() + (1000 * (Long.valueOf(tokenResponse.getExpiresIn())) - 10))
+            );
+            Log.d(Laudhoot.LOG_TAG, tokenResponse.getExpiresIn() + ":"
+            + (1000 * (Long.valueOf(tokenResponse.getExpiresIn())) - 10) + ":"
+            + new Date(System.currentTimeMillis() + (1000 * (Long.valueOf(tokenResponse.getExpiresIn())) - 10)));
             clientDetails.setTokenType(tokenResponse.getTokenType());
             clientDetails.setScope(tokenResponse.getScope());
             saveOrUpdate(clientDetails);
@@ -72,9 +85,34 @@ public class ClientDetailsRepository extends ActiveAndroidRepository {
         ClientDetails clientDetails = findByClientId(clientId);
         String accessToken = clientDetails.getAccessToken();
         if (accessToken != null && accessToken.length() > 0) {
-            return true;
+            if(Laudhoot.D) {
+                Log.d(Laudhoot.LOG_TAG, new Date().after(clientDetails.getExpiresOn()) + " | " + clientDetails.getExpiresOn());
+            }
+            if(new Date().before(clientDetails.getExpiresOn())) {
+                return true;
+            }
         }
         return false;
     }
 
+    public Geofence getLastVisitedGeofence(String clientId) {
+        return findByClientId(clientId).getLastVisited();
+    }
+
+    public ClientDetails updateVisitingGeofence(Geofence geofence, String clientId) {
+        ClientDetails clientDetails = findByClientId(clientId);
+        if(clientDetails.getVisiting() != null) {
+            if(clientDetails.getVisiting().getCode().equals(geofence.getCode())) {
+                return clientDetails;
+            } else {
+                clientDetails.setLastVisited(clientDetails.getVisiting());
+                clientDetails.setVisiting(geofence);
+            }
+        } else {
+            clientDetails.setLastVisited(geofence);
+            clientDetails.setVisiting(geofence);
+        }
+        saveOrUpdate(clientDetails);
+        return clientDetails;
+    }
 }

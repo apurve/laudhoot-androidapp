@@ -31,7 +31,6 @@ public class Laudhoot extends Application {
         super.onCreate();
         ActiveAndroid.initialize(this);
         initializeServices();
-        inject(this);
     }
 
     private void initializeServices() {

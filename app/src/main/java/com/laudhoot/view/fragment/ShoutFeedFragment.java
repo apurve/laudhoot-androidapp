@@ -12,26 +12,29 @@ import android.view.ViewGroup;
 import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
 import com.laudhoot.view.EndlessListView;
-import com.laudhoot.view.activity.LocationAwareActivity;
+import com.laudhoot.view.activity.MainActivity;
 import com.laudhoot.view.adapter.ShoutAdapter;
 import com.laudhoot.web.model.ShoutTO;
+import com.laudhoot.web.services.LaudhootAPI;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Fragment hosting shout feed.
  * <p/>
  * Created by apurve on 12/4/15.
  */
-public class GeoFenceFragment extends Fragment implements EndlessListView.EndlessListener {
+public class ShoutFeedFragment extends Fragment implements EndlessListView.EndlessListener {
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private LocationAwareActivity activity = null;
+    private MainActivity activity = null;
 
     private EndlessListView listView;
 
@@ -39,22 +42,22 @@ public class GeoFenceFragment extends Fragment implements EndlessListView.Endles
 
     int multiplier = 1;
 
-    public static GeoFenceFragment newInstance(Integer sectionNumber) {
-        GeoFenceFragment fragment = new GeoFenceFragment();
+    public static ShoutFeedFragment newInstance(Integer sectionNumber) {
+        ShoutFeedFragment fragment = new ShoutFeedFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public GeoFenceFragment() {
+    public ShoutFeedFragment() {
 
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.activity = (LocationAwareActivity) activity;
+        this.activity = (MainActivity) activity;
         if (Laudhoot.D) {
             Log.d(Laudhoot.LOG_TAG, "+++ ON FRAGMENT ATTACH +++");
         }
@@ -63,17 +66,18 @@ public class GeoFenceFragment extends Fragment implements EndlessListView.Endles
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //((Laudhoot) (getActivity().getApplication())).inject(this);
+        ((Laudhoot) (getActivity().getApplication())).inject(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.geofence_feed, container, false);
         listView = (EndlessListView) rootView.findViewById(R.id.geofence_feed);
-        shoutFeedAdapter = new ShoutAdapter(GeoFenceFragment.this, createDummyShouts(multiplier));
+        shoutFeedAdapter = new ShoutAdapter(ShoutFeedFragment.this, new ArrayList<ShoutTO>());
         listView.setLoadingView(R.layout.loading_layout);
         listView.setAdapter(shoutFeedAdapter);
         listView.setListener(this);
+        //new FakeNetLoader().execute();
         return rootView;
     }
 
@@ -91,28 +95,27 @@ public class GeoFenceFragment extends Fragment implements EndlessListView.Endles
 
     public void laudShout(View v, long shoutId) {
         v.setBackgroundResource(R.drawable.arrow_active);
-        activity.makeToast("LAUD, Shout : " + shoutId);
+        activity.getToaster().makeToast("LAUD, Shout : " + shoutId);
     }
 
     public void hootShout(View v, long shoutId) {
         v.setBackgroundResource(R.drawable.arrow_active);
         //v.setRotation(180);
-        activity.makeToast("HOOT, Shout : " + shoutId);
+        activity.getToaster().makeToast("HOOT, Shout : " + shoutId);
     }
 
     @Override
     public void loadData() {
-        multiplier += 20;
-        FakeNetLoader fl = new FakeNetLoader();
-        fl.execute(new String[]{});
+        List<ShoutTO> shouts = new ArrayList<>();
+        new FakeNetLoader().execute();
     }
 
-    private class FakeNetLoader extends AsyncTask<String, Void, List<ShoutTO>> {
+    private class FakeNetLoader extends AsyncTask<Void, Void, List<ShoutTO>> {
 
         @Override
-        protected List<ShoutTO> doInBackground(String... params) {
+        protected List<ShoutTO> doInBackground(Void... params) {
             try {
-                Thread.sleep(4000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

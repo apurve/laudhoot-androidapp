@@ -4,7 +4,8 @@ import com.laudhoot.persistence.repository.ClientDetailsRepository;
 import com.laudhoot.persistence.repository.GeoFenceRepository;
 import com.laudhoot.service.GeofenceTransitionsIntentService;
 import com.laudhoot.view.activity.InitializationActivity;
-import com.laudhoot.view.fragment.GeoFenceFragment;
+import com.laudhoot.view.activity.MainActivity;
+import com.laudhoot.view.fragment.ShoutFeedFragment;
 
 import javax.inject.Singleton;
 
@@ -22,8 +23,9 @@ import dagger.Provides;
         library = true,
         injects = {
                 GeofenceTransitionsIntentService.class,
-                GeoFenceFragment.class,
-                InitializationActivity.class
+                ShoutFeedFragment.class,
+                InitializationActivity.class,
+                MainActivity.class
         }
 )
 public class PersistenceServicesModule {

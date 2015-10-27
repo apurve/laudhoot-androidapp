@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
+import com.laudhoot.util.Toaster;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -48,9 +49,12 @@ public class PagerActivity extends ActionBarActivity implements ActionBar.TabLis
      */
     ViewPager mViewPager;
 
+    protected Toaster toaster;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        toaster = new Toaster(getApplicationContext());
         setContentView(R.layout.activity_main);
 
         // Set up the action bar.
@@ -235,12 +239,8 @@ public class PagerActivity extends ActionBarActivity implements ActionBar.TabLis
         }
     }
 
-    public void makeToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
-    public void makeShortToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public Toaster getToaster() {
+        return toaster;
     }
 
 }
