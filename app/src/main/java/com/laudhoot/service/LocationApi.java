@@ -115,7 +115,7 @@ public class LocationApi implements LocationAware, GoogleApiClient.ConnectionCal
             Log.d(Laudhoot.LOG_TAG, "Latitude - " + lastLocation.getLatitude()
                     + " | Longitude - " + lastLocation.getLongitude());
         } else {
-            toaster.makeShortToast("Location unavailable.");
+            toaster.makeLongToast("Location unavailable.");
         }
     }
 

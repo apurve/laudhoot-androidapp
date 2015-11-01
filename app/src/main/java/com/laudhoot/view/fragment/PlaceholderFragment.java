@@ -181,7 +181,7 @@ public class PlaceholderFragment extends Fragment implements ResultCallback<Stat
 
     }
 
-    class SampleWebTask extends WebTask {
+    class SampleWebTask extends WebTask<String, String, String> {
 
         public SampleWebTask(){
             super(getActivity(), networkStateManager);
@@ -189,7 +189,6 @@ public class PlaceholderFragment extends Fragment implements ResultCallback<Stat
 
         @Override
         protected String doInBackground(String... params) {
-            super.doInBackground(params);
             return webTestApi.testController1();
         }
 

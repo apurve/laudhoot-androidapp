@@ -78,6 +78,11 @@ public class EndlessListView<T> extends ListView implements AbsListView.OnScroll
         isLoading = false;
     }
 
+    public void noDataAvailable() {
+        this.removeFooterView(footer);
+        isLoading = false;
+    }
+
     public static interface EndlessListener {
         public void loadData();
     }

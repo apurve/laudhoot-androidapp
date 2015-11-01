@@ -42,12 +42,14 @@ public interface LaudhootAPI {
     public GeoFenceTO findGeoFence(@Query("geoFenceCode") String geoFenceCode);
 
     @GET(REST+SHOUT)
-    public List<ShoutTO> listShoutsOfGeoFence(@Query("geoFenceCode") String geoFenceCode);
+    public List<ShoutTO> listShoutsOfGeoFence(@Query("geoFenceCode") String geoFenceCode,
+                                              @Query("shoutsAvailable") String shoutsAvailable,
+                                              @Header("Authorization") String authorization);
 
-    @POST(REST+SHOUT+CREATE)
-    public ShoutTO createShout(@Body ShoutTO shoutTO);
+    @POST(REST+SHOUT)
+    public ShoutTO createShout(@Body ShoutTO shoutTO, @Header("Authorization") String authorization);
 
-    @POST(REST+SHOUT+REPLY+CREATE)
+    @POST(REST+SHOUT+REPLY)
     public ReplyTO createReply(@Body ReplyTO replyTO);
 
     @POST(REST+SHOUT+LAUD)

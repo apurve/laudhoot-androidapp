@@ -68,5 +68,11 @@
     <string name="resolving_geofence">Resolving your location...</string>
     <string name="failure_resolving_geofence">Cannot resolve your location.</string>
     <string name="error_client_unauthorized">Client authorization failed</string>
+    <string name="action_shout_add">Shout</string>
+    <string name="title_activity_post_shout">Post a Shout</string>
+    <string name="post">Post</string>
+    <string name="shout_text_empty">Type whats on your mind.</string>
+    <string name="shout_something">Shout about something...</string>
+    <string name="error_loading_shouts">Cannot load more shouts at this moment</string>
 
 </resources>

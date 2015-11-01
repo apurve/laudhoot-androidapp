@@ -2,6 +2,8 @@ package com.laudhoot.web.util;
 
 import android.util.Base64;
 
+import com.laudhoot.persistence.model.ClientDetails;
+
 /**
  * Utility class to provide authorization of different encoding protocols.
  *
@@ -20,6 +22,10 @@ public class AuthorizationUtil {
     public static String basicAuthorization(String username, String password) {
         String credentials = username + ":" + password;
         return "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+    }
+
+    public static String authorizationToken(ClientDetails clientDetails) {
+        return clientDetails.getTokenType()+" "+clientDetails.getAccessToken();
     }
 
 }

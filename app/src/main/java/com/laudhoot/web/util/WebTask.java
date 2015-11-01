@@ -12,7 +12,7 @@ import com.laudhoot.util.NetworkStateManager;
  *
  * Created by apurve on 2/3/15.
  * */
-public class WebTask extends AsyncTask<String, String, String> {
+public abstract class WebTask<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 
     private Activity activity;
 
@@ -32,26 +32,24 @@ public class WebTask extends AsyncTask<String, String, String> {
      * */
     @Override
     protected void onPreExecute() {
-        super.onPreExecute();
         if(networkStateManager.isNotConnected()){
             Toast.makeText(activity, "Your internet is disabled, turn it on and then try again.", Toast.LENGTH_SHORT).show();
             cancel(true);
         }
         pDialog.show();
+        super.onPreExecute();
     }
 
     /**
      * Perform web operations in background thread
      * */
     @Override
-    protected String doInBackground(String... params) {
-        return null;
-    }
+    protected abstract Result doInBackground(Params... params);
 
     /**
      * Updating progress bar
      * */
-    protected void onProgressUpdate(String... progress) {
+    protected void onProgressUpdate(Progress... progress) {
 
     }
 
@@ -60,15 +58,20 @@ public class WebTask extends AsyncTask<String, String, String> {
      * Dismiss the progress dialog
      * **/
     @Override
-    protected void onPostExecute(String response) {
-        pDialog.setIndeterminate(false);
-        pDialog.dismiss();
+    protected void onPostExecute(Result response) {
+        if(pDialog != null && pDialog.isShowing()) {
+            pDialog.setIndeterminate(false);
+            pDialog.dismiss();
+        }
+        super.onPostExecute(response);
     }
 
     @Override
     protected void onCancelled() {
+        if(pDialog != null && pDialog.isShowing()) {
+            pDialog.setIndeterminate(false);
+            pDialog.dismiss();
+        }
         super.onCancelled();
-        pDialog.setIndeterminate(false);
-        pDialog.dismiss();
     }
 }

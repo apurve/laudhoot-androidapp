@@ -60,8 +60,6 @@ public class InitializationActivity extends Activity implements LocationAware, L
 
     private LocationApi locationApi;
 
-    private Toaster toaster;
-
     private ClientDetails clientDetails;
 
     @InjectView(R.id.init_message)
@@ -88,10 +86,12 @@ public class InitializationActivity extends Activity implements LocationAware, L
     @Inject
     LaudhootAPI laudhootAPI;
 
+    @Inject
+    Toaster toaster;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toaster = new Toaster(getApplicationContext());
         setContentView(R.layout.activity_initialization);
         ButterKnife.inject(this);
         ((Laudhoot) (getApplication())).inject(this);
@@ -206,7 +206,7 @@ public class InitializationActivity extends Activity implements LocationAware, L
     private void resolveGeofence(Location location) {
         initMessages.setText(getApplicationContext().getString(R.string.resolving_geofence));
         laudhootAPI.findGeoFence(location.getLatitude(), location.getLongitude(),
-                clientDetails.getTokenType()+" "+clientDetails.getAccessToken(),
+                AuthorizationUtil.authorizationToken(clientDetails),
                 new BaseCallback<GeoFenceTO>(getApplicationContext()) {
             @Override
             protected void success(GeoFenceTO geoFenceTO, Response response, Context context) {

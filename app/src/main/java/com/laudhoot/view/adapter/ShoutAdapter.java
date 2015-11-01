@@ -56,7 +56,11 @@ public class ShoutAdapter extends WebFeedAdapter<ShoutTO, ShoutHolder> {
     @Override
     public void updateViewHolder(ShoutHolder viewHolder, ShoutTO item) {
         viewHolder.message.setText(item.getMessage());
-        viewHolder.laudhootCount.setText(String.valueOf(item.getLaudCount() - item.getHootCount()));
+        if(item.getLaudCount() == null || item.getHootCount() == null) {
+            viewHolder.laudhootCount.setText("1");
+        } else {
+            viewHolder.laudhootCount.setText(String.valueOf(item.getLaudCount() - item.getHootCount()));
+        }
     }
 
     @Override

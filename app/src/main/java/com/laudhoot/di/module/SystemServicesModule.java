@@ -1,6 +1,5 @@
 package com.laudhoot.di.module;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
@@ -10,9 +9,11 @@ import android.telephony.TelephonyManager;
 
 import com.laudhoot.Laudhoot;
 import com.laudhoot.util.LocationStateManager;
+import com.laudhoot.util.Toaster;
 import com.laudhoot.view.activity.InitializationActivity;
 import com.laudhoot.util.NetworkStateManager;
 import com.laudhoot.view.activity.MainActivity;
+import com.laudhoot.view.activity.PostShoutActivity;
 
 import javax.inject.Singleton;
 
@@ -32,7 +33,8 @@ import static android.content.Context.LOCATION_SERVICE;
         library = true,
         injects = {
                 InitializationActivity.class,
-                MainActivity.class
+                MainActivity.class,
+                PostShoutActivity.class
         }
 )
 public class SystemServicesModule {
@@ -79,6 +81,11 @@ public class SystemServicesModule {
     @Provides @Singleton
     TelephonyManager provideTelephonyManager() {
         return (TelephonyManager) application.getSystemService(Context.TELEPHONY_SERVICE);
+    }
+
+    @Provides @Singleton
+    Toaster providerToaster() {
+        return new Toaster(application.getApplicationContext());
     }
 
 }

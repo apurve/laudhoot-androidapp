@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <uses-feature android:name="android.location.Location" android:required="true" />
+    <uses-feature
+        android:name="android.location.Location"
+        android:required="true" />
 
     <application
         android:name=".Laudhoot"
@@ -15,25 +17,37 @@
         android:configChanges="orientation|keyboardHidden"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:screenOrientation="portrait" >
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".view.activity.InitializationActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/app_name" />
+
         <meta-data
             android:name="AA_DB_NAME"
             android:value="laudhoot_test.db" />
-        <meta-data  
+        <meta-data
             android:name="AA_DB_VERSION"
             android:value="0" />
+
+        <activity
+            android:name=".view.activity.PostShoutActivity"
+            android:label="@string/title_activity_post_shout"
+            android:parentActivityName=".view.activity.MainActivity"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustNothing">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.laudhoot.view.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

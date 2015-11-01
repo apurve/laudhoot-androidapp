@@ -15,7 +15,7 @@ public class WebProgressDialog extends ProgressDialog {
         super(activity);
         this.setIndeterminate(true);
         this.setCancelable(false);
-        this.setMessage("Please wait downloading...");
+        this.setMessage("Please wait...");
     }
 
 }

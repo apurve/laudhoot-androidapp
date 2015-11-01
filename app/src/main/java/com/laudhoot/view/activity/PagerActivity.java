@@ -24,6 +24,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 /**
  * Self rendering page view activity with action bar. Fragments populating the pages are mapped in an XML file and
  * the activity renders the view based on meta data provided in the XML mapping.
@@ -32,7 +34,7 @@ import java.util.Locale;
  * Created by apurve on 1/3/15.
  */
 
-public class PagerActivity extends ActionBarActivity implements ActionBar.TabListener {
+public abstract class PagerActivity extends ActionBarActivity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -49,12 +51,12 @@ public class PagerActivity extends ActionBarActivity implements ActionBar.TabLis
      */
     ViewPager mViewPager;
 
-    protected Toaster toaster;
+    @Inject
+    Toaster toaster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toaster = new Toaster(getApplicationContext());
         setContentView(R.layout.activity_main);
 
         // Set up the action bar.
@@ -111,26 +113,12 @@ public class PagerActivity extends ActionBarActivity implements ActionBar.TabLis
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+    public abstract boolean onCreateOptionsMenu(Menu menu);
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
-    }
+    };
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {

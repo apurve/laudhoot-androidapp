@@ -4,9 +4,13 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -20,6 +24,7 @@ import com.laudhoot.util.LocationApiErrorHandler;
 import com.laudhoot.util.LocationAware;
 import com.laudhoot.web.model.CoordinateTO;
 import com.laudhoot.web.model.GeoFenceTO;
+import com.laudhoot.web.model.ShoutTO;
 import com.laudhoot.web.services.LaudhootAPI;
 import com.laudhoot.web.util.BaseCallback;
 
@@ -36,6 +41,8 @@ import retrofit.client.Response;
 public class MainActivity extends PagerActivity implements LocationAware, LocationApiErrorHandler {
 
     private static final String DIALOG_ERROR = "dialog_error";
+
+    private static final int REQUEST_CODE_POST_SHOUT = 11;
 
     private String clientId;
 
@@ -70,6 +77,20 @@ public class MainActivity extends PagerActivity implements LocationAware, Locati
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            default: break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         locationApi.start();
@@ -101,7 +122,7 @@ public class MainActivity extends PagerActivity implements LocationAware, Locati
 
             @Override
             protected void failure(RetrofitError error, Context context) {
-                toaster.makeToast(getApplicationContext().getString(R.string.failure_resolving_geofence));
+                getToaster().makeToast(getApplicationContext().getString(R.string.failure_resolving_geofence));
             }
         });
     }
@@ -169,4 +190,9 @@ public class MainActivity extends PagerActivity implements LocationAware, Locati
         return locationApi.getLocationApiClient();
     }
 
+    public LaudhootAPI getLaudhootApiClient() {
+        return laudhootAPI;
+    }
+
+    public ClientDetailsRepository getClientDetailsRepository() {return clientDetailsRepository;}
 }

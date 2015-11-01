@@ -16,10 +16,10 @@ public class Toaster {
     }
 
     public void makeToast(String message){
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-    public void makeShortToast(String message){
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    public void makeLongToast(String message){
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 }
