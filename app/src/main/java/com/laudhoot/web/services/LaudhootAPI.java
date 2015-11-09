@@ -50,18 +50,18 @@ public interface LaudhootAPI {
     public ShoutTO createShout(@Body ShoutTO shoutTO, @Header("Authorization") String authorization);
 
     @POST(REST+SHOUT+REPLY)
-    public ReplyTO createReply(@Body ReplyTO replyTO);
+    public ReplyTO createReply(@Body ReplyTO replyTO, @Header("Authorization") String authorization);
 
     @POST(REST+SHOUT+LAUD)
-    public Long laudShout(@Body Long shoutId);
+    public Long laudShout(@Body Long shoutId, @Header("Authorization") String authorization);
 
     @POST(REST+SHOUT+HOOT)
-    public Long hootShout(@Body Long shoutId);
+    public Long hootShout(@Body Long shoutId, @Header("Authorization") String authorization);
 
     @POST(REST+SHOUT+REPLY+LAUD)
-    public Long laudReply(@Body Long replyId);
+    public Long laudReply(@Body Long replyId, @Header("Authorization") String authorization);
 
     @POST(REST+SHOUT+REPLY+HOOT)
-    public Long hootReply(@Body Long replyId);
+    public Long hootReply(@Body Long replyId, @Header("Authorization") String authorization);
 
 }

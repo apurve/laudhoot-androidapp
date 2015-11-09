@@ -2,6 +2,9 @@ package com.laudhoot.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +14,12 @@ import android.widget.EditText;
 
 import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
+import com.laudhoot.persistence.model.view.Shout;
 import com.laudhoot.persistence.repository.ClientDetailsRepository;
+import com.laudhoot.persistence.repository.ShoutRepository;
 import com.laudhoot.util.NetworkStateManager;
 import com.laudhoot.util.Toaster;
+import com.laudhoot.view.fragment.ShoutFeedFragment;
 import com.laudhoot.web.model.ShoutTO;
 import com.laudhoot.web.services.LaudhootAPI;
 import com.laudhoot.web.util.AuthorizationUtil;
@@ -26,8 +32,6 @@ import butterknife.InjectView;
 
 public class PostShoutActivity extends ActionBarActivity {
 
-    public static String SHOUT_MESSAGE = "shout_message";
-
     @InjectView(R.id.shout_text)
     EditText shout;
 
@@ -36,6 +40,9 @@ public class PostShoutActivity extends ActionBarActivity {
 
     @Inject
     ClientDetailsRepository clientDetailsRepository;
+
+    @Inject
+    ShoutRepository shoutRepository;
 
     @Inject
     NetworkStateManager networkStateManager;
@@ -55,6 +62,11 @@ public class PostShoutActivity extends ActionBarActivity {
         ((Laudhoot) (getApplication())).inject(this);
         clientId = getIntent().getStringExtra(InitializationActivity.CLIENT_ID);
         geofenceCode = getIntent().getStringExtra(InitializationActivity.GEOFENCE_CODE);
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.laudhoot_theme_color)));
+        actionBar.setIcon(R.drawable.ic_launcher);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -69,7 +81,7 @@ public class PostShoutActivity extends ActionBarActivity {
             case R.id.post_shout : {
                 String shoutText = shout.getText().toString();
                 if(shoutText != null && shoutText.length()>0) {
-                    new PostShoutTask().execute(shoutText, geofenceCode,
+                    new PostShoutTask().execute(geofenceCode, shoutText,
                             AuthorizationUtil.authorizationToken(clientDetailsRepository.findByClientId(clientId)));
                 } else {
                     toaster.makeToast(getString(R.string.shout_text_empty));
@@ -80,22 +92,23 @@ public class PostShoutActivity extends ActionBarActivity {
                 abortResult();
                 break;
             }
-            default: break;
+            default: return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
-    private class PostShoutTask extends WebTask<String, Integer, ShoutTO> {
+    private class PostShoutTask extends WebTask<String, Integer, Shout> {
 
         public PostShoutTask() {
             super(PostShoutActivity.this, networkStateManager);
         }
 
         @Override
-        protected ShoutTO doInBackground(String... params) {
+        protected Shout doInBackground(String... params) {
             ShoutTO shoutTO = new ShoutTO(params[0], params[1]);
             try {
                 shoutTO = laudhootAPI.createShout(shoutTO, params[2]);
+                return shoutRepository.cache(shoutTO);
             } catch (Exception exception) {
                 if(Laudhoot.D)
                     Log.d(Laudhoot.LOG_TAG, exception.getMessage()
@@ -103,11 +116,10 @@ public class PostShoutActivity extends ActionBarActivity {
                             + exception.getStackTrace());
                 return null;
             }
-            return shoutTO;
         }
 
         @Override
-        protected void onPostExecute(ShoutTO response) {
+        protected void onPostExecute(Shout response) {
             super.onPostExecute(response);
             if(response != null)
                 returnResult(response);
@@ -116,16 +128,14 @@ public class PostShoutActivity extends ActionBarActivity {
         }
     }
 
-    private void returnResult(ShoutTO response) {
+    private void returnResult(Shout response) {
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(SHOUT_MESSAGE, response.getMessage());
+        returnIntent.putExtra(ShoutFeedFragment.SHOUT_ID, response.getDomainId());
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 
     private void abortResult() {
-        Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_CANCELED, returnIntent);
-        finish();
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

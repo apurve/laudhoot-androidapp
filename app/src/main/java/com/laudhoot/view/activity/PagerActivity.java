@@ -1,5 +1,6 @@
 package com.laudhoot.view.activity;
 
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -62,7 +63,8 @@ public abstract class PagerActivity extends ActionBarActivity implements ActionB
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setBackgroundDrawable(new ColorDrawable(R.color.laudhoot_theme_color));
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.laudhoot_theme_color)));
+        actionBar.setStackedBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.laudhoot_theme_color_faded)));
         actionBar.setIcon(R.drawable.ic_launcher);
 
         // Create the adapter that will return a fragment for each of the three

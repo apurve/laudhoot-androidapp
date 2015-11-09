@@ -7,64 +7,24 @@ import java.util.List;
  *
  * Created by root on 2/6/15.
  */
-public class ShoutTO extends BaseTO {
+public class ShoutTO extends PostTO {
 
-    private String message;
-
-    private Long laudCount;
-
-    private Long hootCount;
-
-    private String geoFenceCode;
-
-    private List<ReplyTO> replies;
+    private int repliesCount;
 
     public ShoutTO() {
+        super();
     }
 
-    public ShoutTO(String message, String geoFenceCode) {
-        this.message = message;
-        this.geoFenceCode = geoFenceCode;
+    public ShoutTO(String geoFenceCode, String message) {
+        super(geoFenceCode, message);
     }
 
-    public String getMessage() {
-        return message;
+    public int getRepliesCount() {
+        return repliesCount;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Long getLaudCount() {
-        return laudCount;
-    }
-
-    public void setLaudCount(Long laudCount) {
-        this.laudCount = laudCount;
-    }
-
-    public Long getHootCount() {
-        return hootCount;
-    }
-
-    public void setHootCount(Long hootCount) {
-        this.hootCount = hootCount;
-    }
-
-    public String getGeoFenceCode() {
-        return geoFenceCode;
-    }
-
-    public void setGeoFenceCode(String geoFenceCode) {
-        this.geoFenceCode = geoFenceCode;
-    }
-
-    public List<ReplyTO> getReplies() {
-        return replies;
-    }
-
-    public void setReplies(List<ReplyTO> replies) {
-        this.replies = replies;
+    public void setRepliesCount(int repliesCount) {
+        this.repliesCount = repliesCount;
     }
 
 }

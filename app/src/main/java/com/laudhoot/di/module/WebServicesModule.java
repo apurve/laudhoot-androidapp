@@ -5,6 +5,7 @@ import android.app.Application;
 import com.laudhoot.view.activity.InitializationActivity;
 import com.laudhoot.view.activity.MainActivity;
 import com.laudhoot.view.activity.PostShoutActivity;
+import com.laudhoot.view.activity.ViewShoutActivity;
 import com.laudhoot.view.fragment.ShoutFeedFragment;
 import com.laudhoot.view.fragment.PlaceholderFragment;
 import com.laudhoot.web.LaudhootRestClient;
@@ -31,7 +32,8 @@ import dagger.Provides;
                 ShoutFeedFragment.class,
                 InitializationActivity.class,
                 MainActivity.class,
-                PostShoutActivity.class
+                PostShoutActivity.class,
+                ViewShoutActivity.class
         }
 )
 public class WebServicesModule {

@@ -1,5 +1,6 @@
 package com.laudhoot.web.model;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -11,6 +12,8 @@ import java.util.Map;
 public class BaseTO {
 
     Long id;
+
+    Date createdOn;
 
     boolean error;
 
@@ -33,6 +36,14 @@ public class BaseTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 
     public boolean hasError() {

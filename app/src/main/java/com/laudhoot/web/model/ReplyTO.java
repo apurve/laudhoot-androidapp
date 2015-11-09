@@ -5,22 +5,17 @@ package com.laudhoot.web.model;
  *
  * Created by apurve on 2/6/15.
  */
-public class ReplyTO extends BaseTO {
+public class ReplyTO extends PostTO {
 
     private Long shoutId;
 
-    private String message;
-
-    private Long laudCount;
-
-    private Long hootCount;
-
     public ReplyTO() {
+
     }
 
-    public ReplyTO(String message, Long shoutId) {
+    public ReplyTO(String geoFenceCode, String message, Long shoutId) {
+        super(geoFenceCode, message);
         this.shoutId = shoutId;
-        this.message = message;
     }
 
     public Long getShoutId() {
@@ -29,30 +24,6 @@ public class ReplyTO extends BaseTO {
 
     public void setShoutId(Long shoutId) {
         this.shoutId = shoutId;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Long getLaudCount() {
-        return laudCount;
-    }
-
-    public void setLaudCount(Long laudCount) {
-        this.laudCount = laudCount;
-    }
-
-    public Long getHootCount() {
-        return hootCount;
-    }
-
-    public void setHootCount(Long hootCount) {
-        this.hootCount = hootCount;
     }
 
 }

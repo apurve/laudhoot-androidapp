@@ -27,7 +27,7 @@ public abstract class BaseModel extends Model implements Serializable {
     @Column(name = "archive_status")
     private int archiveStatus;
 
-    public BaseModel() {
+    protected BaseModel() {
         super();
     }
 

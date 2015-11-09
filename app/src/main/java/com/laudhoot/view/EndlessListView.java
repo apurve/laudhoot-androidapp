@@ -54,7 +54,7 @@ public class EndlessListView<T> extends ListView implements AbsListView.OnScroll
         }
     }
 
-    public void setListener(EndlessListener listener) {
+    public void setEndlessListener(EndlessListener listener) {
         this.listener = listener;
     }
 

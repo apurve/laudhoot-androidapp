@@ -10,13 +10,17 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
+import com.laudhoot.persistence.model.view.Shout;
+import com.laudhoot.persistence.repository.ShoutRepository;
 import com.laudhoot.view.EndlessListView;
 import com.laudhoot.view.activity.InitializationActivity;
 import com.laudhoot.view.activity.MainActivity;
 import com.laudhoot.view.activity.PostShoutActivity;
+import com.laudhoot.view.activity.ViewShoutActivity;
 import com.laudhoot.view.adapter.ShoutAdapter;
 import com.laudhoot.web.model.ShoutTO;
 import com.laudhoot.web.util.AuthorizationUtil;
@@ -24,6 +28,8 @@ import com.laudhoot.web.util.AuthorizationUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Fragment hosting shout feed.
@@ -39,15 +45,20 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
 
     private static final int REQUEST_CODE_POST_SHOUT = 11;
 
+    private static final int REQUEST_CODE_VIEW_SHOUT = 12;
+
+    public static final String SHOUT_ID = "shout_id";
+
     private MainActivity activity = null;
 
-    private EndlessListView listView;
+    private EndlessListView<Shout> listView;
 
     private ShoutAdapter shoutFeedAdapter;
 
     private boolean shoutsUnavailable;
 
-    int multiplier = 1;
+    @Inject
+    ShoutRepository shoutRepository;
 
     public static ShoutFeedFragment newInstance(Integer sectionNumber) {
         ShoutFeedFragment fragment = new ShoutFeedFragment();
@@ -81,55 +92,66 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.geofence_feed, container, false);
         listView = (EndlessListView) rootView.findViewById(R.id.geofence_feed);
-        shoutFeedAdapter = new ShoutAdapter(ShoutFeedFragment.this, new ArrayList<ShoutTO>());
+        shoutFeedAdapter = new ShoutAdapter(ShoutFeedFragment.this, new ArrayList<Shout>());
         listView.setLoadingView(R.layout.loading_layout);
         listView.setAdapter(shoutFeedAdapter);
-        listView.setListener(this);
-        //new FakeNetLoader().execute();
+        listView.setEndlessListener(this);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(activity, ViewShoutActivity.class);
+                intent.putExtra(ShoutFeedFragment.SHOUT_ID, shoutFeedAdapter.getItem(position).getDomainId());
+                intent.putExtra(InitializationActivity.CLIENT_ID, activity.getClientId());
+                intent.putExtra(InitializationActivity.GEOFENCE_CODE, activity.getGeofenceCode());
+                startActivityForResult(intent, REQUEST_CODE_VIEW_SHOUT);
+            }
+        });
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        shoutsUnavailable = false;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.post_shout_button : {
+            case R.id.post_shout_button: {
                 Intent intent = new Intent(activity, PostShoutActivity.class);
                 intent.putExtra(InitializationActivity.CLIENT_ID, activity.getClientId());
                 intent.putExtra(InitializationActivity.GEOFENCE_CODE, activity.getGeofenceCode());
                 startActivityForResult(intent, REQUEST_CODE_POST_SHOUT);
                 break;
             }
-            default: break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_POST_SHOUT: {
-                if(resultCode == Activity.RESULT_OK) {
-                    ShoutTO shoutTO = new ShoutTO(
-                            data.getExtras().getString(PostShoutActivity.SHOUT_MESSAGE), activity.getGeofenceCode());
-                    shoutFeedAdapter.insert(shoutTO, 0);
+                if (resultCode == Activity.RESULT_OK) {
+                    Shout shout = shoutRepository.findCached(data.getExtras().getLong(SHOUT_ID));
+                    shoutFeedAdapter.insert(shout, 0);
                 }
                 break;
             }
-            default: break;
+            case REQUEST_CODE_VIEW_SHOUT: {
+                // TODO - handle proper view update
+                shoutFeedAdapter.clear();
+                shoutsUnavailable = false;
+                loadData();
+                break;
+            }
+            default:
+                break;
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private List<ShoutTO> createDummyShouts(int multiplier) {
-        List<ShoutTO> shouts = new ArrayList<>();
-        for (int i = 1; i < 4; i++) {
-            ShoutTO shoutTO = new ShoutTO(i * multiplier + " lorem ispun, loretta with a toaata tataa", "HOME");
-            shoutTO.setId((long) i * multiplier);
-            shoutTO.setLaudCount(5l * multiplier * i);
-            shoutTO.setHootCount(2l * multiplier * i);
-            shouts.add(shoutTO);
-        }
-        return shouts;
     }
 
     public void laudShout(View v, long shoutId) {
@@ -152,13 +174,19 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
             listView.noDataAvailable();
     }
 
-    private class ShoutsLoader extends AsyncTask<String, Void, List<ShoutTO>> {
+    private class ShoutsLoader extends AsyncTask<String, Void, List<Shout>> {
 
         @Override
-        protected List<ShoutTO> doInBackground(String... params) {
+        protected List<Shout> doInBackground(String... params) {
             List<ShoutTO> shoutTOs;
+            List<Shout> shouts = new ArrayList<Shout>();
             try {
                 shoutTOs = activity.getLaudhootApiClient().listShoutsOfGeoFence(params[0], params[1], params[2]);
+                if (shoutTOs != null) {
+                    for (ShoutTO shoutTO : shoutTOs) {
+                        shouts.add(shoutRepository.cache(shoutTO));
+                    }
+                }
             } catch (Exception exception) {
                 if (Laudhoot.D)
                     Log.d(Laudhoot.LOG_TAG, exception.getMessage()
@@ -166,41 +194,21 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
                             + Arrays.toString(exception.getStackTrace()));
                 return null;
             }
-            return shoutTOs;
+            return shouts;
         }
 
         @Override
-        protected void onPostExecute(List<ShoutTO> result) {
+        protected void onPostExecute(List<Shout> result) {
             super.onPostExecute(result);
-            if(result == null || result.size() < 1) {
+            if (result == null || result.size() < 1) {
                 activity.getToaster().makeToast(getString(R.string.error_loading_shouts));
                 listView.noDataAvailable();
-                makeShoutsUnavailableTemporarily();
-            }
-            else {
+                shoutsUnavailable = true;
+            } else {
                 listView.addNewData(result);
             }
         }
 
     }
 
-    private void makeShoutsUnavailableTemporarily() {
-        shoutsUnavailable = true;
-        new MakeShoutsAvailable().execute();
-    }
-
-    private class MakeShoutsAvailable extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                Thread.sleep(300000); // sleep for 5 minutes
-                shoutsUnavailable = false;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-    }
 }

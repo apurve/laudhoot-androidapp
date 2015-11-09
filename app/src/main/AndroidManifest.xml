@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.laudhoot" >
+    package="com.laudhoot">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,10 +18,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".view.activity.InitializationActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,15 +30,17 @@
         </activity>
         <activity
             android:name=".view.activity.MainActivity"
-            android:label="@string/app_name" />
-
-        <meta-data
-            android:name="AA_DB_NAME"
-            android:value="laudhoot_test.db" />
-        <meta-data
-            android:name="AA_DB_VERSION"
-            android:value="0" />
-
+            android:label="@string/app_name"
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".view.activity.ViewShoutActivity"
+            android:label="@string/title_activity_view_shout"
+            android:parentActivityName=".view.activity.MainActivity"
+            android:windowSoftInputMode="adjustNothing">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.laudhoot.view.activity.MainActivity" />
+        </activity>
         <activity
             android:name=".view.activity.PostShoutActivity"
             android:label="@string/title_activity_post_shout"
@@ -48,6 +50,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.laudhoot.view.activity.MainActivity" />
         </activity>
+
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="laudhoot_test.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="0" />
+
     </application>
 
 </manifest>

@@ -74,5 +74,7 @@
     <string name="shout_text_empty">Type whats on your mind.</string>
     <string name="shout_something">Shout about something...</string>
     <string name="error_loading_shouts">Cannot load more shouts at this moment</string>
+    <string name="title_activity_view_shout">Shout</string>
+    <string name="action_refresh">Refresh</string>
 
 </resources>

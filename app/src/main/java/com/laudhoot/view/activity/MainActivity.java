@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -69,9 +70,19 @@ public class MainActivity extends PagerActivity implements LocationAware, Locati
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Laudhoot.D) {
+            Log.d(Laudhoot.LOG_TAG, "+++ ON CREATE +++");
+        }
         ((Laudhoot) (getApplication())).inject(this);
         clientId = getIntent().getStringExtra(InitializationActivity.CLIENT_ID);
         geofenceCode = getIntent().getStringExtra(InitializationActivity.GEOFENCE_CODE);
+        if(savedInstanceState != null) {
+            if (Laudhoot.D) {
+                Log.d(Laudhoot.LOG_TAG, "+++ ON RESTORE STATE +++");
+            }
+            clientId = savedInstanceState.getString(InitializationActivity.CLIENT_ID);
+            geofenceCode = savedInstanceState.getString(InitializationActivity.GEOFENCE_CODE);
+        }
         locationApi = new LocationApi(this, this);
         locationApi.create(savedInstanceState);
     }
@@ -85,9 +96,8 @@ public class MainActivity extends PagerActivity implements LocationAware, Locati
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            default: break;
+            default: return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -98,10 +108,13 @@ public class MainActivity extends PagerActivity implements LocationAware, Locati
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putString(InitializationActivity.CLIENT_ID, clientId);
         outState.putString(InitializationActivity.GEOFENCE_CODE, geofenceCode);
         locationApi.saveInstanceState(outState);
+        if (Laudhoot.D) {
+            Log.d(Laudhoot.LOG_TAG, "+++ ON SAVE STATE +++");
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override

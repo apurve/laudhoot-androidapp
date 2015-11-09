@@ -160,7 +160,7 @@ public class InitializationActivity extends Activity implements LocationAware, L
                     new BaseCallback<TokenResponse>(getApplicationContext()) {
                         @Override
                         protected void success(TokenResponse tokenResponse, Response response, Context context) {
-                            clientDetailsRepository.updateTokens(clientDetails.getClientId(), tokenResponse);
+                            clientDetails = clientDetailsRepository.updateTokens(clientDetails.getClientId(), tokenResponse);
                             if (handelLocationServices()) {
                                 resolveLocationAndGeoFence();
                             }
