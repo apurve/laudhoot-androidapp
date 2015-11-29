@@ -21,6 +21,12 @@ public abstract class Post<T extends PostTO> extends DomainCache<T> {
     @Column(name = "hoot_count")
     private Long hootCount;
 
+    @Column(name = "voted")
+    private boolean voted;
+
+    @Column(name = "is_laud_vote")
+    private Boolean isLaudVote;
+
     public Post() {
         super();
     }
@@ -69,4 +75,19 @@ public abstract class Post<T extends PostTO> extends DomainCache<T> {
         this.hootCount = hootCount;
     }
 
+    public Boolean getIsLaudVote() {
+        return isLaudVote;
+    }
+
+    public void setIsLaudVote(Boolean isLaudVote) {
+        this.isLaudVote = isLaudVote;
+    }
+
+    public boolean isVoted() {
+        return voted;
+    }
+
+    public void setVoted(boolean voted) {
+        this.voted = voted;
+    }
 }

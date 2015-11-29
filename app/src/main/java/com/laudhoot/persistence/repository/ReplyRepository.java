@@ -32,4 +32,16 @@ public class ReplyRepository extends ActiveAndroidRepository<Reply> {
                 .executeSingle();
     }
 
+    public void vote(Long replyId, boolean isLaud) {
+        Reply reply = findCached(replyId);
+        reply.setVoted(true);
+        if(isLaud) {
+            reply.setLaudCount(reply.getLaudCount()+1);
+            reply.setIsLaudVote(true);
+        } else {
+            reply.setHootCount(reply.getHootCount()+1);
+            reply.setIsLaudVote(false);
+        }
+    }
+
 }

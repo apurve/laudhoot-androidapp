@@ -10,45 +10,39 @@
     tools:context="com.laudhoot.view.activity.ViewShoutActivity">
 
 
-    <include layout="@layout/geofence_feed_item"
+    <include
+        layout="@layout/shout_feed_item"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.5" />
+        android:layout_weight="3" />
 
 
-    <ScrollView
+    <include
+        layout="@layout/endless_feed"
+        android:id="@+id/replies_feed_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_above="@+id/fake_view"
-        android:layout_weight="4">
-        
-        <ListView
-            android:id="@+id/replies_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"></ListView>
-
-    </ScrollView>
+        android:layout_weight="6"
+        android:layout_margin="5dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_weight="0.5">
+        android:layout_weight="1">
 
         <EditText
             android:id="@+id/reply_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"/>
+            android:layout_weight="4" />
 
         <Button
             android:id="@+id/post_reply"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
-
+            android:layout_weight="1" />
 
     </LinearLayout>
-
 
 </LinearLayout>

@@ -29,6 +29,8 @@ public class Shout extends Post<ShoutTO> {
         this.setLaudCount(transferObject.getLaudCount());
         this.setHootCount(transferObject.getHootCount());
         this.setRepliesCount(transferObject.getRepliesCount());
+        this.setVoted(transferObject.isVoted());
+        this.setIsLaudVote(transferObject.getIsLaudVote());
     }
 
     public List<Reply> getReplies() {

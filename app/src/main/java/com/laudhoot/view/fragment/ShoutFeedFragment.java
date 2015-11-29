@@ -55,10 +55,8 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
 
     private ShoutAdapter shoutFeedAdapter;
 
-    private boolean shoutsUnavailable;
-
     @Inject
-    ShoutRepository shoutRepository;
+    public ShoutRepository shoutRepository;
 
     public static ShoutFeedFragment newInstance(Integer sectionNumber) {
         ShoutFeedFragment fragment = new ShoutFeedFragment();
@@ -70,6 +68,10 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
 
     public ShoutFeedFragment() {
 
+    }
+
+    public MainActivity getMainActivity() {
+        return activity;
     }
 
     @Override
@@ -85,13 +87,13 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((Laudhoot) (getActivity().getApplication())).inject(this);
+        ((Laudhoot) (getMainActivity().getApplication())).inject(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.geofence_feed, container, false);
-        listView = (EndlessListView) rootView.findViewById(R.id.geofence_feed);
+        View rootView = inflater.inflate(R.layout.endless_feed, container, false);
+        listView = (EndlessListView) rootView.findViewById(R.id.endless_feed_list);
         shoutFeedAdapter = new ShoutAdapter(ShoutFeedFragment.this, new ArrayList<Shout>());
         listView.setLoadingView(R.layout.loading_layout);
         listView.setAdapter(shoutFeedAdapter);
@@ -112,7 +114,6 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
     @Override
     public void onResume() {
         super.onResume();
-        shoutsUnavailable = false;
     }
 
     @Override
@@ -138,13 +139,13 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
                 if (resultCode == Activity.RESULT_OK) {
                     Shout shout = shoutRepository.findCached(data.getExtras().getLong(SHOUT_ID));
                     shoutFeedAdapter.insert(shout, 0);
+                    listView.smoothScrollToPosition(0);
                 }
                 break;
             }
             case REQUEST_CODE_VIEW_SHOUT: {
                 // TODO - handle proper view update
                 shoutFeedAdapter.clear();
-                shoutsUnavailable = false;
                 loadData();
                 break;
             }
@@ -154,24 +155,10 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void laudShout(View v, long shoutId) {
-        v.setBackgroundResource(R.drawable.arrow_active);
-        activity.getToaster().makeToast("LAUD, Shout : " + shoutId);
-    }
-
-    public void hootShout(View v, long shoutId) {
-        v.setBackgroundResource(R.drawable.arrow_active);
-        //v.setRotation(180);
-        activity.getToaster().makeToast("HOOT, Shout : " + shoutId);
-    }
-
     @Override
     public void loadData() {
-        if (!shoutsUnavailable)
-            new ShoutsLoader().execute(activity.getGeofenceCode(), String.valueOf(shoutFeedAdapter.getCount()),
-                    AuthorizationUtil.authorizationToken(activity.getClientDetailsRepository().findByClientId(activity.getClientId())));
-        else
-            listView.noDataAvailable();
+        new ShoutsLoader().execute(activity.getGeofenceCode(), String.valueOf(shoutFeedAdapter.getCount()),
+                AuthorizationUtil.authorizationToken(activity.getClientDetailsRepository().findByClientId(activity.getClientId())));
     }
 
     private class ShoutsLoader extends AsyncTask<String, Void, List<Shout>> {
@@ -203,7 +190,6 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
             if (result == null || result.size() < 1) {
                 activity.getToaster().makeToast(getString(R.string.error_loading_shouts));
                 listView.noDataAvailable();
-                shoutsUnavailable = true;
             } else {
                 listView.addNewData(result);
             }

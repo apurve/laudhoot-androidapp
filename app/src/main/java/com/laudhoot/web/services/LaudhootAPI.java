@@ -1,5 +1,6 @@
 package com.laudhoot.web.services;
 
+import com.laudhoot.web.model.VoteTO;
 import com.laudhoot.web.util.BaseCallback;
 import com.laudhoot.web.model.ClientDetailTO;
 import com.laudhoot.web.model.CoordinateTO;
@@ -30,9 +31,8 @@ public interface LaudhootAPI {
     public static final String REST = "/rest";
     public static final String SHOUT = "/shout";
     public static final String CREATE = "/create";
-    public static final String LAUD = "/laud";
-    public static final String HOOT = "/hoot";
     public static final String REPLY = "/reply";
+    public static final String VOTE = "/vote";
 
     @GET(REST+GEOFENCE)
     public void findGeoFence(@Query("latitude") Double latitude, @Query("longitude") Double longitude,
@@ -46,22 +46,18 @@ public interface LaudhootAPI {
                                               @Query("shoutsAvailable") String shoutsAvailable,
                                               @Header("Authorization") String authorization);
 
+    @GET(REST+SHOUT+REPLY)
+    public List<ReplyTO> listRepliesOfShout(@Query("shoutId") String shoutId,
+                                              @Query("repliesAvailable") String repliesAvailable,
+                                              @Header("Authorization") String authorization);
+
     @POST(REST+SHOUT)
     public ShoutTO createShout(@Body ShoutTO shoutTO, @Header("Authorization") String authorization);
 
     @POST(REST+SHOUT+REPLY)
     public ReplyTO createReply(@Body ReplyTO replyTO, @Header("Authorization") String authorization);
 
-    @POST(REST+SHOUT+LAUD)
-    public Long laudShout(@Body Long shoutId, @Header("Authorization") String authorization);
-
-    @POST(REST+SHOUT+HOOT)
-    public Long hootShout(@Body Long shoutId, @Header("Authorization") String authorization);
-
-    @POST(REST+SHOUT+REPLY+LAUD)
-    public Long laudReply(@Body Long replyId, @Header("Authorization") String authorization);
-
-    @POST(REST+SHOUT+REPLY+HOOT)
-    public Long hootReply(@Body Long replyId, @Header("Authorization") String authorization);
+    @POST(REST+SHOUT+VOTE)
+    public void votePost(@Body VoteTO voteTO, @Header("Authorization") String authorization, BaseCallback<VoteTO> callback);
 
 }

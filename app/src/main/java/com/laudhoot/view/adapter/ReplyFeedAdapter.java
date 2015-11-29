@@ -1,16 +1,16 @@
 package com.laudhoot.view.adapter;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.laudhoot.R;
-import com.laudhoot.persistence.model.view.Shout;
+import com.laudhoot.persistence.model.view.Reply;
 import com.laudhoot.util.DateUtil;
-import com.laudhoot.view.fragment.ShoutFeedFragment;
+import com.laudhoot.util.Toaster;
+import com.laudhoot.view.activity.ViewShoutActivity;
 import com.laudhoot.web.model.VoteTO;
 import com.laudhoot.web.util.AuthorizationUtil;
 import com.laudhoot.web.util.BaseCallback;
@@ -21,47 +21,41 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Adapter to populate shout feed.
- *
- * Created by apurve on 9/5/15.
+ * Created by root on 14/11/15.
  */
-public class ShoutAdapter extends WebFeedAdapter<Shout, ShoutHolder> {
-
-    private ShoutFeedFragment fragment;
+public class ReplyFeedAdapter extends WebFeedAdapter<Reply, ReplyHolder> {
 
     private static LayoutInflater inflater = null;
 
-    public ShoutAdapter(ShoutFeedFragment fragment, List<Shout> shouts) {
-        super(fragment.getMainActivity().getApplicationContext(), shouts, R.layout.shout_feed_item, R.layout.endless_feed_empty);
-        this.fragment = fragment;
-        inflater = (LayoutInflater) fragment.getMainActivity().
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    private ViewShoutActivity activity;
+
+    public ReplyFeedAdapter(ViewShoutActivity activity, List<Reply> shouts) {
+        super(activity.getApplicationContext(), shouts, R.layout.reply_feed_item, R.layout.endless_feed_empty);
+        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.activity = activity;
     }
 
     @Override
-    public ShoutHolder createViewHolder(View convertView, final Shout shout) {
-        final ShoutHolder viewHolder = new ShoutHolder();
-        viewHolder.message = (TextView) convertView.findViewById(R.id.message);
-        viewHolder.laudhootDifference = (TextView) convertView.findViewById(R.id.laudhoot_difference);
-        viewHolder.comments = (TextView) convertView.findViewById(R.id.comments);
-        viewHolder.elapsedTime = (TextView) convertView.findViewById(R.id.elapsed_time);
-        viewHolder.laudCount = (TextView) convertView.findViewById(R.id.laud_count);
-        viewHolder.hootCount = (TextView) convertView.findViewById(R.id.hoot_count);
-        viewHolder.laud = (Button) convertView.findViewById(R.id.laud);
-        viewHolder.hoot = (Button) convertView.findViewById(R.id.hoot);
+    public ReplyHolder createViewHolder(View convertView, final Reply reply) {
+        final ReplyHolder viewHolder = new ReplyHolder();
+        viewHolder.message = (TextView) convertView.findViewById(R.id.reply_message);
+        viewHolder.laudhootDifference = (TextView) convertView.findViewById(R.id.reply_laudhoot_difference);
+        viewHolder.elapsedTime = (TextView) convertView.findViewById(R.id.reply_elapsed_time);
+        viewHolder.laudCount = (TextView) convertView.findViewById(R.id.reply_laud_count);
+        viewHolder.hootCount = (TextView) convertView.findViewById(R.id.reply_hoot_count);
+        viewHolder.laud = (Button) convertView.findViewById(R.id.reply_laud);
+        viewHolder.hoot = (Button) convertView.findViewById(R.id.reply_hoot);
         return viewHolder;
     }
 
     @Override
-    public void updateViewHolder(ShoutHolder viewHolder, Shout item) {
+    public void updateViewHolder(ReplyHolder viewHolder, Reply item) {
         viewHolder.message.setText(item.getMessage());
         if(item.getLaudCount() == null || item.getHootCount() == null) {
             viewHolder.laudhootDifference.setText("0");
         } else {
             viewHolder.laudhootDifference.setText(String.valueOf(item.getLaudCount() - item.getHootCount()));
         }
-
-        viewHolder.comments.setText(item.getRepliesCount()+" comments");
 
         if(item.getCreatedOn() == null) {
             viewHolder.elapsedTime.setText("Just Now");
@@ -96,40 +90,40 @@ public class ShoutAdapter extends WebFeedAdapter<Shout, ShoutHolder> {
         }
     }
 
-    private void setLaudOnClickListener(final ShoutHolder viewHolder, final long shoutId) {
+    private void setLaudOnClickListener(final ReplyHolder viewHolder, final long replyId) {
         viewHolder.laud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voteShout(viewHolder, shoutId, true);
+                voteReply(viewHolder, replyId, true);
                 }
         });
     }
 
-    private void setHootOnClickListener(final ShoutHolder viewHolder, final long shoutId) {
+    private void setHootOnClickListener(final ReplyHolder viewHolder, final long replyId) {
         viewHolder.hoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voteShout(viewHolder, shoutId, false);
-                }
+                voteReply(viewHolder, replyId, false);
+            }
         });
     }
 
     @Override
     public void updateEmptyViewHolder(EmptyViewHolder viewHolder) {
-        viewHolder.title.setText(R.string.shout_feed_empty_title);
-        viewHolder.message.setText(R.string.shout_feed_empty_message);
+        viewHolder.title.setText(R.string.reply_feed_empty_title);
+        viewHolder.message.setText(R.string.reply_feed_empty_message);
     }
 
-    private void voteShout(final ShoutHolder viewHolder, final long shoutId, final Boolean isLaud) {
+    private void voteReply(final ReplyHolder viewHolder, final long replyId, final Boolean isLaud) {
         viewHolder.laud.setEnabled(false);
         viewHolder.hoot.setEnabled(false);
-        VoteTO voteTO = new VoteTO(shoutId, isLaud);
-        fragment.getMainActivity().getLaudhootApiClient().votePost(voteTO,
-                AuthorizationUtil.authorizationToken(fragment.getMainActivity().getClientDetailsRepository().findByClientId(fragment.getMainActivity().getClientId())),
-                new BaseCallback<VoteTO>(fragment.getMainActivity().getApplicationContext()) {
+        VoteTO voteTO = new VoteTO(replyId, isLaud);
+        activity.getLaudhootApiClient().votePost(voteTO,
+                AuthorizationUtil.authorizationToken(activity.getClientDetailsRepository().findByClientId(activity.getClientId())),
+                new BaseCallback<VoteTO>(activity.getApplicationContext()) {
                     @Override
                     protected void success(VoteTO voteTO, Response response, Context context) {
-                        fragment.shoutRepository.vote(voteTO.getPostId(), voteTO.getIsLaud());
+                        activity.replyRepository.vote(voteTO.getPostId(), voteTO.getIsLaud());
                         viewHolder.updateViewFromVote(voteTO.getIsLaud());
                     }
 
@@ -143,12 +137,11 @@ public class ShoutAdapter extends WebFeedAdapter<Shout, ShoutHolder> {
 
 }
 
-class ShoutHolder extends WebFeedAdapter.ViewHolder {
+class ReplyHolder extends WebFeedAdapter.ViewHolder {
     TextView message;
     TextView laudhootDifference;
     Button laud;
     Button hoot;
-    TextView comments;
     TextView laudCount;
     TextView hootCount;
     TextView elapsedTime;
@@ -170,4 +163,5 @@ class ShoutHolder extends WebFeedAdapter.ViewHolder {
             this.laud.setEnabled(true);
         }
     }
+
 }

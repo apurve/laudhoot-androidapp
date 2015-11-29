@@ -7,6 +7,12 @@
     <dimen name="message">17sp</dimen>
     <dimen name="label">13sp</dimen>
     <dimen name="laudhoot_count">17sp</dimen>
-    <dimen name="arrow_button">25dp</dimen>
+    <dimen name="arrow_button">35dp</dimen>
+
+
+    <dimen name="reply_message">14sp</dimen>
+    <dimen name="reply_label">10sp</dimen>
+    <dimen name="reply_laudhoot_count">14sp</dimen>
+    <dimen name="reply_arrow_button">22dp</dimen>
 
 </resources>

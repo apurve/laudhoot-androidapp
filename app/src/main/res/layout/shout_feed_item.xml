@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="fill_vertical"
+    android:background="@drawable/list_row_selector" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="fill_horizontal">
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/label"
+            android:textSize="@dimen/message"
+            android:layout_weight="9" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/laud"
+                android:background="@drawable/arrow_inactive"
+                android:layout_width="@dimen/arrow_button"
+                android:layout_height="@dimen/arrow_button"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="false"
+                android:gravity="top" />
+
+            <TextView
+                android:id="@+id/laudhoot_difference"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:textColor="@color/laudhoot_theme_color"
+                android:layout_weight="2"
+                android:textSize="@dimen/laudhoot_count"
+                android:layout_gravity="center"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/hoot"
+                android:background="@drawable/arrow_inactive"
+                android:layout_width="@dimen/arrow_button"
+                android:layout_height="@dimen/arrow_button"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="false"
+                android:gravity="bottom"
+                android:rotation="0" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
+        <TextView
+            android:id="@+id/hoot_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/label"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:id="@+id/laud_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="@dimen/label"
+            android:layout_toStartOf="@id/hoot_count"
+            android:layout_toLeftOf="@id/hoot_count"/>
+
+        <TextView
+            android:id="@+id/comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:textColor="@color/laudhoot_theme_color"
+            android:textSize="@dimen/label"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/elapsed_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:textColor="@color/label"
+            android:textSize="@dimen/label"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true" />
+
+    </RelativeLayout>
+
+</LinearLayout>

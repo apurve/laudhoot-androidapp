@@ -26,6 +26,8 @@ public class Reply extends Post<ReplyTO> {
     public void update(ReplyTO transferObject) {
         this.setLaudCount(transferObject.getLaudCount());
         this.setHootCount(transferObject.getHootCount());
+        this.setVoted(transferObject.isVoted());
+        this.setIsLaudVote(transferObject.getIsLaudVote());
     }
 
     public Shout getShout() {

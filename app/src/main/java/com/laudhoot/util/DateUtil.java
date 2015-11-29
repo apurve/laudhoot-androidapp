@@ -26,13 +26,13 @@ public class DateUtil {
         if (milliseconds / FOR_MILLIS_TO_MINUTES == 0l) {
             return "Just now";
         } else if (milliseconds / FOR_MILLIS_TO_HOURS == 0l) {
-            return (milliseconds / FOR_MILLIS_TO_MINUTES) + "M";
+            return (milliseconds / FOR_MILLIS_TO_MINUTES) + "m";
         } else if (milliseconds / FOR_MILLIS_TO_DAYS == 0l) {
-            return (milliseconds / FOR_MILLIS_TO_HOURS) + "H";
+            return (milliseconds / FOR_MILLIS_TO_HOURS) + "h";
         } else if (milliseconds / FOR_MILLIS_TO_WEEKS == 0l) {
-            return (milliseconds / FOR_MILLIS_TO_DAYS) + "D";
+            return (milliseconds / FOR_MILLIS_TO_DAYS) + "d";
         } else if (milliseconds / FOR_MILLIS_TO_MONTHS == 0l) {
-            return (milliseconds / FOR_MILLIS_TO_WEEKS) + "W";
+            return (milliseconds / FOR_MILLIS_TO_WEEKS) + "w";
         } else if (milliseconds / FOR_MILLIS_TO_YEARS == 0l) {
             return (milliseconds / FOR_MILLIS_TO_MONTHS) + "M";
         } else {

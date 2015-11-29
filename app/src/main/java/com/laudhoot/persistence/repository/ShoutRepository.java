@@ -50,4 +50,16 @@ public class ShoutRepository extends ActiveAndroidRepository {
         }
         return reply;
     }
+
+    public void vote(Long shoutId, boolean isLaud) {
+        Shout shout = findCached(shoutId);
+        shout.setVoted(true);
+        if(isLaud) {
+            shout.setLaudCount(shout.getLaudCount()+1);
+            shout.setIsLaudVote(true);
+        } else {
+            shout.setHootCount(shout.getHootCount()+1);
+            shout.setIsLaudVote(false);
+        }
+    }
 }

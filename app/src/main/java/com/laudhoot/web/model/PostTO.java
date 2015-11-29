@@ -13,6 +13,10 @@ public class PostTO extends BaseTO {
 
     private Long hootCount;
 
+    private boolean voted;
+
+    private Boolean isLaudVote;
+
     public PostTO() {
         super();
     }
@@ -62,4 +66,19 @@ public class PostTO extends BaseTO {
         this.hootCount = hootCount;
     }
 
+    public boolean isVoted() {
+        return voted;
+    }
+
+    public void setVoted(boolean voted) {
+        this.voted = voted;
+    }
+
+    public Boolean getIsLaudVote() {
+        return isLaudVote;
+    }
+
+    public void setIsLaudVote(Boolean isLaudVote) {
+        this.isLaudVote = isLaudVote;
+    }
 }

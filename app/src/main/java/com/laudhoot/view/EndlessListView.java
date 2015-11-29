@@ -81,6 +81,7 @@ public class EndlessListView<T> extends ListView implements AbsListView.OnScroll
     public void noDataAvailable() {
         this.removeFooterView(footer);
         isLoading = false;
+        this.setOnScrollListener(null);
     }
 
     public static interface EndlessListener {

@@ -49,8 +49,10 @@
     <string name="hoot">hoot</string>
     <string name="wifi">Wi-Fi</string>
     <string name="data">2G/3G</string>
-    <string name="geofence_feed_empty_title">Shouts not found.</string>
-    <string name="geofence_feed_empty_message">Shouts could not be found. This can happen when location services are disabled or were just turned on. If they were just turned on it may take a moment to get the location. Give it a few seconds and then refresh the feed by pulling down on this message.</string>
+    <string name="shout_feed_empty_title">Shouts not found.</string>
+    <string name="shout_feed_empty_message">Shouts could not be found. This can happen when location services are disabled or were just turned on. If they were just turned on it may take a moment to get the location. Give it a few seconds and then refresh the feed by pulling down on this message.</string>
+    <string name="reply_feed_empty_title">Replies not found.</string>
+    <string name="reply_feed_empty_message">Replies could not be found. This can happen when location services are disabled or were just turned on. If they were just turned on it may take a moment to get the location. Give it a few seconds and then refresh the feed by pulling down on this message.</string>
     <string name="enable_data_network">Data services must be enabled to laud/hoot. Enable data services?</string>
     <string name="data_network_not_enabled">Data services must be enabled for laudhoot.</string>
     <string name="title_enable_data_network">Enable Data Services</string>
@@ -74,6 +76,7 @@
     <string name="shout_text_empty">Type whats on your mind.</string>
     <string name="shout_something">Shout about something...</string>
     <string name="error_loading_shouts">Cannot load more shouts at this moment</string>
+    <string name="error_loading_replies">Cannot load more replies at this moment</string>
     <string name="title_activity_view_shout">Shout</string>
     <string name="action_refresh">Refresh</string>
 
