@@ -50,7 +50,7 @@ public class EndlessListView<T> extends ListView implements AbsListView.OnScroll
                 && visibleItemCount + firstVisibleItem >= totalItemCount) {
             addFooterView(footer);
             isLoading = true;
-            listener.loadData();
+            listener.loadData(adapter.getCount());
         }
     }
 
@@ -84,13 +84,22 @@ public class EndlessListView<T> extends ListView implements AbsListView.OnScroll
         this.setOnScrollListener(null);
     }
 
+    public void refresh() {
+        adapter.clear();
+        isLoading = true;
+        listener.loadData(0);
+        this.setOnScrollListener(this);
+    }
+
     public static interface EndlessListener {
-        public void loadData();
+        public void loadData(int count);
     }
 
     public static interface EndlessAdapter<T> extends ListAdapter {
+        public int getCount();
         public void notifyDataSetChanged();
         public void addAll(Collection<? extends T> collection);
+        public void clear();
     }
 
 }

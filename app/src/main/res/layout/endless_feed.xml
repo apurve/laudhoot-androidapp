@@ -1,15 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/endless_feed_swipe_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity" >
+    android:layout_height="match_parent">
 
     <com.laudhoot.view.EndlessListView
-        android:id="@+id/endless_feed_list"
+        android:id="@+id/endless_shouts_feed"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:divider="@color/list_divider"
         android:dividerHeight="0dp" />
 
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

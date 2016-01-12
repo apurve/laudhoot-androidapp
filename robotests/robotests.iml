@@ -48,23 +48,22 @@
     <orderEntry type="library" exported="" scope="TEST" name="httpcore-4.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="ant-launcher-1.8.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javawriter-2.5.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="okhttp-urlconnection-2.0.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="okio-1.0.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="classes" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="okhttp-urlconnection-2.0.0" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="_home_apurve_laudhoot_projects_android_app_build_intermediates_exploded_aar_com_google_android_gms_play_services_maps_7_0_0_classes_jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="eventbus-2.4.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="classes" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="_home_apurve_laudhoot_projects_android_app_build_intermediates_exploded_aar_com_google_android_gms_play_services_base_7_0_0_classes_jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="butterknife-6.0.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="dagger-compiler-1.2.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="okhttp-2.0.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="classes" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="_home_apurve_laudhoot_projects_android_app_build_intermediates_exploded_aar_com_android_support_appcompat_v7_22_0_0_classes_jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="guava-15.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="retrofit-1.9.0" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="dagger-1.2.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="gson-2.3.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="classes" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="classes" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="internal_impl-22.0.0" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="_home_apurve_laudhoot_projects_android_app_build_intermediates_exploded_aar_com_google_android_gms_play_services_location_7_0_0_classes_jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="_home_apurve_laudhoot_projects_android_app_build_intermediates_exploded_aar_com_android_support_support_v4_22_0_0_classes_jar" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="activeandroid-3.1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="dagger-1.2.3-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.inject-1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="support-annotations-22.0.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="_home_apurve_laudhoot_projects_android_app_build_intermediates_classes_debug" level="project" />

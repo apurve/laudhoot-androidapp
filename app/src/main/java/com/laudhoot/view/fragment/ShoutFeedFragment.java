@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -55,6 +56,8 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
 
     private ShoutAdapter shoutFeedAdapter;
 
+    private SwipeRefreshLayout swipeContainer;
+
     @Inject
     public ShoutRepository shoutRepository;
 
@@ -93,7 +96,7 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.endless_feed, container, false);
-        listView = (EndlessListView) rootView.findViewById(R.id.endless_feed_list);
+        listView = (EndlessListView) rootView.findViewById(R.id.endless_shouts_feed);
         shoutFeedAdapter = new ShoutAdapter(ShoutFeedFragment.this, new ArrayList<Shout>());
         listView.setLoadingView(R.layout.loading_layout);
         listView.setAdapter(shoutFeedAdapter);
@@ -108,6 +111,16 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
                 startActivityForResult(intent, REQUEST_CODE_VIEW_SHOUT);
             }
         });
+
+        swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.endless_feed_swipe_container);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listView.refresh();
+            }
+        });
+        /*swipeContainer.setColorSchemeColors(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);*/
         return rootView;
     }
 
@@ -145,8 +158,7 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
             }
             case REQUEST_CODE_VIEW_SHOUT: {
                 // TODO - handle proper view update
-                shoutFeedAdapter.clear();
-                loadData();
+                listView.refresh();
                 break;
             }
             default:
@@ -156,8 +168,8 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
     }
 
     @Override
-    public void loadData() {
-        new ShoutsLoader().execute(activity.getGeofenceCode(), String.valueOf(shoutFeedAdapter.getCount()),
+    public void loadData(int count) {
+        new ShoutsLoader().execute(activity.getGeofenceCode(), String.valueOf(count),
                 AuthorizationUtil.authorizationToken(activity.getClientDetailsRepository().findByClientId(activity.getClientId())));
     }
 
@@ -193,6 +205,7 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
             } else {
                 listView.addNewData(result);
             }
+            swipeContainer.setRefreshing(false);
         }
 
     }

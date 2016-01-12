@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -86,7 +87,7 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
     @InjectView(R.id.post_reply)
     Button postReply;
 
-    @InjectView(R.id.endless_feed_list)
+    @InjectView(R.id.endless_replies_feed)
     EndlessListView repliesView;
 
     ReplyFeedAdapter repliesAdapter;
@@ -231,8 +232,8 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
     }
 
     @Override
-    public void loadData() {
-        new RepliesLoader().execute(String.valueOf(shoutId), String.valueOf(repliesAdapter.getCount()),
+    public void loadData(int count) {
+        new RepliesLoader().execute(String.valueOf(shoutId), String.valueOf(count),
                 AuthorizationUtil.authorizationToken(clientDetailsRepository.findByClientId(clientId)));
     }
 

@@ -3,11 +3,11 @@
 
     <string-array name="pages_titles">
         <item>Shout Feed</item>
-        <item>Test Fragment</item>
+        <item>Explore</item>
     </string-array>
     <string-array name="pages_classes">
         <item>com.laudhoot.view.fragment.ShoutFeedFragment</item>
-        <item>com.laudhoot.view.fragment.PlaceholderFragment</item>
+        <item>com.laudhoot.view.fragment.UserFragment</item>
     </string-array>
     <!--icons array can be left empty, titles will be shown for each page-->
     <string-array name="pages_icons">

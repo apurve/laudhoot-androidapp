@@ -7,7 +7,6 @@ import com.laudhoot.view.activity.MainActivity;
 import com.laudhoot.view.activity.PostShoutActivity;
 import com.laudhoot.view.activity.ViewShoutActivity;
 import com.laudhoot.view.fragment.ShoutFeedFragment;
-import com.laudhoot.view.fragment.PlaceholderFragment;
 import com.laudhoot.web.LaudhootRestClient;
 import com.laudhoot.web.services.ClientAPI;
 import com.laudhoot.web.services.LaudhootAPI;
@@ -28,7 +27,6 @@ import dagger.Provides;
         complete = false,
         library = true,
         injects = {
-                PlaceholderFragment.class,
                 ShoutFeedFragment.class,
                 InitializationActivity.class,
                 MainActivity.class,
