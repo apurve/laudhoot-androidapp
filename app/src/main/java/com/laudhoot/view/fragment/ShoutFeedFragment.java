@@ -200,7 +200,8 @@ public class ShoutFeedFragment extends Fragment implements EndlessListView.Endle
         protected void onPostExecute(List<Shout> result) {
             super.onPostExecute(result);
             if (result == null || result.size() < 1) {
-                activity.getToaster().makeToast(getString(R.string.error_loading_shouts));
+                if (Laudhoot.D)
+                    activity.getToaster().makeToast(getString(R.string.error_loading_shouts));
                 listView.noDataAvailable();
             } else {
                 listView.addNewData(result);

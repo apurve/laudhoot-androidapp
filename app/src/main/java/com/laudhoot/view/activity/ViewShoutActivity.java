@@ -303,7 +303,8 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
         protected void onPostExecute(List<Reply> result) {
             super.onPostExecute(result);
             if (result == null || result.size() < 1) {
-                toaster.makeToast(getString(R.string.error_loading_replies));
+                if (Laudhoot.D)
+                    toaster.makeToast(getString(R.string.error_loading_replies));
                 repliesView.noDataAvailable();
             } else {
                 repliesView.addNewData(result);
