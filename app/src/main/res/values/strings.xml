@@ -79,5 +79,6 @@
     <string name="error_loading_replies">Cannot load more replies at this moment</string>
     <string name="title_activity_view_shout">Shout</string>
     <string name="action_refresh">Refresh</string>
+    <string name="title_activity_user_shout">Your Shouts</string>
 
 </resources>

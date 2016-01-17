@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Notifications"
+        android:id="@+id/notifications"
+        android:padding="2dp"
+        android:editable="false"
+        android:inputType="none"
+        android:textColor="@color/laudhoot_theme_color" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/notifications_list" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="My Stuff"
+        android:id="@+id/my_stuff"
+        android:padding="2dp"
+        android:editable="false"
+        android:inputType="none"
+        android:textColor="@color/laudhoot_theme_color"
+        android:paddingLeft="5dp" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_stuff_list"
+        android:headerDividersEnabled="true"
+        android:footerDividersEnabled="true" />
+    
+</LinearLayout>

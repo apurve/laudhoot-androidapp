@@ -33,6 +33,7 @@ public interface LaudhootAPI {
     public static final String CREATE = "/create";
     public static final String REPLY = "/reply";
     public static final String VOTE = "/vote";
+    public static final String CLIENT = "/client";
 
     @GET(REST+GEOFENCE)
     public void findGeoFence(@Query("latitude") Double latitude, @Query("longitude") Double longitude,
@@ -43,6 +44,11 @@ public interface LaudhootAPI {
 
     @GET(REST+SHOUT)
     public List<ShoutTO> listShoutsOfGeoFence(@Query("geoFenceCode") String geoFenceCode,
+                                              @Query("shoutsAvailable") String shoutsAvailable,
+                                              @Header("Authorization") String authorization);
+
+    @GET(REST+SHOUT+CLIENT)
+    public List<ShoutTO> listShoutsOfClient(@Query("clientId") String clientId,
                                               @Query("shoutsAvailable") String shoutsAvailable,
                                               @Header("Authorization") String authorization);
 

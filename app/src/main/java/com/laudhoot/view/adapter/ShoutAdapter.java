@@ -1,5 +1,6 @@
 package com.laudhoot.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -7,15 +8,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
 import com.laudhoot.persistence.model.view.Shout;
+import com.laudhoot.persistence.repository.ClientDetailsRepository;
+import com.laudhoot.persistence.repository.ShoutRepository;
 import com.laudhoot.util.DateUtil;
 import com.laudhoot.view.fragment.ShoutFeedFragment;
 import com.laudhoot.web.model.VoteTO;
+import com.laudhoot.web.services.LaudhootAPI;
 import com.laudhoot.web.util.AuthorizationUtil;
 import com.laudhoot.web.util.BaseCallback;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -27,15 +34,24 @@ import retrofit.client.Response;
  */
 public class ShoutAdapter extends WebFeedAdapter<Shout, ShoutHolder> {
 
-    private ShoutFeedFragment fragment;
+    private Activity activity;
 
-    private static LayoutInflater inflater = null;
+    private String clientId;
 
-    public ShoutAdapter(ShoutFeedFragment fragment, List<Shout> shouts) {
-        super(fragment.getMainActivity().getApplicationContext(), shouts, R.layout.shout_feed_item, R.layout.endless_feed_empty);
-        this.fragment = fragment;
-        inflater = (LayoutInflater) fragment.getMainActivity().
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    @Inject
+    protected LaudhootAPI laudhootAPI;
+
+    @Inject
+    protected ClientDetailsRepository clientDetailsRepository;
+
+    @Inject
+    public ShoutRepository shoutRepository;
+
+    public ShoutAdapter(Activity activity, String clientId, List<Shout> shouts) {
+        super(activity.getApplicationContext(), shouts, R.layout.shout_feed_item, R.layout.endless_feed_empty);
+        this.activity = activity;
+        this.clientId = clientId;
+        ((Laudhoot) (activity.getApplication())).inject(this);
     }
 
     @Override
@@ -124,12 +140,12 @@ public class ShoutAdapter extends WebFeedAdapter<Shout, ShoutHolder> {
         viewHolder.laud.setEnabled(false);
         viewHolder.hoot.setEnabled(false);
         VoteTO voteTO = new VoteTO(shoutId, isLaud);
-        fragment.getMainActivity().getLaudhootApiClient().votePost(voteTO,
-                AuthorizationUtil.authorizationToken(fragment.getMainActivity().getClientDetailsRepository().findByClientId(fragment.getMainActivity().getClientId())),
-                new BaseCallback<VoteTO>(fragment.getMainActivity().getApplicationContext()) {
+        laudhootAPI.votePost(voteTO,
+                AuthorizationUtil.authorizationToken(clientDetailsRepository.findByClientId(clientId)),
+                new BaseCallback<VoteTO>(activity.getApplicationContext()) {
                     @Override
                     protected void success(VoteTO voteTO, Response response, Context context) {
-                        fragment.shoutRepository.vote(voteTO.getPostId(), voteTO.getIsLaud());
+                        shoutRepository.vote(voteTO.getPostId(), voteTO.getIsLaud());
                         viewHolder.updateViewFromVote(voteTO.getIsLaud());
                     }
 

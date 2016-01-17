@@ -6,7 +6,7 @@ package com.laudhoot.web;
  * Created by apurve on 29/12/14.
  */
 public class WebConstants {
-    public static final String BASE_URL = "http://192.168.1.5:8080/laudhoot";
+    public static final String BASE_URL = "http://192.168.1.11:8080/laudhoot";
     public static final int HTTP_TIMEOUT = 2;
     public static final String CLIENT_NAME = "laudhoot-android-app";
     public static final String CLIENT_GRANT_TYPE = "client_credentials";
