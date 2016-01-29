@@ -5,15 +5,12 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,22 +18,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
 import com.laudhoot.persistence.model.view.Notification;
-import com.laudhoot.persistence.model.view.Shout;
 import com.laudhoot.persistence.repository.NotificationRepository;
 import com.laudhoot.util.Toaster;
+import com.laudhoot.view.activity.ContactUsActivity;
 import com.laudhoot.view.activity.InitializationActivity;
-import com.laudhoot.view.activity.MainActivity;
 import com.laudhoot.view.activity.UserShoutsActivity;
 import com.laudhoot.view.activity.ViewShoutActivity;
 import com.laudhoot.web.WebConstants;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -53,6 +46,8 @@ public class UserFragment extends BaseFragment {
     private static final int REQUEST_CODE_USER_SHOUTS = 221;
 
     private static final int REQUEST_CODE_VIEW_SHOUT = 222;
+
+    private static final int REQUEST_CODE_CONTACT_US = 223;
 
     @Bind(R.id.my_stuff_list)
     ListView myStuffList;
@@ -275,6 +270,13 @@ public class UserFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0: {
+                        Intent intent = new Intent(getActivity(), ContactUsActivity.class);
+                        intent.putExtra(InitializationActivity.CLIENT_ID, activity.getClientId());
+                        intent.putExtra(InitializationActivity.GEOFENCE_CODE, activity.getGeofenceCode());
+                        Location currentLocation = getMainActivity().getLocation();
+                        intent.putExtra(ContactUsActivity.LATITUDE, currentLocation.getLatitude());
+                        intent.putExtra(ContactUsActivity.LONGITUDE, currentLocation.getLongitude());
+                        startActivityForResult(intent, REQUEST_CODE_CONTACT_US);
                         break;
                     }
                     case 1: {
@@ -284,6 +286,10 @@ public class UserFragment extends BaseFragment {
                         break;
                     }
                 }
+                /*"Contact Us"
+                        , "Rules and Info"
+                        , "Terms of Service"
+                        , "Privacy Policy"*/
             }
         });
     }

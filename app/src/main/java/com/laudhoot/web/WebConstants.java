@@ -16,4 +16,5 @@ public class WebConstants {
     public static final String SHARE_SUBJECT = "Hello,";
     public static final String TWITTER_URL = "https://www.twitter.com/laudhoot";
     public static final String FACEBOOK_URL = "https://www.facebook.com/laudhoot";
+    public static final String SUPPORT_EMAIL = "supportforandroid@laudhoot.com";
 }

@@ -10,6 +10,7 @@ import android.telephony.TelephonyManager;
 import com.laudhoot.Laudhoot;
 import com.laudhoot.util.LocationStateManager;
 import com.laudhoot.util.Toaster;
+import com.laudhoot.view.activity.ContactUsActivity;
 import com.laudhoot.view.activity.InitializationActivity;
 import com.laudhoot.util.NetworkStateManager;
 import com.laudhoot.view.activity.MainActivity;
@@ -17,7 +18,6 @@ import com.laudhoot.view.activity.PostShoutActivity;
 import com.laudhoot.view.activity.UserShoutsActivity;
 import com.laudhoot.view.activity.ViewShoutActivity;
 import com.laudhoot.view.fragment.ExploreFragment;
-import com.laudhoot.view.fragment.UserFragment;
 
 import javax.inject.Singleton;
 
@@ -41,7 +41,8 @@ import static android.content.Context.LOCATION_SERVICE;
                 PostShoutActivity.class,
                 ViewShoutActivity.class,
                 UserShoutsActivity.class,
-                ExploreFragment.class
+                ExploreFragment.class,
+                ContactUsActivity.class
         }
 )
 public class SystemServicesModule {

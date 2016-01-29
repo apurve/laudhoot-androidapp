@@ -83,6 +83,8 @@
     <string name="title_activity_view_shout">Shout</string>
     <string name="action_refresh">Refresh</string>
     <string name="title_activity_user_shout">Your Shouts</string>
+    <string name="title_activity_contact_us">Contact Us</string>
     <string name="no_notifications">You do not have any new notifications.</string>
-
+    <string name="describe_problem">Please describe your problem.</string>
+    <string name="read_faq">Have you read FAQs yet?</string>
 </resources>

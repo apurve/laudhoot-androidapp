@@ -46,6 +46,14 @@ public class NetworkStateManager {
         return false;
     }
 
+    public String getNetworkType() {
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null) {
+            return activeNetworkInfo.getTypeName();
+        }
+        return null;
+    }
+
     public void requestNetworkServicesEnable(Activity activity) {
         final Activity dialogActivity = activity;
         if (!isConnected()) {
