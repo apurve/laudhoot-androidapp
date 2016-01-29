@@ -69,6 +69,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.laudhoot.view.activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".view.activity.PlaceholderActivity"
+            android:label="@string/title_activity_contact_us"
+            android:parentActivityName=".view.activity.MainActivity"
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.laudhoot.view.activity.MainActivity" />
+        </activity>
 
         <meta-data
             android:name="AA_DB_NAME"

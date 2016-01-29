@@ -24,6 +24,7 @@ import com.laudhoot.persistence.repository.NotificationRepository;
 import com.laudhoot.util.Toaster;
 import com.laudhoot.view.activity.ContactUsActivity;
 import com.laudhoot.view.activity.InitializationActivity;
+import com.laudhoot.view.activity.PlaceholderActivity;
 import com.laudhoot.view.activity.UserShoutsActivity;
 import com.laudhoot.view.activity.ViewShoutActivity;
 import com.laudhoot.web.WebConstants;
@@ -48,6 +49,9 @@ public class UserFragment extends BaseFragment {
     private static final int REQUEST_CODE_VIEW_SHOUT = 222;
 
     private static final int REQUEST_CODE_CONTACT_US = 223;
+
+    private static final int REQUEST_CODE_PLACEHOLDER = 224;
+
 
     @Bind(R.id.my_stuff_list)
     ListView myStuffList;
@@ -280,16 +284,27 @@ public class UserFragment extends BaseFragment {
                         break;
                     }
                     case 1: {
+                        Intent intent = new Intent(getActivity(), PlaceholderActivity.class);
+                        intent.putExtra(PlaceholderActivity.PLACEHOLDER_KEY, PlaceholderActivity.PC_RULES_AND_INFO);
+                        startActivityForResult(intent, REQUEST_CODE_PLACEHOLDER);
+                        break;
+                    }
+                    case 2: {
+                        Intent intent = new Intent(getActivity(), PlaceholderActivity.class);
+                        intent.putExtra(PlaceholderActivity.PLACEHOLDER_KEY, PlaceholderActivity.PC_TERMS_OF_SERVICE);
+                        startActivityForResult(intent, REQUEST_CODE_PLACEHOLDER);
+                        break;
+                    }
+                    case 3: {
+                        Intent intent = new Intent(getActivity(), PlaceholderActivity.class);
+                        intent.putExtra(PlaceholderActivity.PLACEHOLDER_KEY, PlaceholderActivity.PC_PRIVACY_POLICY);
+                        startActivityForResult(intent, REQUEST_CODE_PLACEHOLDER);
                         break;
                     }
                     default: {
                         break;
                     }
                 }
-                /*"Contact Us"
-                        , "Rules and Info"
-                        , "Terms of Service"
-                        , "Privacy Policy"*/
             }
         });
     }

@@ -188,7 +188,7 @@ public class ContactUsActivity extends ActionBarActivity {
                         }
                         ei.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
                     }
-                    startActivityForResult(Intent.createChooser(ei, "Choose an email application..."), SEND_EMAIL_TO_SUPPORT);
+                    startActivityForResult(Intent.createChooser(ei, "Choose an email app..."), SEND_EMAIL_TO_SUPPORT);
                 } else {
                     toaster.makeToast(getString(R.string.describe_problem));
                 }

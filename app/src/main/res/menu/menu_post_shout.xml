@@ -7,5 +7,5 @@
         android:title="@string/post"
         android:icon="@drawable/ic_send"
         android:orderInCategory="100"
-        app:showAsAction="always" />
+        app:showAsAction="always|withText" />
 </menu>
