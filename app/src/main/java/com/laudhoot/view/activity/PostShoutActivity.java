@@ -27,12 +27,12 @@ import com.laudhoot.web.util.WebTask;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 public class PostShoutActivity extends ActionBarActivity {
 
-    @InjectView(R.id.shout_text)
+    @Bind(R.id.shout_text)
     EditText shout;
 
     @Inject
@@ -58,7 +58,7 @@ public class PostShoutActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_shout);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         ((Laudhoot) (getApplication())).inject(this);
         clientId = getIntent().getStringExtra(InitializationActivity.CLIENT_ID);
         geofenceCode = getIntent().getStringExtra(InitializationActivity.GEOFENCE_CODE);

@@ -33,7 +33,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.Bind;
 
 /**
  * Created by root on 14/1/16.
@@ -46,12 +46,12 @@ public class UserShoutsActivity extends ActionBarActivity implements EndlessList
 
     private String geofenceCode;
 
-    @InjectView(R.id.endless_shouts_feed)
+    @Bind(R.id.endless_shouts_feed)
     EndlessListView<Shout> listView;
 
     private ShoutAdapter shoutFeedAdapter;
 
-    @InjectView(R.id.endless_feed_swipe_container)
+    @Bind(R.id.endless_feed_swipe_container)
     SwipeRefreshLayout swipeContainer;
 
     @Inject
@@ -70,7 +70,7 @@ public class UserShoutsActivity extends ActionBarActivity implements EndlessList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.endless_feed);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         ((Laudhoot) (getApplication())).inject(this);
 
         clientId = getIntent().getStringExtra(InitializationActivity.CLIENT_ID);

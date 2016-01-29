@@ -13,14 +13,17 @@ public class NotificationTO extends BaseTO {
 
     private int actionCode;
 
+    private String data;
+
     public NotificationTO() {
         super();
     }
 
-    public NotificationTO(String message, int actionCode) {
+    public NotificationTO(String message, int actionCode, String data) {
         super();
         this.message = message;
         this.actionCode = actionCode;
+        this.data = data;
     }
 
     public String getMessage() {
@@ -37,6 +40,14 @@ public class NotificationTO extends BaseTO {
 
     public void setActionCode(int actionCode) {
         this.actionCode = actionCode;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
 }

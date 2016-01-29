@@ -11,4 +11,9 @@ public class WebConstants {
     public static final String CLIENT_NAME = "laudhoot-android-app";
     public static final String CLIENT_GRANT_TYPE = "client_credentials";
     public static final String TOKEN_RESPONSE_TYPE = "token";
+
+    public static final String SHARE_TEXT = "Shout out loud with LAUDHOOT app: shout.laudhoot.com";
+    public static final String SHARE_SUBJECT = "Hello,";
+    public static final String TWITTER_URL = "https://www.twitter.com/laudhoot";
+    public static final String FACEBOOK_URL = "https://www.facebook.com/laudhoot";
 }

@@ -36,8 +36,8 @@ import com.laudhoot.web.model.ClientDetailTO;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -62,7 +62,7 @@ public class InitializationActivity extends Activity implements LocationAware, L
 
     private ClientDetails clientDetails;
 
-    @InjectView(R.id.init_message)
+    @Bind(R.id.init_message)
     public TextView initMessages;
 
     @Inject
@@ -93,7 +93,7 @@ public class InitializationActivity extends Activity implements LocationAware, L
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initialization);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         ((Laudhoot) (getApplication())).inject(this);
         locationApi = new LocationApi(this, this);
         locationApi.create(savedInstanceState);

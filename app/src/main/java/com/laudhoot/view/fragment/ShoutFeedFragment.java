@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,6 @@ import com.laudhoot.persistence.model.view.Shout;
 import com.laudhoot.persistence.repository.ShoutRepository;
 import com.laudhoot.view.EndlessListView;
 import com.laudhoot.view.activity.InitializationActivity;
-import com.laudhoot.view.activity.MainActivity;
 import com.laudhoot.view.activity.PostShoutActivity;
 import com.laudhoot.view.activity.ViewShoutActivity;
 import com.laudhoot.view.adapter.ShoutAdapter;
@@ -39,7 +39,7 @@ import javax.inject.Inject;
  */
 public class ShoutFeedFragment extends BaseFragment implements EndlessListView.EndlessListener {
 
-    private static final int REQUEST_CODE_POST_SHOUT = 11;
+    private static final int REQUEST_CODE_SHOUT = 11;
 
     private static final int REQUEST_CODE_VIEW_SHOUT = 12;
 
@@ -86,9 +86,14 @@ public class ShoutFeedFragment extends BaseFragment implements EndlessListView.E
                 listView.refresh();
             }
         });
-        swipeContainer.setColorSchemeColors(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
-                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        swipeContainer.setColorSchemeColors(R.color.laudhoot_theme_color);
         return rootView;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.post_shout_button).setVisible(true);
     }
 
     @Override
@@ -98,19 +103,19 @@ public class ShoutFeedFragment extends BaseFragment implements EndlessListView.E
                 Intent intent = new Intent(activity, PostShoutActivity.class);
                 intent.putExtra(InitializationActivity.CLIENT_ID, activity.getClientId());
                 intent.putExtra(InitializationActivity.GEOFENCE_CODE, activity.getGeofenceCode());
-                startActivityForResult(intent, REQUEST_CODE_POST_SHOUT);
-                break;
+                startActivityForResult(intent, REQUEST_CODE_SHOUT);
+                return true;
             }
             default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
-        return true;
+        return false;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQUEST_CODE_POST_SHOUT: {
+            case REQUEST_CODE_SHOUT: {
                 if (resultCode == Activity.RESULT_OK) {
                     Shout shout = shoutRepository.findCached(data.getExtras().getLong(SHOUT_ID));
                     shoutFeedAdapter.insert(shout, 0);

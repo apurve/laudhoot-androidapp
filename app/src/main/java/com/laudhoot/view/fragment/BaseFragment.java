@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Menu;
 
 import com.laudhoot.Laudhoot;
+import com.laudhoot.R;
 import com.laudhoot.view.activity.MainActivity;
 
 /**
@@ -41,6 +43,7 @@ public abstract class BaseFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((Laudhoot) (getMainActivity().getApplication())).inject(this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -53,6 +56,12 @@ public abstract class BaseFragment extends Fragment {
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.post_shout_button).setVisible(false);
+        super.onPrepareOptionsMenu(menu);
     }
 
 }

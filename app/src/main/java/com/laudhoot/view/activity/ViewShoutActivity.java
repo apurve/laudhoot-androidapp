@@ -44,8 +44,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -57,37 +57,37 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
 
     private Long shoutId;
 
-    @InjectView(R.id.message)
+    @Bind(R.id.message)
     TextView message;
 
-    @InjectView(R.id.laudhoot_difference)
+    @Bind(R.id.laudhoot_difference)
     TextView laudhootDifference;
 
-    @InjectView(R.id.laud)
+    @Bind(R.id.laud)
     Button laud;
 
-    @InjectView(R.id.hoot)
+    @Bind(R.id.hoot)
     Button hoot;
 
-    @InjectView(R.id.comments)
+    @Bind(R.id.comments)
     TextView comments;
 
-    @InjectView(R.id.laud_count)
+    @Bind(R.id.laud_count)
     TextView laudCount;
 
-    @InjectView(R.id.hoot_count)
+    @Bind(R.id.hoot_count)
     TextView hootCount;
 
-    @InjectView(R.id.elapsed_time)
+    @Bind(R.id.elapsed_time)
     TextView elapsedTime;
 
-    @InjectView(R.id.reply_text)
+    @Bind(R.id.reply_text)
     TextView reply;
 
-    @InjectView(R.id.post_reply)
+    @Bind(R.id.post_reply)
     Button postReply;
 
-    @InjectView(R.id.endless_replies_feed)
+    @Bind(R.id.endless_replies_feed)
     EndlessListView repliesView;
 
     ReplyFeedAdapter repliesAdapter;
@@ -114,7 +114,7 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_shout);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         ((Laudhoot) (getApplication())).inject(this);
         shoutId = getIntent().getLongExtra(ShoutFeedFragment.SHOUT_ID, 0);
         clientId = getIntent().getStringExtra(InitializationActivity.CLIENT_ID);

@@ -4,13 +4,16 @@
     <string-array name="pages_titles">
         <item>Shout Feed</item>
         <item>Explore</item>
+        <item>Important Stuff</item>
     </string-array>
     <string-array name="pages_classes">
         <item>com.laudhoot.view.fragment.ShoutFeedFragment</item>
+        <item>com.laudhoot.view.fragment.ExploreFragment</item>
         <item>com.laudhoot.view.fragment.UserFragment</item>
     </string-array>
     <!--icons array can be left empty, titles will be shown for each page-->
     <string-array name="pages_icons">
+        <item>ic_launcher</item>
         <item>ic_launcher</item>
         <item>ic_launcher</item>
     </string-array>
@@ -80,5 +83,6 @@
     <string name="title_activity_view_shout">Shout</string>
     <string name="action_refresh">Refresh</string>
     <string name="title_activity_user_shout">Your Shouts</string>
+    <string name="no_notifications">You do not have any new notifications.</string>
 
 </resources>
