@@ -1,6 +1,5 @@
 package com.laudhoot.view.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -21,7 +20,6 @@ import com.laudhoot.util.Toaster;
 import com.laudhoot.view.EndlessListView;
 import com.laudhoot.view.adapter.ShoutAdapter;
 import com.laudhoot.view.fragment.BaseFragment;
-import com.laudhoot.view.fragment.ShoutFeedFragment;
 import com.laudhoot.web.model.ShoutTO;
 import com.laudhoot.web.services.LaudhootAPI;
 import com.laudhoot.web.util.AuthorizationUtil;
@@ -46,7 +44,7 @@ public class UserShoutsActivity extends ActionBarActivity implements EndlessList
 
     private String geofenceCode;
 
-    @Bind(R.id.endless_shouts_feed)
+    @Bind(R.id.endless_feed_view)
     EndlessListView<Shout> listView;
 
     private ShoutAdapter shoutFeedAdapter;

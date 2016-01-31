@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.laudhoot.view.EndlessListView
-        android:id="@+id/endless_shouts_feed"
+        android:id="@+id/endless_feed_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:divider="@color/list_divider"

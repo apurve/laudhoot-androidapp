@@ -48,6 +48,7 @@ public class ContactUsActivity extends ActionBarActivity {
     private static final int LOAD_SCREENSHOT_TWO = 552;
     private static final int LOAD_SCREENSHOT_THREE = 553;
     private static final int SEND_EMAIL_TO_SUPPORT = 554;
+    private static final int READ_FAQ = 555;
 
     private String clientId;
     private String geofenceCode;
@@ -106,11 +107,10 @@ public class ContactUsActivity extends ActionBarActivity {
 
     @OnClick(R.id.read_faq)
     public void readFAQ(Button readFAQ) {
-        toaster.makeToast("It Works.");
         viewedFAQ = true;
-        /*Intent intent = new Intent(this, ContactUs.class);
-        intent.putExtra(InitializationActivity.CLIENT_ID, activity.getClientId());
-        startActivityForResult(intent, REQUEST_CODE_CONTACT_US);*/
+        Intent intent = new Intent(this, FAQSActivity.class);
+        intent.putExtra(InitializationActivity.CLIENT_ID, clientId);
+        startActivityForResult(intent, READ_FAQ);
     }
 
     @OnClick(R.id.problem_screenhot1)

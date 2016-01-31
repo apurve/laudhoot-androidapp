@@ -32,6 +32,13 @@ public abstract class WebFeedAdapter<I, H extends WebFeedAdapter.ViewHolder> ext
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    public WebFeedAdapter(Context context, List<I> items, int feedItemId) {
+        super(context, feedItemId, items);
+        this.feedItemId = feedItemId;
+        this.emptyItemId = R.layout.endless_feed_empty;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (getCount() < 1) {

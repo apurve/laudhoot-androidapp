@@ -6,6 +6,7 @@ import com.laudhoot.persistence.repository.NotificationRepository;
 import com.laudhoot.persistence.repository.ReplyRepository;
 import com.laudhoot.persistence.repository.ShoutRepository;
 import com.laudhoot.service.GeofenceTransitionsIntentService;
+import com.laudhoot.view.activity.FAQSActivity;
 import com.laudhoot.view.activity.InitializationActivity;
 import com.laudhoot.view.activity.MainActivity;
 import com.laudhoot.view.activity.PostShoutActivity;
@@ -38,7 +39,8 @@ import dagger.Provides;
                 ViewShoutActivity.class,
                 UserShoutsActivity.class,
                 ShoutAdapter.class,
-                UserFragment.class
+                UserFragment.class,
+                FAQSActivity.class
         }
 )
 public class PersistenceServicesModule {

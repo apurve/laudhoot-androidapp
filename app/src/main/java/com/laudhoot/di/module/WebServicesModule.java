@@ -2,6 +2,7 @@ package com.laudhoot.di.module;
 
 import android.app.Application;
 
+import com.laudhoot.view.activity.FAQSActivity;
 import com.laudhoot.view.activity.InitializationActivity;
 import com.laudhoot.view.activity.MainActivity;
 import com.laudhoot.view.activity.PostShoutActivity;
@@ -35,7 +36,8 @@ import dagger.Provides;
                 PostShoutActivity.class,
                 ViewShoutActivity.class,
                 UserShoutsActivity.class,
-                ShoutAdapter.class
+                ShoutAdapter.class,
+                FAQSActivity.class
         }
 )
 public class WebServicesModule {

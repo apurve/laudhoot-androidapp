@@ -63,7 +63,7 @@ public class ShoutFeedFragment extends BaseFragment implements EndlessListView.E
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.endless_feed, container, false);
-        listView = (EndlessListView) rootView.findViewById(R.id.endless_shouts_feed);
+        listView = (EndlessListView) rootView.findViewById(R.id.endless_feed_view);
         shoutFeedAdapter = new ShoutAdapter(getMainActivity(), getMainActivity().getClientId(), new ArrayList<Shout>());
         listView.setLoadingView(R.layout.loading_layout);
         listView.setAdapter(shoutFeedAdapter);

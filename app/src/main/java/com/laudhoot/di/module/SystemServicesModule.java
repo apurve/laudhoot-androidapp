@@ -11,6 +11,7 @@ import com.laudhoot.Laudhoot;
 import com.laudhoot.util.LocationStateManager;
 import com.laudhoot.util.Toaster;
 import com.laudhoot.view.activity.ContactUsActivity;
+import com.laudhoot.view.activity.FAQSActivity;
 import com.laudhoot.view.activity.InitializationActivity;
 import com.laudhoot.util.NetworkStateManager;
 import com.laudhoot.view.activity.MainActivity;
@@ -42,7 +43,8 @@ import static android.content.Context.LOCATION_SERVICE;
                 ViewShoutActivity.class,
                 UserShoutsActivity.class,
                 ExploreFragment.class,
-                ContactUsActivity.class
+                ContactUsActivity.class,
+                FAQSActivity.class
         }
 )
 public class SystemServicesModule {

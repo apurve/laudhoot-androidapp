@@ -52,6 +52,8 @@
     <string name="hoot">hoot</string>
     <string name="wifi">Wi-Fi</string>
     <string name="data">2G/3G</string>
+    <string name="faq_feed_empty_title">FAQs not found.</string>
+    <string name="faq_feed_empty_message">FAQs could not be found. This can happen when network services are disabled or were just turned on. If they were just turned on it may take a moment. Give it a few seconds and then refresh the feed by pulling down on this message.</string>
     <string name="shout_feed_empty_title">Shouts not found.</string>
     <string name="shout_feed_empty_message">Shouts could not be found. This can happen when location services are disabled or were just turned on. If they were just turned on it may take a moment to get the location. Give it a few seconds and then refresh the feed by pulling down on this message.</string>
     <string name="reply_feed_empty_title">Replies not found.</string>
@@ -79,6 +81,7 @@
     <string name="shout_text_empty">Type whats on your mind.</string>
     <string name="shout_something">Shout about something...</string>
     <string name="error_loading_shouts">Cannot load more shouts at this moment</string>
+    <string name="error_loading_faqs">Cannot load more faqs at this moment</string>
     <string name="error_loading_replies">Cannot load more replies at this moment</string>
     <string name="title_activity_view_shout">Shout</string>
     <string name="action_refresh">Refresh</string>
@@ -87,6 +90,7 @@
     <string name="title_terms_of_service">Terms of Service</string>
     <string name="title_privacy_policy">Privacy Policy</string>
     <string name="title_rules_and_info">Rules and Info</string>
+    <string name="title_faqs">Frequently Asked Questions</string>
     <string name="no_notifications">You do not have any new notifications.</string>
     <string name="describe_problem">Please describe your problem.</string>
     <string name="read_faq">Have you read FAQs yet?</string>

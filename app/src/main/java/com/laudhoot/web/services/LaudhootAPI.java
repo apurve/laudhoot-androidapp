@@ -1,5 +1,6 @@
 package com.laudhoot.web.services;
 
+import com.laudhoot.web.model.FAQTO;
 import com.laudhoot.web.model.VoteTO;
 import com.laudhoot.web.util.BaseCallback;
 import com.laudhoot.web.model.ClientDetailTO;
@@ -30,10 +31,12 @@ public interface LaudhootAPI {
 
     public static final String REST = "/rest";
     public static final String SHOUT = "/shout";
+    public static final String REFRESH = "/refresh";
     public static final String CREATE = "/create";
     public static final String REPLY = "/reply";
     public static final String VOTE = "/vote";
     public static final String CLIENT = "/client";
+    public static final String FAQS = "/faqs";
 
     @GET(REST+GEOFENCE)
     public void findGeoFence(@Query("latitude") Double latitude, @Query("longitude") Double longitude,
@@ -46,6 +49,10 @@ public interface LaudhootAPI {
     public List<ShoutTO> listShoutsOfGeoFence(@Query("geoFenceCode") String geoFenceCode,
                                               @Query("shoutsAvailable") String shoutsAvailable,
                                               @Header("Authorization") String authorization);
+
+    @GET(REST+SHOUT+REFRESH)
+    public void refreshShout(@Query("id") Long id, @Header("Authorization") String authorization,
+                                BaseCallback<ShoutTO> callback);
 
     @GET(REST+SHOUT+CLIENT)
     public List<ShoutTO> listShoutsOfClient(@Query("clientId") String clientId,
@@ -65,5 +72,9 @@ public interface LaudhootAPI {
 
     @POST(REST+SHOUT+VOTE)
     public void votePost(@Body VoteTO voteTO, @Header("Authorization") String authorization, BaseCallback<VoteTO> callback);
+
+    @GET(REST+FAQS)
+    public List<FAQTO> listFAQs(@Query("faqsAvailable") String shoutsAvailable,
+                                            @Header("Authorization") String authorization);
 
 }

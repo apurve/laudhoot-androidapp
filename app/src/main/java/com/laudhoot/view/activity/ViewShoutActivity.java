@@ -147,7 +147,10 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
     @Override
     protected void onResume() {
         super.onResume();
-        final Shout shout = shoutRepository.findCached(shoutId);
+        refreshView(shoutRepository.findCached(shoutId));
+    }
+
+    private void refreshView(final Shout shout) {
         message.setText(shout.getMessage());
         if (shout.getLaudCount() == null || shout.getHootCount() == null) {
             laudhootDifference.setText("0");
@@ -188,7 +191,6 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
             setLaudOnClickListener(shout.getDomainId());
             setHootOnClickListener(shout.getDomainId());
         }
-
     }
 
     private void setHootOnClickListener(final long shoutId) {
@@ -219,6 +221,19 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh_shout: {
+                laudhootAPI.refreshShout(shoutId,
+                        AuthorizationUtil.authorizationToken(clientDetailsRepository.findByClientId(clientId)),
+                        new BaseCallback<ShoutTO>(getApplicationContext()) {
+                            @Override
+                            protected void success(ShoutTO shoutTO, Response response, Context context) {
+                                refreshView(shoutRepository.cache(shoutTO));
+                                toaster.makeToast("Refreshed.");
+                            }
+                            @Override
+                            protected void failure(RetrofitError error, Context context) {
+
+                            }
+                        });
                 break;
             }
             case R.id.home: {
