@@ -102,7 +102,7 @@ public abstract class PagerActivity extends ActionBarActivity implements ActionB
             } else {
                 actionBar.addTab(
                         actionBar.newTab()
-                                .setIcon(mSectionsPagerAdapter.getPageIcon(i))
+                                .setIcon(mSectionsPagerAdapter.getInactivePageIcon(i))
                                 .setTabListener(this));
             }
         }
@@ -127,10 +127,12 @@ public abstract class PagerActivity extends ActionBarActivity implements ActionB
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
+        tab.setIcon(mSectionsPagerAdapter.getPageIcon(tab.getPosition()));
     }
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        tab.setIcon(mSectionsPagerAdapter.getInactivePageIcon(tab.getPosition()));
     }
 
     @Override
@@ -216,6 +218,25 @@ public abstract class PagerActivity extends ActionBarActivity implements ActionB
             if (pageIcons.length > 0) {
                 try {
                     Field field = R.drawable.class.getDeclaredField(pageIcons[position]);
+                    return (Integer) field.get(null);
+                } catch (NoSuchFieldException e) {
+                    Log.d(Laudhoot.LOG_TAG, "Icon " + pageIcons[position] + " not found in drawable resources.");
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    Log.d(Laudhoot.LOG_TAG, "Resources unavailable, try rebuilding the project.");
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        public Integer getInactivePageIcon(int position) {
+            if (pageIcons.length > 0) {
+                try {
+                    Field field = R.drawable.class.getDeclaredField(pageIcons[position]+"_inactive");
+                    if(field == null) {
+                        field = R.drawable.class.getDeclaredField(pageIcons[position]);
+                    }
                     return (Integer) field.get(null);
                 } catch (NoSuchFieldException e) {
                     Log.d(Laudhoot.LOG_TAG, "Icon " + pageIcons[position] + " not found in drawable resources.");

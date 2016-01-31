@@ -13,9 +13,9 @@
     </string-array>
     <!--icons array can be left empty, titles will be shown for each page-->
     <string-array name="pages_icons">
-        <item>ic_launcher</item>
-        <item>ic_launcher</item>
-        <item>ic_launcher</item>
+        <item>geo_fence</item>
+        <item>explore</item>
+        <item>activity_feed</item>
     </string-array>
 
     <string name="app_name">laudhoot</string>
