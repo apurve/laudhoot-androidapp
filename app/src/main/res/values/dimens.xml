@@ -15,4 +15,6 @@
     <dimen name="reply_laudhoot_count">14sp</dimen>
     <dimen name="reply_arrow_button">22dp</dimen>
 
+    <dimen name="emojicons_height">250dp</dimen>
+
 </resources>

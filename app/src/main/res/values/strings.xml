@@ -3,7 +3,7 @@
 
     <string-array name="pages_titles">
         <item>Shout Feed</item>
-        <item>Explore</item>
+        <item>Zipline</item>
         <item>Important Stuff</item>
     </string-array>
     <string-array name="pages_classes">

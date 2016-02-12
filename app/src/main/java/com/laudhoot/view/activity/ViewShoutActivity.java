@@ -12,8 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.laudhoot.Laudhoot;
@@ -37,6 +40,11 @@ import com.laudhoot.web.services.LaudhootAPI;
 import com.laudhoot.web.util.AuthorizationUtil;
 import com.laudhoot.web.util.BaseCallback;
 import com.laudhoot.web.util.WebTask;
+import com.rockerhieu.emojicon.EmojiconEditText;
+import com.rockerhieu.emojicon.EmojiconGridFragment;
+import com.rockerhieu.emojicon.EmojiconTextView;
+import com.rockerhieu.emojicon.EmojiconsFragment;
+import com.rockerhieu.emojicon.emoji.Emojicon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,10 +54,12 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ViewShoutActivity extends ActionBarActivity implements EndlessListView.EndlessListener {
+public class ViewShoutActivity extends ActionBarActivity implements EndlessListView.EndlessListener,
+        EmojiconsFragment.OnEmojiconBackspaceClickedListener, EmojiconGridFragment.OnEmojiconClickedListener {
 
     private String clientId;
 
@@ -57,8 +67,14 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
 
     private Long shoutId;
 
+    @Bind(R.id.view_shout_content)
+    View shoutContent;
+
     @Bind(R.id.message)
-    TextView message;
+    EmojiconTextView message;
+
+    @Bind(R.id.showReplyEmojicons)
+    ImageView emojiButton;
 
     @Bind(R.id.laudhoot_difference)
     TextView laudhootDifference;
@@ -82,7 +98,7 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
     TextView elapsedTime;
 
     @Bind(R.id.reply_text)
-    TextView reply;
+    EmojiconEditText reply;
 
     @Bind(R.id.post_reply)
     Button postReply;
@@ -109,6 +125,8 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
 
     @Inject
     NetworkStateManager networkStateManager;
+
+    EmojiconsFragment emojiconsFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,12 +160,62 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
                 }
             }
         });
+
+        reply.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideEmojiconFragment();
+                return false;
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         refreshView(shoutRepository.findCached(shoutId));
+    }
+
+    @OnClick(R.id.showReplyEmojicons)
+    public void handleEmojiconFragment() {
+        if(emojiconsFragment == null) {
+            emojiconsFragment = EmojiconsFragment.newInstance(false);
+        }
+        if(emojiconsFragment.isVisible()) {
+            hideEmojiconFragment();
+        } else {
+            showEmojiconFragment();
+            hideKeyboard();
+        }
+    }
+
+    private void showEmojiconFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.emojicons, emojiconsFragment).commit();
+        shoutContent.animate().translationYBy(
+                -1*getResources().getDimensionPixelSize(R.dimen.emojicons_height)).setDuration(500);
+        emojiButton.setBackgroundColor(getResources().getColor(R.color.laudhoot_theme_color));
+    }
+
+    private void hideEmojiconFragment() {
+        if(emojiconsFragment != null && (!emojiconsFragment.isDetached()) && (!emojiconsFragment.isRemoving())) {
+            getSupportFragmentManager().beginTransaction()
+                    .remove(emojiconsFragment).commit();
+            shoutContent.animate().translationYBy(
+                    getResources().getDimensionPixelSize(R.dimen.emojicons_height)).setDuration(500);
+            emojiButton.setBackgroundColor(getResources().getColor(R.color.switch_thumb_normal_material_dark));
+        }
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(this);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void refreshView(final Shout shout) {
@@ -366,6 +434,16 @@ public class ViewShoutActivity extends ActionBarActivity implements EndlessListV
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();
+    }
+
+    @Override
+    public void onEmojiconClicked(Emojicon emojicon) {
+        EmojiconsFragment.input(reply, emojicon);
+    }
+
+    @Override
+    public void onEmojiconBackspaceClicked(View view) {
+        EmojiconsFragment.backspace(reply);
     }
 
     public Toaster getToaster() {

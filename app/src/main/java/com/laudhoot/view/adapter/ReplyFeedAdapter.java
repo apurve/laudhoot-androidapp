@@ -14,6 +14,7 @@ import com.laudhoot.view.activity.ViewShoutActivity;
 import com.laudhoot.web.model.VoteTO;
 import com.laudhoot.web.util.AuthorizationUtil;
 import com.laudhoot.web.util.BaseCallback;
+import com.rockerhieu.emojicon.EmojiconTextView;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ReplyFeedAdapter extends WebFeedAdapter<Reply, ReplyHolder> {
     @Override
     public ReplyHolder createViewHolder(View convertView, final Reply reply) {
         final ReplyHolder viewHolder = new ReplyHolder();
-        viewHolder.message = (TextView) convertView.findViewById(R.id.reply_message);
+        viewHolder.message = (EmojiconTextView) convertView.findViewById(R.id.reply_message);
         viewHolder.laudhootDifference = (TextView) convertView.findViewById(R.id.reply_laudhoot_difference);
         viewHolder.elapsedTime = (TextView) convertView.findViewById(R.id.reply_elapsed_time);
         viewHolder.laudCount = (TextView) convertView.findViewById(R.id.reply_laud_count);
@@ -138,7 +139,7 @@ public class ReplyFeedAdapter extends WebFeedAdapter<Reply, ReplyHolder> {
 }
 
 class ReplyHolder extends WebFeedAdapter.ViewHolder {
-    TextView message;
+    EmojiconTextView message;
     TextView laudhootDifference;
     Button laud;
     Button hoot;

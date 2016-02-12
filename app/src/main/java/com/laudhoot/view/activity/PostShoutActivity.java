@@ -3,14 +3,17 @@ package com.laudhoot.view.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 
 import com.laudhoot.Laudhoot;
 import com.laudhoot.R;
@@ -24,16 +27,25 @@ import com.laudhoot.web.model.ShoutTO;
 import com.laudhoot.web.services.LaudhootAPI;
 import com.laudhoot.web.util.AuthorizationUtil;
 import com.laudhoot.web.util.WebTask;
+import com.rockerhieu.emojicon.EmojiconEditText;
+import com.rockerhieu.emojicon.EmojiconGridFragment;
+import com.rockerhieu.emojicon.EmojiconsFragment;
+import com.rockerhieu.emojicon.emoji.Emojicon;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class PostShoutActivity extends ActionBarActivity {
+public class PostShoutActivity extends ActionBarActivity implements
+        EmojiconsFragment.OnEmojiconBackspaceClickedListener, EmojiconGridFragment.OnEmojiconClickedListener {
 
     @Bind(R.id.shout_text)
-    EditText shout;
+    EmojiconEditText shout;
+
+    @Bind(R.id.showEmojicons)
+    ImageView emojiButton;
 
     @Inject
     LaudhootAPI laudhootAPI;
@@ -54,6 +66,8 @@ public class PostShoutActivity extends ActionBarActivity {
 
     private String geofenceCode;
 
+    EmojiconsFragment emojiconsFragment = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +81,52 @@ public class PostShoutActivity extends ActionBarActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.laudhoot_theme_color)));
         actionBar.setIcon(R.drawable.ic_launcher);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        shout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideEmojiconFragment();
+                return false;
+            }
+        });
+    }
+
+    @OnClick(R.id.showEmojicons)
+    public void handleEmojiconFragment() {
+        if(emojiconsFragment == null) {
+            emojiconsFragment = EmojiconsFragment.newInstance(false);
+        }
+        if(emojiconsFragment.isVisible()) {
+            hideEmojiconFragment();
+        } else {
+            showEmojiconFragment();
+            hideKeyboard();
+        }
+    }
+
+    private void showEmojiconFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.emojicons, emojiconsFragment).commit();
+        emojiButton.setBackgroundColor(getResources().getColor(R.color.laudhoot_theme_color));
+    }
+
+    private void hideEmojiconFragment() {
+        if(emojiconsFragment != null && (!emojiconsFragment.isDetached()) && (!emojiconsFragment.isRemoving())) {
+            getSupportFragmentManager().beginTransaction()
+                    .remove(emojiconsFragment).commit();
+            emojiButton.setBackgroundColor(getResources().getColor(R.color.switch_thumb_normal_material_dark));
+        }
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(this);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
@@ -137,5 +197,15 @@ public class PostShoutActivity extends ActionBarActivity {
 
     private void abortResult() {
         NavUtils.navigateUpFromSameTask(this);
+    }
+
+    @Override
+    public void onEmojiconClicked(Emojicon emojicon) {
+        EmojiconsFragment.input(shout, emojicon);
+    }
+
+    @Override
+    public void onEmojiconBackspaceClicked(View view) {
+        EmojiconsFragment.backspace(shout);
     }
 }
